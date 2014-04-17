@@ -6,7 +6,6 @@ public class Cube implements Puzzle{
 	private int height;
 	private int depth;
 	
-	
 	public Cube(int width, int height, int depth){
 		assert(width > 0 && height > 0 && depth > 0);
 		
@@ -18,6 +17,9 @@ public class Cube implements Puzzle{
 		 * HOW DO YOU WANT TO DO COULOURS?????
 		 */
 	}
+	/**
+	 * 
+	 */
 	
 	@Override
 	public boolean isSolved() {
