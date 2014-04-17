@@ -1,0 +1,49 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main_menu_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shitty_main_screen"
+    android:gravity="bottom"
+    android:orientation="horizontal"
+    android:weightSum="6"
+    tools:context="ca.germuth.puzzled.MainMenuActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <Button
+        android:id="@+id/activity_main_menu_play_button"
+        style="@style/activity_main_menu_button"
+        android:background="#AA66CC"
+        android:text="@string/activity_main_menu_play_button" />
+
+    <Button
+        android:id="@+id/activity_main_menu_statistic_button"
+        style="@style/activity_main_menu_button"
+        android:background="#99CC00"
+        android:text="@string/activity_main_menu_statistic_button" />
+
+    <Button
+        android:id="@+id/activity_main_menu_leaderboard_button"
+        style="@style/activity_main_menu_button"
+        android:background="#FFBB33"
+        android:text="@string/activity_main_menu_leaderboard_button" />
+
+    <Button
+        android:id="@+id/activity_main_menu_achievement_button"
+        style="@style/activity_main_menu_button"
+        android:background="#FF4444"
+        android:text="@string/activity_main_menu_achievement_button" />
+
+    <Button
+        android:id="@+id/activity_main_menu_setting_button"
+        style="@style/activity_main_menu_button"
+        android:background="#99CC00"
+        android:text="@string/activity_main_menu_setting_button" />
+
+    <Button
+        android:id="@+id/activity_main_menu_quit_button"
+        style="@style/activity_main_menu_button"
+        android:background="#AA66CC"
+        android:text="@string/activity_main_menu_quit_button" />
+
+</LinearLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Puzzled</string>
+    
+    <!-- Main Menu Activity -->
+    <string name ="activity_main_menu_play_button">Play</string>
+    <string name ="activity_main_menu_statistic_button">View Statistics</string>
+    <string name ="activity_main_menu_leaderboard_button">Leaderboards</string>
+    <string name ="activity_main_menu_achievement_button">Achievements</string>
+    <string name ="activity_main_menu_setting_button">Settings</string>
+    <string name ="activity_main_menu_quit_button">Quit</string>
+   
+    
+</resources>

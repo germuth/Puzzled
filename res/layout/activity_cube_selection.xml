@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/shitty_cube_selection_screen" >
+    
+    <at.technikum.mti.fancycoverflow.FancyCoverFlow
+        android:id="@+id/activity_cube_selection_fcf"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    
+    <!--
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
+        
+        <LinearLayout 
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_centerVertical="true">
+
+    	</LinearLayout>
+        
+    </HorizontalScrollView>
+     -->
+</RelativeLayout>
