@@ -13,11 +13,7 @@ public class MainMenuActivity extends PuzzledActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_menu);
-		/**
-		 * TODO NEED TO ADD SPLASH SCREEN 
-		 * http://stackoverflow.com/questions/5486789/how-do-i-make-a-splash-screen-in-android
-		 * WITH THE SVG IMAGE (but not actually in svg form)
-		 */
+
 		this.setUpButtons();
 	}
 

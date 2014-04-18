@@ -78,7 +78,7 @@ containing a value of this type.
         public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int activity_main_menu_background=0x7f020000;
+        public static final int activity_splash_screen_background=0x7f020000;
         public static final int ic_launcher=0x7f020001;
         public static final int puzzle_3by3=0x7f020002;
         public static final int shitty_cube_selection_screen=0x7f020003;
@@ -98,6 +98,7 @@ containing a value of this type.
     public static final class layout {
         public static final int activity_cube_selection=0x7f030000;
         public static final int activity_main_menu=0x7f030001;
+        public static final int activity_splash_screen=0x7f030002;
     }
     public static final class string {
         public static final int activity_main_menu_achievement_button=0x7f060004;
