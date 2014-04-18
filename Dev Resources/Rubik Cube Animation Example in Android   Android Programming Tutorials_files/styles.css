@@ -1,0 +1,107 @@
+div#suggestions.postbox ul {
+    margin-top: 1.5%;
+    margin-bottom: 1.5%;
+    margin-left: 3%;
+    list-style-type: disc;
+}
+
+tr.scores-red-background {
+    background-color: #ff7f7f;
+}
+
+tr.scores-red-background td {
+    border-color: #ef6f6f;
+}
+
+td.scores-red-not-anchor {
+    color: #991919;
+}
+
+td.scores-red-anchor a {
+    color: #903a4d;
+}
+
+td.scores-red-anchor a:hover {
+    color: #991919;
+}
+
+div#seopressor-powered {
+    text-align: center;
+}
+
+div#ps.tablenav div.tablenav-pages {
+    height: auto;
+}
+
+#site_wide_keywords_list.large-text {
+    width: 45%;
+}
+
+/*
+ Styles for box widget in the post/page admin panels
+ */
+.widget_box {
+    font-size: 11px;
+    line-height: 1;
+}
+
+.widget_box ul {
+    font-size: 11px;
+    margin-left: 10%;
+}
+
+.widget_box table {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 5%;
+}
+
+.suggestions_yes {
+    list-style-type: disc;
+    list-style-image: url(../images/green-check.png);
+}
+
+.suggestions_no {
+    list-style-type: disc;
+    list-style-image: url(../images/red-cross.png);
+}
+
+.box_score_green {
+    color: green;
+    font-size: 180%;
+    width: 40%;
+    text-align: center;
+}
+
+.box_score_red {
+    color: red;
+    font-size: 180%;
+    width: 40%;
+    text-align: center;
+}
+
+.box_score_green_text {
+    color: green;
+    width: 60%;
+}
+
+.box_score_red_text {
+    color: red;
+    width: 60%;
+}
+
+.box_table_header {
+    height: 20px;
+}
+
+.center {
+    text-align: center;
+}
+
+.left {
+    text-align: left;
+}
+
+/*
+ End --> Styles for box widget in the post/page admin panels
+ */

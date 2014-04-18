@@ -1,0 +1,117 @@
+.ois_20 {
+	background-image: url('../../front/images/alfons_bg.jpg') !important;
+	background-repeat: repeat-y !important;
+	position:relative;
+	padding-bottom:25px!important;
+}
+.ois_badge_text_20 {
+	color: white !important;
+	font-size: 30px !important;
+	position: absolute !important;
+	top: 70px;
+	left: 30px;
+	height: 100px !important;
+	text-align: center !important;
+	line-height: 25px !important;
+	z-index: 3;
+	text-shadow:#ac433e 1px 1px 0!important;
+}
+.ois_badge_text_20 div {
+	text-align: center !important;
+	width: 90px !important;	
+	margin: 0 auto !important;
+}
+div.ois_vorm_20 {
+	background-color: #f4f4f4 !important;
+	height: 90px !important;
+	position: absolute !important;
+	top: 45px !important;
+	left: 80px !important;
+	border-radius: 10px !important;
+	padding-left:85px;
+	padding-top:25px;
+	padding-right: 20px;
+	z-index: 1;
+}
+.ois_social_20 {
+	position: relative !important;
+}
+.ois_title_20 {
+	font-size: 24px !important;
+	text-align:right !important;
+	margin-right: 30px !important;
+}
+.ois_subtitle_20 {
+	font-size: 26px !important;
+	margin: 25px 0 20px 0 !important;
+}
+.ois_textbox_20,.ois_form_20 input[type="text"],.ois_form_20 input[type="email"] {
+	text-align:left!important;
+	padding: 10px 7px!important;
+	background-color:#FAFAFA!important;
+	background-image:none!important;
+	box-sizing: border-box !important;
+	-webkit-box-sizing: border-box !important;
+	-moz-box-sizing: border-box !important;
+	border:1px solid#bec3ce!important;
+	-webkit-box-shadow:inset 0 1px 1px 0 rgba(0,0,0,0.0976562)!important;
+	-moz-box-shadow:inset 0 1px 1px 0 rgba(0,0,0,0.0976562)!important;
+	box-shadow:inset 0 1px 1px 0 rgba(0,0,0,0.0976562)!important;
+	color:#888!important;
+	cursor:auto!important;
+	display:inline-block!important;
+	font-family:'Helvetica Neue',Helvetica,Arial,sans-serif!important;
+	font-style:normal!important;
+	font-size: 13px;
+	font-variant:normal!important;
+	font-weight:300!important;
+	letter-spacing:normal!important;
+	line-height:18px!important;
+	margin:2px 0 8px 0!important;
+	outline:none!important;
+	text-indent:0!important;
+	text-shadow:none!important;
+	text-transform:none!important;
+	vertical-align:baseline!important;
+	word-spacing:0!important
+}
+.ois_button_20 {
+	background-origin: padding-box !important;
+	border-bottom-left-radius: 2px !important;
+	border-bottom-right-radius: 2px !important;
+	border-style: solid !important;
+	border-width: 1px !important;
+	border-color: #EEB047 !important;
+	box-shadow: #F9F9F9 0px 1px 2px 0px !important;
+	box-sizing: border-box !important;
+	-webkit-box-sizing: border-box !important;
+	-moz-box-sizing: border-box !important;
+	clear: none !important;
+	color: #963 !important;
+	cursor: pointer !important;
+	display: inline-block !important;
+	float: none !important;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+	font-size: 13px !important;
+	font-style: normal !important;
+	font-variant: normal !important;
+	font-weight: bold !important;
+	height: 30px !important;
+	letter-spacing: normal !important;
+	line-height: 20px !important;
+	margin: 0 0 5px 0 !important;
+	outline-color: #963 !important;
+	outline-style: none !important;
+	outline-width: 0px !important;
+	padding: 7px 15px;
+	text-align: center !important;
+	text-decoration: none !important;
+	text-indent: 0px !important;
+	text-shadow: rgba(255, 255, 255, 0.398438) 0px 1px 0px !important;
+	text-transform: none !important;
+	vertical-align: baseline !important;
+	white-space: pre !important;
+	width: 84px !important;
+	word-spacing: 0px !important;
+	word-wrap: break-word !important;
+}

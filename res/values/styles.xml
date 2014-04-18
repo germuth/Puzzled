@@ -3,9 +3,9 @@
     <!-- The buttons in Main Menu Activity -->
     <style name="activity_main_menu_button" >
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">30sp</item>
+        <item name="android:layout_height">40sp</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     

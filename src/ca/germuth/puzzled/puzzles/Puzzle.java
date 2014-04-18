@@ -25,7 +25,19 @@ public interface Puzzle {
 	 * Applies X random moves to the puzzle, scrambling it. X is determined
 	 * from user settings
 	 */
-	public abstract void scramble();
+	public abstract String scramble(int scramble_length);
+	
+	/**
+	 * Returns an array of RGBA Colours used for this puzzle
+	 * @return
+	 */
+	public abstract Colour[] getColours();
+	
+	/**
+	 * Sets the RGBA Colours used for this puzzle
+	 * @return
+	 */
+	public abstract Colour[] setColours();
 	
 	/**
 	 * Returns an array of strings, denoting the names for each operation that
