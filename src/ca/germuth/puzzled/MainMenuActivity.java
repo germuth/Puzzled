@@ -33,6 +33,8 @@ public class MainMenuActivity extends PuzzledActivity implements
 		case R.id.activity_main_menu_setting_button:
 			break;
 		case R.id.activity_main_menu_quit_button:
+			MainMenuActivity.this.finish();
+			System.exit(0);
 			break;
 		}
 

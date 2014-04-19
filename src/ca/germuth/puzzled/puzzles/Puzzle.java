@@ -1,5 +1,7 @@
 package ca.germuth.puzzled.puzzles;
 
+import java.util.ArrayList;
+
 /**
  * Puzzle
  * 
@@ -38,6 +40,13 @@ public interface Puzzle {
 	 * @return
 	 */
 	public abstract Colour[] setColours();
+	
+	/**
+	 * Returns a list of the changed tiles that have changed in
+	 * the last rotation performed on the cube. This is used 
+	 * to know which pieces to animate turning
+	 */
+	public abstract ArrayList<ChangedTile> getChangedTiles();
 	
 	/**
 	 * Returns an array of strings, denoting the names for each operation that
