@@ -24,24 +24,6 @@ public interface Puzzle {
 	public abstract void setSolved();
 	
 	/**
-	 * Applies X random moves to the puzzle, scrambling it. X is determined
-	 * from user settings
-	 */
-	public abstract String scramble(int scramble_length);
-	
-	/**
-	 * Returns an array of RGBA Colours used for this puzzle
-	 * @return
-	 */
-	public abstract Colour[] getColours();
-	
-	/**
-	 * Sets the RGBA Colours used for this puzzle
-	 * @return
-	 */
-	public abstract Colour[] setColours();
-	
-	/**
 	 * Returns a list of the changed tiles that have changed in
 	 * the last rotation performed on the cube. This is used 
 	 * to know which pieces to animate turning
@@ -53,10 +35,10 @@ public interface Puzzle {
 	 * can be performed on that puzzle. For example, [ R, R', L, L' ] for a 3x3
 	 * rubik's cube Primary Moves refers to the 10 most basic moves, making up
 	 * the most inner column of buttons in the main activity
-	 * 
+	 * Also Refers to the moves used to scramble a cube (for now)
 	 * @return
 	 */
-	public abstract String[] getPrimaryMoves();
+	public abstract ArrayList<PuzzleTurn> getPrimaryMoves();
 
 	/**
 	 * Returns the Extra moves, which will make up the 2nd column (if
@@ -65,5 +47,12 @@ public interface Puzzle {
 	 * 
 	 * @return
 	 */
-	public abstract String[] getExtraMoves();
+	public abstract ArrayList<PuzzleTurn> getExtraMoves();
+	
+	/**
+	 * Returns a puzzleturn object for each rotation move, such as
+	 * x, x', y, and z for a 3x3
+	 * @return
+	 */
+	public abstract ArrayList<PuzzleTurn> getRotationMoves();
 }
