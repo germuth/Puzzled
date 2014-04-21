@@ -1,6 +1,7 @@
-package ca.germuth.puzzled.puzzles;
+package ca.germuth.puzzled.scrambler;
 
-import java.util.ArrayList;
+import ca.germuth.puzzled.puzzle.Puzzle;
+import ca.germuth.puzzled.puzzle.PuzzleTurn;
 
 public interface Scrambler {
 	

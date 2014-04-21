@@ -1,4 +1,4 @@
-package ca.germuth.puzzled.puzzles;
+package ca.germuth.puzzled.puzzle;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -21,10 +21,14 @@ public class PuzzleTurn {
 	 */
 	private String mName;
 	/**
-	 * A reference to the actual method of puzzle. This could be
-	 * puzzle.RTurn(), puzzle.FTurn(), etc
+	 * A reference to the actual method of puzzle that implements that turn
 	 */
-	private Method mMethod;
+	private Method[] mMethod;
+	/**
+	 * Argument for each method. Assumes each method
+	 * can only take one parameter. 
+	 */
+	private Object[] mArguments;
 	/**
 	 * A list of the changed tiles used to animate the correct
 	 * pieces for that turn
@@ -37,11 +41,23 @@ public class PuzzleTurn {
 	 */
 	private float mRotation;
 	
-	public PuzzleTurn(Puzzle p, String name, Method method, ArrayList<ChangedTile> changed,
+	public static Method[] triple(Method[] input){
+		Method[] triple = new Method[input.length * 3];
+		for(int i = 0; i < triple.length; i++){
+			triple[i] = input[i % input.length];
+		}
+		return triple;
+	}
+	
+	public PuzzleTurn(Puzzle p, String name, Method[] method, Object[] args, ArrayList<ChangedTile> changed,
 			float rotation){
 		this.mPuzzle = p;
+		if(name.startsWith("1")){
+			name = name.substring(1);
+		}
 		this.mName = name;
 		this.mMethod = method;
+		this.mArguments = args;
 		this.mChangedTiles = changed;
 		this.mRotation = rotation;
 	}
@@ -61,15 +77,7 @@ public class PuzzleTurn {
 	public void setmName(String mName) {
 		this.mName = mName;
 	}
-
-	public Method getmMethod() {
-		return mMethod;
-	}
-
-	public void setmMethod(Method mMethod) {
-		this.mMethod = mMethod;
-	}
-
+	
 	public ArrayList<ChangedTile> getmChangedTiles() {
 		return mChangedTiles;
 	}
@@ -84,5 +92,26 @@ public class PuzzleTurn {
 
 	public void setmRotation(float mRotation) {
 		this.mRotation = mRotation;
+	}
+
+	public Method[] getmMethod() {
+		return mMethod;
+	}
+
+	public void setmMethod(Method[] mMethod) {
+		this.mMethod = mMethod;
+	}
+
+	public Object[] getmArguments() {
+		return mArguments;
+	}
+
+	public void setmArguments(Object[] mArguments) {
+		this.mArguments = mArguments;
+	}
+
+	@Override
+	public String toString() {
+		return "PuzzleTurn: " + this.mName;
 	}
 }

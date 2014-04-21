@@ -1,7 +1,7 @@
-package ca.germuth.puzzled.puzzles;
+package ca.germuth.puzzled.puzzle;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 /**
  * Cube 
  * 
@@ -43,7 +43,7 @@ public class Cube implements Puzzle{
 	private CubeFace back;
 	
 	public Cube(int width, int height, int depth){
-		assert(width > 0 && height > 0 && depth > 0);
+		assert(width > 1 && height > 1 && depth > 1);
 		
 		this.width = width;
 		this.height = height;
@@ -114,30 +114,6 @@ public class Cube implements Puzzle{
 		this.down.setSolved();
 		this.left.setSolved();
 		this.right.setSolved();
-	}
-
-	@Override
-	public ArrayList<PuzzleTurn> getPrimaryMoves() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<PuzzleTurn> getExtraMoves() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public ArrayList<PuzzleTurn> getRotationMoves() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<ChangedTile> getChangedTiles() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
@@ -386,142 +362,138 @@ public class Cube implements Puzzle{
 		}
 	}
 	
-	//---------------------------------------------
-	//CUBE SINGLE TURNS
-	//---------------------------------------------
-	public void RTurn(){
-		sideRotation(width - 1);
-		rotateFace(this.right);
-	}
-
-	public void RPrimeTurn(){
-		this.RTurn();
-		this.RTurn();
-		this.RTurn();
-	}
-
-	public void LPrimeTurn(){
-		sideRotation(0);
-		rotateFace(this.left);
-		rotateFace(this.left);
-		rotateFace(this.left);
-	}
-
-	public void LTurn(){
-		this.LPrimeTurn();
-		this.LPrimeTurn();
-		this.LPrimeTurn();
-	}
-	public void UTurn(){
-		topRotation(0);
-		rotateFace(this.top);
-	}
-
-	public void UPrimeTurn(){
-		this.UTurn();
-		this.UTurn();
-		this.UTurn();
-	}
-
-	public void DPrimeTurn(){
-		topRotation(height - 1);
-		rotateFace(this.down);
-		rotateFace(this.down);
-		rotateFace(this.down);
-	}
-
-	public void DTurn(){
-		this.DPrimeTurn();
-		this.DPrimeTurn();
-		this.DPrimeTurn();
+	@Override
+	public ArrayList<PuzzleTurn> getAllMoves() {
+		ArrayList<PuzzleTurn> moves = new ArrayList<PuzzleTurn>();
+		try {
+			Class<? extends Cube> c = this.getClass();
+			for (int i = 0; i < (width + 1/ 2) - 1; i++) {
+				//Single Slice Turns
+				
+				//R, 2R, 3R, etc are single slice turns according to SiGN
+				PuzzleTurn R = new PuzzleTurn(this, (i+1) + "R",
+						new Method[]{c.getMethod("RTurn", int.class, int.class)},
+						new Object[]{ i, i},
+						null, (float)Math.PI);
+				moves.add(R);
+				PuzzleTurn L = new PuzzleTurn(this, (i+1) + "L'",
+						new Method[]{c.getMethod("LPrimeTurn", int.class, int.class)},
+						new Object[]{i, i},
+						null, (float)Math.PI);
+				moves.add(L);
+				PuzzleTurn U = new PuzzleTurn(this, (i+1) + "U",
+						new Method[]{c.getMethod("UTurn", int.class, int.class)},
+						new Object[]{i, i},
+						null, (float)Math.PI);
+				moves.add(U);
+				PuzzleTurn D = new PuzzleTurn(this, (i+1) + "D",
+						new Method[]{c.getMethod("DTurn", int.class, int.class)},
+						new Object[]{i, i},
+						null, (float)Math.PI);
+				moves.add(D);
+				PuzzleTurn F = new PuzzleTurn(this, (i+1) + "F",
+						new Method[]{c.getMethod("FTurn", int.class, int.class)},
+						new Object[]{i, i},
+						null, (float)Math.PI);
+				moves.add(F);
+				PuzzleTurn B = new PuzzleTurn(this, (i+1) + "B'",
+						new Method[]{c.getMethod("BPrimeTurn", int.class, int.class)},
+						new Object[]{i, i},
+						null, (float)Math.PI);
+				moves.add(B);
+			}
+			//add the multislice turns
+			//grab first 6 turns above
+			for(int j = 0; j < 5; j++){
+				PuzzleTurn current = moves.get(j);
+				
+				for(int i = 0; i < (width + 1) / 2; i++){
+					PuzzleTurn bigTurn = new PuzzleTurn(this, current.getmName().toLowerCase(), 
+							current.getmMethod(),
+							new Object[]{0, i}, null, (current.getmRotation()));
+					moves.add(bigTurn);
+				}
+			}
+			int size = moves.size();
+			//for each element in the array, add the reverse turns
+			for(int i = 0; i < size; i++){
+				PuzzleTurn current = moves.get(i);
+				String name = null;
+				if( current.getmName().endsWith("'")){
+					name = current.getmName().substring(0, current.getmName().length());
+				}else{
+					name = current.getmName() + "'";
+				}
+				PuzzleTurn reverseTurn = new PuzzleTurn(this, name, 
+						//triple whatever turn was done before to turn the other way
+						PuzzleTurn.triple(current.getmMethod()),
+						new Object[]{i, i}, null, -(current.getmRotation()));
+				moves.add(reverseTurn);
+			}
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		}
+		return moves;
 	}
 	
-	public void FTurn(){
-		frontRotation(depth - 1);
-		rotateFace(this.front);
+	@Override
+	public ArrayList<PuzzleTurn> getAllRotationMoves() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public void FPrimeTurn(){
-		this.FTurn();
-		this.FTurn();
-		this.FTurn();
+	@Override
+	public ArrayList<ChangedTile> getChangedTiles() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public void RTurn(int startLayer, int endLayer){
+		for(int i = startLayer; i <= endLayer; i++){
+			this.sideRotation((depth - 1) - i);
+		}
+		this.rotateFace(this.right);
+	}
+	
+	public void LPrimeTurn(int startLayer, int endLayer){
+		for(int i = startLayer; i <= endLayer; i++){
+			this.sideRotation(i);
+		}
+		this.rotateFace(this.left);
+		this.rotateFace(this.left);
+		this.rotateFace(this.left);
+	}
+	
+	public void UTurn(int startLayer, int endLayer){
+		for(int i = startLayer; i <= endLayer; i++){
+			this.topRotation(i);
+		}
+		this.rotateFace(this.top);
+	}
+	
+	public void DTurn(int startLayer, int endLayer){
+		for(int i = startLayer; i <= endLayer; i++){
+			this.sideRotation((height - 1) - i);
+		}
+		this.rotateFace(this.down);
+		this.rotateFace(this.down);
+		this.rotateFace(this.down);
 	}
 
-	public void BPrimeTurn(){
-		frontRotation(0);
-		rotateFace(this.back);
-		rotateFace(this.back);
-		rotateFace(this.back);
+	public void FTurn(int startLayer, int endLayer){
+		for(int i = startLayer; i <= endLayer; i++){
+			this.frontRotation((depth - 1) - i);
+		}
+		this.rotateFace(this.front);
 	}
 
-	public void BTurn(){
-		BPrimeTurn();
-		BPrimeTurn();
-		BPrimeTurn();
-	}
-
-	//---------------------------------------------
-	//DOUBLE TURNS
-	//---------------------------------------------
-	public void rTurn() {
-		sideRotation( this.width - 1);
-		sideRotation( this.width - 2);
-		rotateFace( this.right );
-	}
-	public void rPrimeTurn() {
-		rTurn();
-		rTurn();
-		rTurn();
-	}
-
-	public void uPrimeTurn() {
-		uTurn();
-		uTurn();
-		uTurn();
-	}
-	public void uTurn() {
-		rotateFace(this.top);
-		topRotation(0);
-		topRotation(1);
-	}
-
-	public void fTurn() {
-		frontRotation(depth - 1);
-		frontRotation(depth - 2);
-		rotateFace(this.front);
-	}
-
-	public void fPrimeTurn() {
-		fTurn();
-		fTurn();
-		fTurn();
-	}
-
-	public void lTurn() {
-		lPrimeTurn();
-		lPrimeTurn();
-		lPrimeTurn();
-	}
-	public void lPrimeTurn() {
-		sideRotation(0);
-		sideRotation(1);
-		rotateFace(this.left);
-		rotateFace(this.left);
-		rotateFace(this.left);
-	}
-
-	public void dTurn(){
-		dPrimeTurn();
-		dPrimeTurn();
-		dPrimeTurn();
-	}
-
-	public void dPrimeTurn(){
-		topRotation( height - 1 );
-		topRotation( height - 2 );
-		rotateFace(this.down);
-		rotateFace(this.down);
-		rotateFace(this.down);
+	public void BPrimeTurn(int startLayer, int endLayer){
+		for(int i = startLayer; i <= endLayer; i++){
+			this.frontRotation(i);
+		}
+		this.rotateFace(this.back);
+		this.rotateFace(this.back);
+		this.rotateFace(this.back);
 	}
 	
 	//---------------------------------------------

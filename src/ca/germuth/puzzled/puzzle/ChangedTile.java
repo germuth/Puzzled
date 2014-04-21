@@ -1,4 +1,4 @@
-package ca.germuth.puzzled.puzzles;
+package ca.germuth.puzzled.puzzle;
 
 public class ChangedTile {
 	private Puzzle mPuzzle;

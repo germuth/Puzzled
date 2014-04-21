@@ -1,4 +1,4 @@
-package ca.germuth.puzzled.puzzles;
+package ca.germuth.puzzled.puzzle;
 /**
  * Represents an RGBA colour where
  * R = red
