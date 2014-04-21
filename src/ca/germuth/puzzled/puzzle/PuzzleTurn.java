@@ -41,7 +41,7 @@ public class PuzzleTurn {
 	 */
 	private float mRotation;
 	
-	public static Method[] triple(Method[] input){
+	public static Method[] concatenate(Method[] input, int times){
 		Method[] triple = new Method[input.length * 3];
 		for(int i = 0; i < triple.length; i++){
 			triple[i] = input[i % input.length];

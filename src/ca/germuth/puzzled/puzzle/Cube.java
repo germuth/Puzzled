@@ -367,9 +367,9 @@ public class Cube implements Puzzle{
 		ArrayList<PuzzleTurn> moves = new ArrayList<PuzzleTurn>();
 		try {
 			Class<? extends Cube> c = this.getClass();
-			for (int i = 0; i < (width + 1/ 2) - 1; i++) {
-				//Single Slice Turns
-				
+			//Single Slice Turn
+			
+			for (int i = 0; i <= ((width + 1) / 2) - 1; i++) {
 				//R, 2R, 3R, etc are single slice turns according to SiGN
 				PuzzleTurn R = new PuzzleTurn(this, (i+1) + "R",
 						new Method[]{c.getMethod("RTurn", int.class, int.class)},
@@ -381,6 +381,8 @@ public class Cube implements Puzzle{
 						new Object[]{i, i},
 						null, (float)Math.PI);
 				moves.add(L);
+			}
+			for(int i = 0; i <= ((height + 1) / 2) - 1; i++){
 				PuzzleTurn U = new PuzzleTurn(this, (i+1) + "U",
 						new Method[]{c.getMethod("UTurn", int.class, int.class)},
 						new Object[]{i, i},
@@ -391,6 +393,8 @@ public class Cube implements Puzzle{
 						new Object[]{i, i},
 						null, (float)Math.PI);
 				moves.add(D);
+			}
+			for(int i = 0; i <= ((depth + 1) / 2) - 1; i++){
 				PuzzleTurn F = new PuzzleTurn(this, (i+1) + "F",
 						new Method[]{c.getMethod("FTurn", int.class, int.class)},
 						new Object[]{i, i},
@@ -404,17 +408,23 @@ public class Cube implements Puzzle{
 			}
 			//add the multislice turns
 			//grab first 6 turns above
-			for(int j = 0; j < 5; j++){
-				PuzzleTurn current = moves.get(j);
-				
-				for(int i = 0; i < (width + 1) / 2; i++){
-					PuzzleTurn bigTurn = new PuzzleTurn(this, current.getmName().toLowerCase(), 
-							current.getmMethod(),
-							new Object[]{0, i}, null, (current.getmRotation()));
+			int size = moves.size();
+			for (int i = 0; i < size; i++) {
+				PuzzleTurn current = moves.get(i);
+
+				char firstChar = current.getmName().charAt(0);
+				if ( Character.isDigit(firstChar)) {
+					String newName = current.getmName().toLowerCase();
+					if( firstChar == '2'){
+						newName = newName.substring(1);
+					}
+					PuzzleTurn bigTurn = new PuzzleTurn(this, newName, current.getmMethod(),
+							new Object[] { 0, (Integer) (current.getmArguments()[0]) },
+							null, (current.getmRotation()));
 					moves.add(bigTurn);
 				}
 			}
-			int size = moves.size();
+			size = moves.size();
 			//for each element in the array, add the reverse turns
 			for(int i = 0; i < size; i++){
 				PuzzleTurn current = moves.get(i);
@@ -426,7 +436,7 @@ public class Cube implements Puzzle{
 				}
 				PuzzleTurn reverseTurn = new PuzzleTurn(this, name, 
 						//triple whatever turn was done before to turn the other way
-						PuzzleTurn.triple(current.getmMethod()),
+						PuzzleTurn.concatenate(current.getmMethod(), 3),
 						new Object[]{i, i}, null, -(current.getmRotation()));
 				moves.add(reverseTurn);
 			}
@@ -438,8 +448,36 @@ public class Cube implements Puzzle{
 	
 	@Override
 	public ArrayList<PuzzleTurn> getAllRotationMoves() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<PuzzleTurn> rotations = new ArrayList<PuzzleTurn>();
+		try{
+			Class<? extends Cube> c = this.getClass();
+			PuzzleTurn Y = new PuzzleTurn(this, "y",
+					new Method[]{c.getMethod("YTurn", int.class, int.class)},
+					null, null, 0);
+			rotations.add(Y);
+			PuzzleTurn X = new PuzzleTurn(this, "x",
+					new Method[]{c.getMethod("XTurn", int.class, int.class)},
+					null, null, 0);
+			rotations.add(X);
+			PuzzleTurn Z = new PuzzleTurn(this, "z",
+					new Method[]{c.getMethod("ZTurn", int.class, int.class)},
+					null, null, 0);
+			rotations.add(Z);
+			
+			for(int i = 0; i < rotations.size(); i++){
+				PuzzleTurn current = rotations.get(i);
+				
+				PuzzleTurn reverse = new PuzzleTurn(this,
+						current.getmName() + "'", 
+						PuzzleTurn.concatenate(current.getmMethod(), 3),
+						null, null, 0);
+				rotations.add(reverse);
+			}
+		}catch(NoSuchMethodException e){
+			e.printStackTrace();
+		}
+		
+		return rotations;
 	}
 
 	@Override

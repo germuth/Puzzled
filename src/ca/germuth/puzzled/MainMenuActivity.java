@@ -17,17 +17,6 @@ public class MainMenuActivity extends PuzzledActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_menu);
-
-		Cube c2 = new Cube(2, 2, 2);
-		Cube c3 = new Cube(3, 3, 3);
-		Cube c4 = new Cube(4, 4, 4);
-		Cube c5 = new Cube(5, 5, 5);
-		Cube rect = new Cube(3, 3, 5);
-		ArrayList<PuzzleTurn> aoeu = c2.getAllMoves();
-		ArrayList<PuzzleTurn> aoeu2 = c3.getAllMoves();
-		ArrayList<PuzzleTurn> aoeu3 = c4.getAllMoves();
-		ArrayList<PuzzleTurn> aoeu4 = c5.getAllMoves();
-		ArrayList<PuzzleTurn> aoeu5 = rect.getAllMoves();
 		
 		this.setUpButtons();
 	}
