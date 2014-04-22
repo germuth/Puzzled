@@ -5,25 +5,26 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">40sp</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">11sp</item>
     </style>
 
+    <!-- The Navigation buttons in PuzzleSelection Activity -->
+    <style name="activity_puzzle_selection_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:textSize">24sp</item>
+    </style>
     
-    <!--
-  ~ Copyright 2013 David Schreiber
-  ~           2013 John Paul Nalog
-  ~
-  ~    Licensed under the Apache License, Version 2.0 (the "License");
-  ~    you may not use this file except in compliance with the License.
-  ~    You may obtain a copy of the License at
-  ~
-  ~        http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~    Unless required by applicable law or agreed to in writing, software
-  ~    distributed under the License is distributed on an "AS IS" BASIS,
-  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~    See the License for the specific language governing permissions and
-  ~    limitations under the License.
-  -->
-
+    
+    <!-- The buttons for each turn in the Game Activty -->
+    <style name="activity_game_button" >
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">55dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:text">R</item>
+    </style>
+    
 </resources>

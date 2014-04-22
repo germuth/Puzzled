@@ -85,20 +85,29 @@ containing a value of this type.
         public static final int shitty_main_screen=0x7f020004;
     }
     public static final class id {
-        public static final int activity_cube_selection_fcf=0x7f040001;
-        public static final int activity_main_menu_achievement_button=0x7f040006;
-        public static final int activity_main_menu_container=0x7f040002;
-        public static final int activity_main_menu_leaderboard_button=0x7f040005;
-        public static final int activity_main_menu_play_button=0x7f040003;
-        public static final int activity_main_menu_quit_button=0x7f040008;
-        public static final int activity_main_menu_setting_button=0x7f040007;
-        public static final int activity_main_menu_statistic_button=0x7f040004;
+        public static final int activity_main_menu_achievement_button=0x7f040005;
+        public static final int activity_main_menu_container=0x7f040001;
+        public static final int activity_main_menu_leaderboard_button=0x7f040004;
+        public static final int activity_main_menu_play_button=0x7f040002;
+        public static final int activity_main_menu_quit_button=0x7f040007;
+        public static final int activity_main_menu_setting_button=0x7f040006;
+        public static final int activity_main_menu_statistic_button=0x7f040003;
+        public static final int activity_puzzle_select_back_button=0x7f040009;
+        public static final int activity_puzzle_select_go_button=0x7f04000b;
+        public static final int activity_puzzle_select_option_button=0x7f04000a;
+        public static final int activity_puzzle_selection_fcf=0x7f040008;
         public static final int auto=0x7f040000;
+        public static final int leftInnerColumn=0x7f04000d;
+        public static final int leftOuterColumn=0x7f04000c;
+        public static final int rightInnerColumn=0x7f04000f;
+        public static final int rightOuterColumn=0x7f04000e;
+        public static final int timer=0x7f040010;
     }
     public static final class layout {
-        public static final int activity_cube_selection=0x7f030000;
-        public static final int activity_main_menu=0x7f030001;
+        public static final int activity_main_menu=0x7f030000;
+        public static final int activity_puzzle_select=0x7f030001;
         public static final int activity_splash_screen=0x7f030002;
+        public static final int puzzle_cube=0x7f030003;
     }
     public static final class string {
         public static final int activity_main_menu_achievement_button=0x7f060004;
@@ -109,12 +118,23 @@ containing a value of this type.
         public static final int activity_main_menu_quit_button=0x7f060006;
         public static final int activity_main_menu_setting_button=0x7f060005;
         public static final int activity_main_menu_statistic_button=0x7f060002;
+        /**  Puzzle Select Activity 
+         */
+        public static final int activity_puzzle_select_back_button=0x7f060007;
+        public static final int activity_puzzle_select_go_button=0x7f060009;
+        public static final int activity_puzzle_select_option_button=0x7f060008;
         public static final int app_name=0x7f060000;
     }
     public static final class style {
+        /**  The buttons for each turn in the Game Activty 
+         */
+        public static final int activity_game_button=0x7f070002;
         /**  The buttons in Main Menu Activity 
          */
         public static final int activity_main_menu_button=0x7f070000;
+        /**  The Navigation buttons in PuzzleSelection Activity 
+         */
+        public static final int activity_puzzle_selection_button=0x7f070001;
     }
     public static final class styleable {
         /** Attributes that can be used with a FancyCoverFlow.

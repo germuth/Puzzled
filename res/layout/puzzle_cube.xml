@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/leftOuterColumn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:orientation="vertical"
+        android:weightSum="13" 
+        android:paddingLeft="5dp"
+        android:paddingRight="1dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="#FFEBCD">
+
+        <Button style="@style/activity_game_button"
+            android:background="#FFBB33" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp" />
+
+        <Button style="@style/activity_game_button" 
+            android:background="#FF4444"
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp" />
+
+        <Button style="@style/activity_game_button"
+            android:background="#FF4444"
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp" />
+
+        <Button style="@style/activity_game_button"
+            android:background="#99CC00"
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp" />
+
+        <Button style="@style/activity_game_button"
+            android:background="#AA66CC"
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp" />
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="0dip"
+            android:layout_weight="1" >
+        </View>
+
+        <Button style="@style/activity_game_button"
+            android:background="#33B5E5" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp" />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/leftInnerColumn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/leftOuterColumn"
+        android:orientation="vertical"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="#FFEBCD">
+
+        <Button style="@style/activity_game_button"
+            android:background="#FF8800" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp" />
+
+        <Button style="@style/activity_game_button" 
+            android:background="#CC0000"
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#CC0000"
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#669900" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#9933CC" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"/>
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="0dip"
+            android:layout_weight="1" >
+        </View>
+
+        <Button style="@style/activity_game_button"
+            android:background="#0099CC" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"/>
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rightOuterColumn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical"
+        android:weightSum="13"
+        android:paddingLeft="1dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="#FFEBCD">
+
+         <Button style="@style/activity_game_button"
+            android:background="#FFBB33" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"/>
+
+        <Button style="@style/activity_game_button" 
+            android:background="#FF4444"
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#FF4444" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#99CC00" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#AA66CC" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"/>
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="0dip"
+            android:layout_weight="1" >
+        </View>
+
+        <Button style="@style/activity_game_button"
+            android:background="#33B5E5" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"/>
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rightInnerColumn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/rightOuterColumn"
+        android:orientation="vertical"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="#FFEBCD">
+
+        <Button style="@style/activity_game_button"
+            android:background="#FF8800" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"/>
+
+        <Button style="@style/activity_game_button" 
+            android:background="#CC0000"
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#CC0000"
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#669900" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#9933CC" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"/>
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="0dip"
+            android:layout_weight="1" >
+        </View>
+
+        <Button style="@style/activity_game_button"
+            android:background="#0099CC" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"/>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_toLeftOf="@+id/rightInnerColumn"
+        android:layout_toRightOf="@+id/leftInnerColumn"
+        android:orientation="vertical"
+        android:weightSum="20">
+        
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="18"
+            android:background="@drawable/puzzle_3by3" />
+        
+        <TextView
+            android:id="@+id/timer"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="00:00.000"
+            android:textColor="#FFFFFF"
+            android:textSize="28dp" />
+        
+    </LinearLayout>
+
+</RelativeLayout>

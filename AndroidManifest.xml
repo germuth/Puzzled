@@ -15,18 +15,21 @@
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         
         <activity
-            android:name="ca.germuth.puzzled.MainMenuActivity"
-            android:label="@string/app_name" >
+            android:name="SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity 
-            android:name="ca.germuth.puzzled.CubeSelectionActivity">
             
         </activity>
+        <activity
+            android:name="ca.germuth.puzzled.MainMenuActivity"
+            android:label="@string/app_name" />
+        <activity 
+            android:name="ca.germuth.puzzled.PuzzleSelectActivity"/>
+        <activity
+            android:name="ca.germuth.puzzled.GameActivity" />  
     </application>
 
 </manifest>

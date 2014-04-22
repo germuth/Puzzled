@@ -2,6 +2,8 @@ package ca.germuth.puzzled.puzzle;
 
 import java.util.ArrayList;
 
+import android.content.res.Resources;
+
 /**
  * Puzzle
  * 
@@ -11,6 +13,7 @@ public interface Puzzle {
 
 	// public abstract OpenGLFace getModel();
 
+	public abstract int getLayout();
 	/**
 	 * Checks whether the puzzle is currently in the 
 	 * solved state

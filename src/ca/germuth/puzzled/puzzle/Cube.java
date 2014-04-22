@@ -2,6 +2,7 @@ package ca.germuth.puzzled.puzzle;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import ca.germuth.puzzled.R;
 /**
  * Cube 
  * 
@@ -31,6 +32,8 @@ import java.util.ArrayList;
  */
 public class Cube implements Puzzle{
 
+	private static final int myLayout = R.layout.puzzle_cube;
+	
 	private int width;
 	private int height;
 	private int depth;
@@ -585,5 +588,10 @@ public class Cube implements Puzzle{
 		xTurn();
 		xTurn();
 		xTurn();
+	}
+
+	@Override
+	public int getLayout() {
+		return this.myLayout;
 	}
 }

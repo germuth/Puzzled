@@ -3,7 +3,17 @@ package ca.germuth.puzzled;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-
+/**
+ * Displays Puzzled splash screen and waits until logging in.
+ * Once the app actually has things to load, it will load here, rather
+ * than just make the user wait. Current list of things to do here:
+ * 
+ * 1 - Load Fonts
+ * 2 - Load openGL shaders and compile them
+ * 
+ * @author Germuth
+ *
+ */
 public class SplashScreenActivity extends PuzzledActivity{
 	private final int SPLASH_DISPLAY_LENGHT = 1000;
 

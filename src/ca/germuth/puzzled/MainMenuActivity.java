@@ -1,14 +1,13 @@
 package ca.germuth.puzzled;
 
-import java.util.ArrayList;
-
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import ca.germuth.puzzled.puzzle.Cube;
-import ca.germuth.puzzled.puzzle.PuzzleTurn;
+import ca.germuth.puzzled.util.FontManager;
 
 public class MainMenuActivity extends PuzzledActivity implements
 		OnClickListener {
@@ -25,7 +24,7 @@ public class MainMenuActivity extends PuzzledActivity implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.activity_main_menu_play_button:
-			Intent myIntent = new Intent(MainMenuActivity.this, CubeSelectionActivity.class);
+			Intent myIntent = new Intent(MainMenuActivity.this, PuzzleSelectActivity.class);
 			MainMenuActivity.this.startActivity(myIntent);
 			break;
 		case R.id.activity_main_menu_statistic_button:
@@ -45,11 +44,16 @@ public class MainMenuActivity extends PuzzledActivity implements
 	}
 
 	private void setUpButtons() {
+		Typeface agentOrange = FontManager.getTypeface(this, FontManager.AGENT_ORANGE_FONT);
 		LinearLayout ll = (LinearLayout) this
 				.findViewById(R.id.activity_main_menu_container);
 		for (int i = 0; i < ll.getChildCount(); i++) {
 			View child = ll.getChildAt(i);
-			child.setOnClickListener(this);
+			if( child instanceof Button){
+				Button btn = (Button) child;
+				btn.setOnClickListener(this);
+				btn.setTypeface(agentOrange);
+			}
 		}
 	}
 }
