@@ -1,10 +1,10 @@
 package ca.germuth.puzzled.puzzle.minx;
 
-import ca.germuth.puzzled.puzzle.Colour;
+import ca.germuth.puzzled.puzzle.Tile;
 import ca.germuth.puzzled.puzzle.PuzzleFace;
 
 public class MinxFace implements PuzzleFace{
-	private Colour center;
+	private Tile center;
 	/**
 	 * Array of edges in clockwise fashion. Slighly
 	 * right-most one is first.

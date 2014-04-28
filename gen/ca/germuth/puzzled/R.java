@@ -86,6 +86,8 @@ containing a value of this type.
     }
     public static final class id {
         public static final int activity_game_container=0x7f04000c;
+        public static final int activity_game_gl_surface_view=0x7f040011;
+        public static final int activity_game_timer=0x7f040012;
         public static final int activity_main_menu_achievement_button=0x7f040005;
         public static final int activity_main_menu_container=0x7f040001;
         public static final int activity_main_menu_leaderboard_button=0x7f040004;
@@ -102,7 +104,6 @@ containing a value of this type.
         public static final int leftOuterColumn=0x7f04000d;
         public static final int rightInnerColumn=0x7f040010;
         public static final int rightOuterColumn=0x7f04000f;
-        public static final int timer=0x7f040011;
     }
     public static final class layout {
         public static final int activity_main_menu=0x7f030000;

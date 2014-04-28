@@ -1,6 +1,8 @@
 package ca.germuth.puzzled.openGL;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -11,14 +13,22 @@ import android.opengl.Matrix;
 import android.os.SystemClock;
 import android.util.Log;
 import ca.germuth.puzzled.openGL.shapes.Shape;
-import ca.germuth.puzzled.openGL.shapes.Square;
-import ca.germuth.puzzled.puzzle.Colour;
 import ca.germuth.puzzled.puzzle.Puzzle;
+import ca.germuth.puzzled.puzzle.Tile;
 
-/**
+/**O
+ * Renderer
+ * 
+ * Physically uses openGL to draw colored triangles on the screen.
+ * Triangles are specified by an array of floating point numbers for
+ * x, y, and z coordinates. Coordinates are stored in ByteBuffer
+ * for maximum efficiency
+ * 
  * Vertex Shader - OpenGL ES graphics code for rendering the vertices of a
- * shape. Fragment Shader - OpenGL ES code for rendering the face of a shape
- * with colors or textures. Program - An OpenGL ES object that contains the
+ * shape. 
+ * Fragment Shader - OpenGL ES code for rendering the face of a shape
+ * with colors or textures. 
+ * Program - An OpenGL ES object that contains the
  * shaders you want to use for drawing one or more shapes.
  * 
  * @author Administrator
@@ -31,9 +41,30 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	private static final boolean spin = false;
 	private static final boolean fortyFive = true;
 
+	/**
+	 * Matrix which combines the effects of the Projection
+	 * and View matrix. 
+	 * MVP = Model View Projection matrix i think
+	 */
 	private final float[] mMVPMatrix = new float[16];
+	/**
+	 * Projection matrix is used to adjust the coordinate of drawn objects
+	 * based on the width and height of the GLSUrfaceView.
+	 * This means drawn objects have the same relative size
+	 * independant of teh GLSurfaceView's size
+	 * Only established/changed in onSurfaceChanged()
+	 */
 	private final float[] mProjMatrix = new float[16];
+	/**
+	 * View Matrix is used to simulate a camera. It Does
+	 * this by adjusting coordinate of drawn objects to
+	 * perspective of a camera
+	 */
 	private final float[] mVMatrix = new float[16];
+	/**
+	 * Another transformation matrix to rotate objects. Can 
+	 * be combined with the projection and view matrix
+	 */
 	private final float[] mRotationMatrix = new float[16];
 
 	private ArrayList<Shape> myFaces;
@@ -44,11 +75,25 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	public volatile float mYAngle;
 
 	public Puzzle mPuzzle;
+	/**
+	 * Queue of puzzle turns that need to be rendered by renderer. 
+	 * This queue is volatile since two threads access/update it
+	 * Each puzzle turn consits of an array of individual tiles that
+	 * need to be animated turning. 
+	 */
+	public volatile Queue<ArrayList<Tile>> changedTiles;
 
 	public MyRenderer(Puzzle p){
 		this.mPuzzle = p;
+		this.changedTiles = new LinkedList<ArrayList<Tile>>();
 	}
-
+	
+	/**
+	 * Called once when rendered is first created.
+	 * Should initialize all shapse here like:
+	 * Triangle t = new Triangle()
+	 * Square s = new Square
+	 */
 	@Override
 	public void onSurfaceCreated(GL10 unused, EGLConfig config) {
 
@@ -78,25 +123,28 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	    // Set the view matrix. This matrix can be said to represent the camera position.
 	    Matrix.setLookAtM(mVMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
 
-	    this.myFaces = mPuzzle.drawPuzzle();
+	    this.myFaces = mPuzzle.createPuzzleModel();
 	}
 	
+//	/**
+//	 * Takes bottom left corner of bottom left face
+//	 * @param bl
+//	 */
+//	private void updateColours(ArrayList<Square> face, Colour[][] side){
+//
+//		int k = 0;
+//		for(int i = 0; i < side.length; i++){
+//			for(int j = 0; j < side[i].length; j++){
+//				Square current = face.get(k);
+//				k++;
+//				current.setmColour( colourToGLColour( side[i][j] ) );
+//			}
+//		}
+//	}
+
 	/**
-	 * Takes bottom left corner of bottom left face
-	 * @param bl
+	 * Called for each redraw of a frame
 	 */
-	private void drawFace(ArrayList<Square> face, Colour[][] side){
-
-		int k = 0;
-		for(int i = 0; i < side.length; i++){
-			for(int j = 0; j < side[i].length; j++){
-				Square current = face.get(k);
-				k++;
-				current.setmColour( colourToGLColour( side[i][j] ) );
-			}
-		}
-	}
-
 	@Override
 	public void onDrawFrame(GL10 unused) {
 
@@ -104,13 +152,15 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		// Draw background color
 		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
-		drawFace( this.mTop, this.mCube.getTop() );
-		drawFace( this.mFront, this.mCube.getFront() );
-		drawFace( this.mBottom, this.mCube.getBottom() );
-		drawFace( this.mBack, this.mCube.getBack() );
-		drawFace( this.mLeft, this.mCube.getLeft() );
-		drawFace( this.mRight, this.mCube.getRight() );
+//		updateColours( this.mTop, this.mCube.getTop() );
+//		updateColours( this.mFront, this.mCube.getFront() );
+//		updateColours( this.mBottom, this.mCube.getBottom() );
+//		updateColours( this.mBack, this.mCube.getBack() );
+//		updateColours( this.mLeft, this.mCube.getLeft() );
+//		updateColours( this.mRight, this.mCube.getRight() );
 
+		// Combine the projection matrix (objects look good on any screen)
+		// and the View Matrix (simulate a camera) into the MVP Matrix
 		// Calculate the projection and view transformation
 		Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
 
@@ -118,7 +168,9 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 			float angleInDegrees = 45f;
 
 			// Draw the triangle facing straight on.
+			//clear rotation matrix from whatever is was before to identity matrix
 			Matrix.setIdentityM(mRotationMatrix, 0);
+			//set rotation matrix to specified rotation
 			Matrix.setRotateM(mRotationMatrix, 0, angleInDegrees, -1.0f, 0.0f,
 					.0f);
 
@@ -144,12 +196,19 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 			Matrix.multiplyMM(mMVPMatrix, 0, mRotationMatrix, 0, mMVPMatrix, 0);
 		}
 
-
+		/**
+		 * Need to iterate over shapes i want to rotate and give them just mMVP matrix with rotatiod added
+		 * then iterate over every other shape and give them normal mMVP matrix
+		 */
 		for(int i = 0; i < this.myFaces.size(); i++){
 			this.myFaces.get(i).draw(mMVPMatrix);
 		}
 	}
 
+	/**
+	 * Called if geometry of view changes, like turning device from
+	 * portriat to landscape
+	 */
 	@Override
 	public void onSurfaceChanged(GL10 unused, int width, int height) {
 		// Adjust the viewport based on geometry changes,
@@ -166,7 +225,8 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	    final float near = 0.5f;
 	    final float far = 1.5f;
 
-	    //Matrix.frustumM(mProjMatrix, 0, -0.6f, 0.6f, -0.7f, 0.7f, near, far);
+	    //populates projection Matrix with appropriate values based on view 
+	    //size and desired frustrum
 	    Matrix.frustumM(mProjMatrix, 0, -ratio, ratio, -1f, 1f, 1.9f, 100.5f);
 	}
 

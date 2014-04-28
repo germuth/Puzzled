@@ -13,9 +13,6 @@ import ca.germuth.puzzled.openGL.shapes.Shape;
  */
 public interface Puzzle {
 
-	abstract ArrayList<Shape> drawPuzzle();
-
-	// abstract int getLayout();
 	/**
 	 * Checks whether the puzzle is currently in the solved state
 	 * 
@@ -29,11 +26,32 @@ public interface Puzzle {
 	abstract void setSolved();
 
 	/**
-	 * Returns a list of the changed tiles that have changed in the last
-	 * rotation performed on the cube. This is used to know which pieces to
-	 * animate turning
+	 * Returns all of the changed tiles since the last call
+	 * to moveFinished(); 
+	 * @return
 	 */
-	abstract ArrayList<ChangedTile> getChangedTiles();
+	abstract ArrayList<Tile> getChangedTiles();
+
+	/**
+	 * Tells the cube that the current move is finished and to clear 
+	 * its current record of stored changed tiles
+	 */
+	abstract void moveFinished();
+	
+	/**
+	 * Returns an arraylist of shapes for drawing this puzzle in openGL
+	 * @return
+	 */
+	abstract ArrayList<Shape> createPuzzleModel();
+	
+	/**
+	 * Given a tile of the puzzle, returns the openGL shape for 
+	 * that tile.
+	 * This method can't be used until createPuzzleModel() is called
+	 * @param colour
+	 * @return
+	 */
+	abstract Shape getTileFor(Tile colour);
 
 	/**
 	 * Returns an array of possible puzzle turn objects. The GUI can use this to

@@ -2,9 +2,11 @@ package ca.germuth.puzzled.puzzle.minx;
 
 import java.util.ArrayList;
 
+import ca.germuth.puzzled.openGL.shapes.Shape;
 import ca.germuth.puzzled.puzzle.ChangedTile;
 import ca.germuth.puzzled.puzzle.Puzzle;
 import ca.germuth.puzzled.puzzle.PuzzleTurn;
+import ca.germuth.puzzled.puzzle.Tile;
 
 public class Minx implements Puzzle{
 	//TODO add megaminx layout
@@ -47,13 +49,7 @@ public class Minx implements Puzzle{
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public ArrayList<ChangedTile> getChangedTiles() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public ArrayList<PuzzleTurn> getAllMoves() {
 		// TODO Auto-generated method stub
@@ -62,6 +58,30 @@ public class Minx implements Puzzle{
 
 	@Override
 	public ArrayList<PuzzleTurn> getAllRotationMoves() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void moveFinished() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<Shape> createPuzzleModel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Shape getTileFor(Tile colour) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Tile> getChangedTiles() {
 		// TODO Auto-generated method stub
 		return null;
 	}

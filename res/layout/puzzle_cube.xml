@@ -213,14 +213,14 @@
         android:orientation="vertical"
         android:weightSum="20">
         
-        <ImageView
+        <MyGLSurfaceView
+            android:id="@+id/activity_game_gl_surface_view"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="18"
-            android:background="@drawable/puzzle_3by3" />
+            android:layout_weight="18" />
         
         <TextView
-            android:id="@+id/timer"
+            android:id="@+id/activity_game_timer"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"

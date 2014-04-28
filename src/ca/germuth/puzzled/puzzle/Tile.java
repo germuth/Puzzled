@@ -1,21 +1,26 @@
 package ca.germuth.puzzled.puzzle;
 /**
- * Represents an RGBA colour where
+ * Represents a Tile of a puzzle. Each tile has 
+ * an RGBA colour where
  * R = red
  * G = green
  * B = blue
  * A = alpha
  * 
  * Each value must be inbetween (inclusive) 0 and 255
+ * 
+ * For this purposes of this program, every tile object is unique, 
+ * so the default object.equals() and object.hashCode() should be 
+ * perfect, since they will all hash to different locations.
  * @author Germuth
  */
-public class Colour {
+public class Tile {
 	private int red;
 	private int green;
 	private int blue;
 	private int alpha;
 	
-	public Colour(int red, int green, int blue, int alpha){
+	public Tile(int red, int green, int blue, int alpha){
 		assert(red >= 0 && red <= 255);
 		assert(green >= 0 && green <= 255);
 		assert(blue >= 0 && blue <= 255);
@@ -58,6 +63,5 @@ public class Colour {
 	public void setAlpha(int alpha) {
 		this.alpha = alpha;
 	}
-	
-	
+
 }

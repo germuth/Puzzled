@@ -6,20 +6,31 @@ import java.util.ArrayList;
 
 import ca.germuth.puzzled.openGL.GLColour;
 import ca.germuth.puzzled.openGL.GLVertex;
+import ca.germuth.puzzled.puzzle.Tile;
 
 public abstract class Shape {
+	/**
+	 * Used with MyRenederer.loadShader to compile and load this shader
+	 */
 	protected final String vertexShaderCode =
 	// This matrix member variable provides a hook to manipulate
 	// the coordinates of the objects that use this vertex shader
 	"uniform mat4 uMVPMatrix;" +
-
-	"attribute vec4 vPosition;" + "void main() {" +
+	"attribute vec4 vPosition;" + 
+	"void main() {" +
 	// the matrix must be included as a modifier of gl_Position
-			"  gl_Position = vPosition * uMVPMatrix;" + "}";
+			"  gl_Position = vPosition * uMVPMatrix;" +
+	"}";
 
-	protected final String fragmentShaderCode = "precision mediump float;"
-			+ "uniform vec4 vColor;" + "void main() {"
-			+ "  gl_FragColor = vColor;" + "}";
+	/**
+	 * Also used with loadShaper to compile/load
+	 */
+	protected final String fragmentShaderCode = 
+			"precision mediump float;" + 
+			"uniform vec4 vColor;" + 
+			"void main() {"
+			+ "  gl_FragColor = vColor;" + 
+			"}";
 
 	protected FloatBuffer vertexBuffer;
 	protected ShortBuffer drawListBuffer;
@@ -42,6 +53,12 @@ public abstract class Shape {
 	
 	public abstract void finalize();
 	
+	/**
+	 * Draw the species shape. Takes in the Model View Projection matrix. 
+	 * Shape defines list of coordinates, which are modified by above matrix
+	 * to account for different screen sizes (projection) and a camera position (view)
+	 * @param mvpMatrix
+	 */
 	public abstract void draw(float[] mvpMatrix);
 	
 	protected float[] getCoords(){
@@ -93,6 +110,17 @@ public abstract class Shape {
 			s.finalize();
 		}
 	}
+	
+	public static GLColour colourToGLColour( Tile c){
+		float one = 1f;
+		float half = 0.5f;
+
+		float red = ((float)c.getRed()) / 255f;
+		float blue = ((float)c.getGreen()) / 255f;
+		float green = ((float)c.getBlue()) / 255f;
+		return new GLColour( red, blue ,green);
+	}
+
 
 	/**
 	 * @return the mColour

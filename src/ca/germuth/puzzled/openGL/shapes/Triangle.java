@@ -10,6 +10,8 @@ import ca.germuth.puzzled.openGL.MyRenderer;
 
 public class Triangle extends Shape {
 
+	//drawing order important because it defines
+	//which face of triangle is the front face
 	private final short drawOrder[] = { 0, 1, 2 };
 
 	// Set color with red, green, blue and alpha (opacity) values
@@ -22,19 +24,27 @@ public class Triangle extends Shape {
 		this.verticies.add(bottomLeft);
 		this.verticies.add(bottomRight);
 	}
-
+	
+	/**
+	 * Compile ES Shaders and add to OpenGL ES Program object and link program.
+	 * Should only be called once!
+	 */
 	public void finalize() {
 		float[] triangleCoords = getCoords();
 		
-		// initialize vertex byte buffer for shape coordinates
+		//verticies are passed to openGL in ByteBuffer because it 
+		// is more efficenct
+		//so grab all of the triangles verticies, and place in byteBuffer
+		
+		// initialize vertex byte buffer for shape coordinate
+		//size is num verticies * num coordinates (x, y and z) * 4 bytes per float
 		ByteBuffer bb = ByteBuffer.allocateDirect(
-		// (number of coordinate values * 4 bytes per float)
 				this.verticies.size() * 3 * 4);
 		// use the device hardware's native byte order
 		bb.order(ByteOrder.nativeOrder());
 
 		// create a floating point buffer from the ByteBuffer
-		super.vertexBuffer = bb.asFloatBuffer();
+		vertexBuffer = bb.asFloatBuffer();
 		// add the coordinates to the FloatBuffer
 		vertexBuffer.put(triangleCoords);
 		// set the buffer to read the first coordinate
@@ -53,7 +63,11 @@ public class Triangle extends Shape {
 															// shader to program
 		GLES20.glLinkProgram(mProgram); // create OpenGL program executables
 	}
-
+	/**
+	 * Draw the species shape. Takes in the Model View Projection matrix. 
+	 * Shape defines list of coordinates, which are modified by above matrix
+	 * to account for different screen sizes (projection) and a camera position (view)
+	 */
 	public void draw(float[] mvpMatrix) {
 		// Add program to OpenGL environment
 		GLES20.glUseProgram(mProgram);

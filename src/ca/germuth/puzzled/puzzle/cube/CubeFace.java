@@ -1,14 +1,14 @@
 package ca.germuth.puzzled.puzzle.cube;
 
-import ca.germuth.puzzled.puzzle.Colour;
+import ca.germuth.puzzled.puzzle.Tile;
 import ca.germuth.puzzled.puzzle.PuzzleFace;
 
 public class CubeFace implements PuzzleFace{
-	protected Colour[][] mFace;
-	protected Colour mSolvedColour;
+	protected Tile[][] mFace;
+	protected Tile mSolvedColour;
 	
-	public CubeFace(int rows, int columns, Colour colour){
-		mFace = new Colour[rows][columns];
+	public CubeFace(int rows, int columns, Tile colour){
+		mFace = new Tile[rows][columns];
 		mSolvedColour = colour;
 		
 		setSolved();

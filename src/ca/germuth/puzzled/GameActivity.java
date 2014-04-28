@@ -1,8 +1,5 @@
 package ca.germuth.puzzled;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -10,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import ca.germuth.puzzled.openGL.MyGLSurfaceView;
 import ca.germuth.puzzled.puzzle.Puzzle;
 import ca.germuth.puzzled.puzzle.cube.Cube;
 import ca.germuth.puzzled.util.FontManager;
@@ -36,10 +34,11 @@ public class GameActivity extends PuzzledActivity {
 		mPuzzle = new Cube(3, 3, 3);
 		this.setContentView(Cube.getLayout());
 		
-		TextView timer = (TextView) this.findViewById(R.id.timer);
+		TextView timer = (TextView) this.findViewById(R.id.activity_game_timer);
 		timer.setTypeface( FontManager.getTypeface(this, FontManager.AGENT_ORANGE_FONT));
 		
-		OnClickListener listener = new PuzzleMoveListener(this.mPuzzle);
+		MyGLSurfaceView glView = (MyGLSurfaceView) this.findViewById(R.id.activity_game_gl_surface_view);
+		OnClickListener listener = new PuzzleMoveListener(this.mPuzzle, glView);
 		
 		ViewGroup container = (ViewGroup) this.findViewById(R.id.activity_game_container);
 		for(int i = 0; i < container.getChildCount(); i++){

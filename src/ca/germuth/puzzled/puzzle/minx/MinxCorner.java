@@ -1,7 +1,7 @@
 package ca.germuth.puzzled.puzzle.minx;
 
-import ca.germuth.puzzled.puzzle.Colour;
+import ca.germuth.puzzled.puzzle.Tile;
 
 public class MinxCorner {
-	private Colour[][] corner;
+	private Tile[][] corner;
 }
