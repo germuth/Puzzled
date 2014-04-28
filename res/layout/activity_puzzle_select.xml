@@ -2,24 +2,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/shitty_cube_selection_screen" >
+    android:background="@drawable/shitty_cube_selection_screen"
+    android:orientation="vertical" >
 
     <at.technikum.mti.fancycoverflow.FancyCoverFlow
         android:id="@+id/activity_puzzle_selection_fcf"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
+        android:layout_height="fill_parent"
         android:layout_alignParentTop="true" />
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:padding="10dp"
-        android:weightSum="3">
-        
+        android:weightSum="3" >
+
         <Button
             android:id="@+id/activity_puzzle_select_back_button"
             style="@style/activity_puzzle_selection_button"
@@ -37,7 +36,6 @@
             style="@style/activity_puzzle_selection_button"
             android:background="#99CC00"
             android:text="@string/activity_puzzle_select_go_button" />
-        
     </LinearLayout>
 
 </RelativeLayout>

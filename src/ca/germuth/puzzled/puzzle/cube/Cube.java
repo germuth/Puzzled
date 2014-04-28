@@ -1,8 +1,16 @@
-package ca.germuth.puzzled.puzzle;
+package ca.germuth.puzzled.puzzle.cube;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Locale;
+
 import ca.germuth.puzzled.R;
+import ca.germuth.puzzled.openGL.shapes.Shape;
+import ca.germuth.puzzled.openGL.shapes.Square;
+import ca.germuth.puzzled.puzzle.ChangedTile;
+import ca.germuth.puzzled.puzzle.Colour;
+import ca.germuth.puzzled.puzzle.Puzzle;
+import ca.germuth.puzzled.puzzle.PuzzleTurn;
 /**
  * Cube 
  * 
@@ -61,37 +69,6 @@ public class Cube implements Puzzle{
 		this.right = new CubeFace(depth, height, new Colour(255, 0, 0, 0)); 
 		this.down = new CubeFace(depth, width, new Colour(255, 255, 0, 0)); 
 		this.back = new CubeFace(height, width, new Colour(0, 0, 255, 0));
-	}
-	
-	public class CubeFace implements PuzzleFace{
-		private Colour[][] mFace;
-		private Colour mSolvedColour;
-		
-		public CubeFace(int rows, int columns, Colour colour){
-			mFace = new Colour[rows][columns];
-			mSolvedColour = colour;
-			
-			setSolved();
-		}
-		
-		public boolean isSolved(){
-			for(int i = 0; i < mFace.length; i++){
-				for(int j = 0; j < mFace[i].length; j++){
-					if( ! this.mFace[i][j].equals( this.mFace[0][0] )){
-						return false;
-					}
-				}
-			}
-			return true;
-		}
-		
-		public void setSolved(){
-			for(int i = 0; i < mFace.length; i++){
-				for(int j = 0; j < mFace[i].length; j++){
-					mFace[i][j] = mSolvedColour;
-				}
-			}
-		}
 	}
 	
 	@Override
@@ -417,7 +394,7 @@ public class Cube implements Puzzle{
 
 				char firstChar = current.getmName().charAt(0);
 				if ( Character.isDigit(firstChar)) {
-					String newName = current.getmName().toLowerCase();
+					String newName = current.getmName().toLowerCase(Locale.US);
 					if( firstChar == '2'){
 						newName = newName.substring(1);
 					}
@@ -589,9 +566,96 @@ public class Cube implements Puzzle{
 		xTurn();
 		xTurn();
 	}
+	
+	public static int getLayout(){
+		return myLayout;
+	}
 
 	@Override
-	public int getLayout() {
-		return this.myLayout;
+	public ArrayList<Shape> drawPuzzle() {
+		ArrayList<Shape> myFaces = new ArrayList<Shape>();
+		
+		ArrayList<Square> topF = drawFace(top);
+		Square.finalizeAll(mTop);
+		myFaces.addAll(topF);
+
+		ArrayList<Square> frontF = drawFace(this.mCube.getFront());
+		Square.rotateAll(mFront, 'X', (float) Math.PI / 2);
+		Square.finalizeAll(mFront);
+		myFaces.addAll(frontF);
+
+		mBack = drawFace(this.mCube.getBack());
+		Square.rotateAll(mBack, 'X', (float) -Math.PI / 2);
+		Square.finalizeAll(mBack);
+		myFaces.addAll(mBack);
+
+		mLeft = drawFace(this.mCube.getLeft());
+		Square.rotateAll(mLeft, 'Z', (float) (Math.PI / 2));
+		Square.finalizeAll(mLeft);
+		myFaces.addAll(mLeft);
+
+		mRight = drawFace(this.mCube.getRight());
+		Square.rotateAll(mRight, 'Z', (float) -(Math.PI / 2));
+		Square.finalizeAll(mRight);
+		myFaces.addAll(mRight);
+
+		//bottom can't be rotated while preserving orientation
+		//must translate directly down
+		//this might not be true somehow
+		//definetly not true somehow
+	  	mBottom = drawFace(this.mCube.getBottom());
+		//Square.translateAll(mBottom, 'Y', -1.40);
+	  	Square.rotateAll(mBottom, 'X', (float) (Math.PI ));
+		Square.finalizeAll(mBottom);
+		myFaces.addAll(mBottom);
+		
+		return null;
+	}
+	
+	private ArrayList<Square> drawFace( CubeFace side ){
+		ArrayList<Square> face = new ArrayList<Square>();
+
+		int cubeSize = this.mCube.getSize(); 
+
+		float faceLength = 120f / cubeSize;
+		faceLength /= 100;
+		float spaceLength = 20f / ( cubeSize + 1 );
+		spaceLength /= 100;
+		final float height = 0.70f;
+
+		float topCornerX = -0.70f;
+		float topCornerZ = -0.70f;
+
+		topCornerX += spaceLength;
+		topCornerZ += spaceLength;
+
+		float currentTopRightX = topCornerX;
+		float currentTopRightZ = topCornerZ;
+
+		//iterate down
+		for(int i = 0; i < cubeSize; i++){
+			//reset top right coordinates after each row
+			currentTopRightX = topCornerX;
+
+			//iterate across
+			for(int j = 0; j < cubeSize; j++){
+
+				//make face
+				Square current = new Square(
+						new GLVertex( currentTopRightX,              height, currentTopRightZ ), 
+						new GLVertex( currentTopRightX,              height, currentTopRightZ + faceLength ), 
+						new GLVertex( currentTopRightX + faceLength, height, currentTopRightZ + faceLength), 
+						new GLVertex( currentTopRightX + faceLength, height, currentTopRightZ ) );
+				current.setmColour( colourToGLColour(side[0][0]) );
+				face.add( current );
+
+				currentTopRightX += faceLength + spaceLength;
+			}
+
+			//once we finish a row, we need to move down to next row
+			currentTopRightZ += faceLength + spaceLength;
+		}
+
+		return face;
 	}
 }

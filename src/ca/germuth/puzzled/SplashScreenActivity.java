@@ -10,6 +10,10 @@ import android.os.Handler;
  * 
  * 1 - Load Fonts
  * 2 - Load openGL shaders and compile them
+ * 3 - Create Database if not created
+ * 4 - Get reference to database application wide?
+ * 5 - Generically get all subclasses of puzzle, store in application
+ * 6 - Load up music files and music players
  * 
  * @author Germuth
  *

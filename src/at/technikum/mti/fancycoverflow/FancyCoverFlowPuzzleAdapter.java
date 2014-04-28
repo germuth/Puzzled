@@ -1,22 +1,29 @@
 package at.technikum.mti.fancycoverflow;
 
-import android.content.Context;
+import java.util.ArrayList;
+
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import ca.germuth.puzzled.R;
+import ca.germuth.puzzled.PuzzleSelectActivity;
+import ca.germuth.puzzled.puzzle.Puzzle;
 
 public class FancyCoverFlowPuzzleAdapter extends FancyCoverFlowAdapter{
 
-	public FancyCoverFlowPuzzleAdapter(){
+	public FancyCoverFlowPuzzleAdapter(PuzzleSelectActivity ac, ArrayList<Integer> images){
 		super();
+		this.activity = ac;
+		this.images = images;
 	}
 	// =============================================================================
 	// Private members
 	// =============================================================================
 
-	private int[] images = { R.drawable.puzzle_3by3, R.drawable.puzzle_3by3,
-			R.drawable.puzzle_3by3, R.drawable.puzzle_3by3};
+	//private int[] images = { R.drawable.puzzle_3by3, R.drawable.puzzle_3by3,
+	//		R.drawable.puzzle_3by3, R.drawable.puzzle_3by3};
+	private PuzzleSelectActivity activity;
+	private ArrayList<Integer> images;
 
 	// =============================================================================
 	// Supertype overrides
@@ -24,12 +31,12 @@ public class FancyCoverFlowPuzzleAdapter extends FancyCoverFlowAdapter{
 
 	@Override
 	public int getCount() {
-		return images.length;
+		return images.size();
 	}
 
 	@Override
 	public Integer getItem(int i) {
-		return images[i];
+		return images.get(i);
 	}
 
 	@Override
@@ -38,7 +45,7 @@ public class FancyCoverFlowPuzzleAdapter extends FancyCoverFlowAdapter{
 	}
 
 	@Override
-	public View getCoverFlowItem(int i, View reuseableView, ViewGroup viewGroup) {
+	public View getCoverFlowItem(final int i, View reuseableView, ViewGroup viewGroup) {
 		ImageView imageView = null;
 
 		if (reuseableView != null) {
@@ -52,6 +59,13 @@ public class FancyCoverFlowPuzzleAdapter extends FancyCoverFlowAdapter{
 		}
 
 		imageView.setImageResource(this.getItem(i));
+		imageView.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				activity.puzzleSelected(i);
+			}
+		});
 		return imageView;
 	}
+	
 }
