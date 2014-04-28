@@ -1,19 +1,19 @@
 package ca.germuth.puzzled.openGL;
 
-import java.nio.IntBuffer;
 import java.util.ArrayList;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-
-
-
-import ca.germuth.puzzled.openGL.shapes.Shape;
-import ca.germuth.puzzled.puzzle.Puzzle;
-import android.opengl.*;
+import android.opengl.GLES20;
+import android.opengl.GLSurfaceView;
+import android.opengl.Matrix;
 import android.os.SystemClock;
 import android.util.Log;
+import ca.germuth.puzzled.openGL.shapes.Shape;
+import ca.germuth.puzzled.openGL.shapes.Square;
+import ca.germuth.puzzled.puzzle.Colour;
+import ca.germuth.puzzled.puzzle.Puzzle;
 
 /**
  * Vertex Shader - OpenGL ES graphics code for rendering the vertices of a

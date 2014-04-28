@@ -579,7 +579,7 @@ public class Cube implements Puzzle{
 		Square.finalizeAll(mTop);
 		myFaces.addAll(topF);
 
-		ArrayList<Square> frontF = drawFace(this.mCube.getFront());
+		ArrayList<Square> frontF = drawFace(front);
 		Square.rotateAll(mFront, 'X', (float) Math.PI / 2);
 		Square.finalizeAll(mFront);
 		myFaces.addAll(frontF);
