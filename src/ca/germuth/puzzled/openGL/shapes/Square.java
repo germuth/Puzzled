@@ -38,7 +38,7 @@ public class Square extends Shape {
 	 * Compile ES Shaders and add to OpenGL ES Program object and link program.
 	 * Should only be called once!
 	 */
-	public void finalize() {
+	public void finalizeShape() {
 
 		float[] squareCoords = getCoords();
 
@@ -90,7 +90,7 @@ public class Square extends Shape {
 		// Enable a handle to the triangle vertices
 		GLES20.glEnableVertexAttribArray(mPositionHandle);
 
-		// Prepare the triangle coordinate data
+		// Prepare the coordinate data
 		GLES20.glVertexAttribPointer(mPositionHandle, COORDS_PER_VERTEX,
 				GLES20.GL_FLOAT, false, vertexStride, vertexBuffer);
 
@@ -120,4 +120,10 @@ public class Square extends Shape {
 		// Disable vertex array
 		GLES20.glDisableVertexAttribArray(mPositionHandle);
 	}
+
+	@Override
+	public String toString() {
+		return "Sqr: " + this.verticies.toString();
+	}
+	
 }

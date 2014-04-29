@@ -51,7 +51,7 @@ public interface Puzzle {
 	 * @param colour
 	 * @return
 	 */
-	abstract Shape getTileFor(Tile colour);
+	abstract Shape getShapeFor(Tile tile);
 
 	/**
 	 * Returns an array of possible puzzle turn objects. The GUI can use this to

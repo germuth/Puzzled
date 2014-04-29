@@ -1,4 +1,7 @@
 package ca.germuth.puzzled.puzzle;
+
+import java.util.Random;
+
 /**
  * Represents a Tile of a puzzle. Each tile has 
  * an RGBA colour where
@@ -20,6 +23,8 @@ public class Tile {
 	private int blue;
 	private int alpha;
 	
+	private int test;
+	
 	public Tile(int red, int green, int blue, int alpha){
 		assert(red >= 0 && red <= 255);
 		assert(green >= 0 && green <= 255);
@@ -30,6 +35,29 @@ public class Tile {
 		this.green = green;
 		this.blue = blue;
 		this.alpha = alpha;
+		
+		test = new Random(Integer.MAX_VALUE).nextInt();
+	}
+	
+	
+	//TODO make proper
+	@Override
+	public boolean equals(Object o) {
+		return false;
+	}
+
+
+	//TODO make proper
+	@Override
+	public int hashCode() {
+		Random r = new Random(Integer.MAX_VALUE);
+		return r.nextInt();
+	}
+
+	@Override
+	public String toString() {
+		return "Tile: " + this.red + ", " + this.green + 
+				", " + this.blue + ": " + test;
 	}
 
 	public int getRed() {

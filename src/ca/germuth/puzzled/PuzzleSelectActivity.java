@@ -107,12 +107,12 @@ public class PuzzleSelectActivity extends PuzzledActivity implements OnClickList
 			try {
 				Class<?> current = allPuzzles.get(i);
 				
-				Method getImage = current.getMethod("getImage", (Class[])null);
-				int imageResource = (Integer)getImage.invoke(null, (Object)null); 
+				Method getImage = current.getMethod("getLayout", (Class[]) null);
+				int imageResource = (Integer)getImage.invoke(null, (Object[]) null); 
 				images.add(imageResource);
 				
 				Constructor<?> constr = current.getConstructors()[0];
-				Object o = constr.newInstance(Integer.valueOf(3));
+				Object o = constr.newInstance(Integer.valueOf(3), Integer.valueOf(3), Integer.valueOf(3));
 				puzzles.add((Puzzle)o);
 				
 			} catch (NoSuchMethodException e) {

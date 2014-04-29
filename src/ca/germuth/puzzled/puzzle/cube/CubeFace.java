@@ -1,7 +1,8 @@
 package ca.germuth.puzzled.puzzle.cube;
 
-import ca.germuth.puzzled.puzzle.Tile;
 import ca.germuth.puzzled.puzzle.PuzzleFace;
+import ca.germuth.puzzled.puzzle.Tile;
+
 
 public class CubeFace implements PuzzleFace{
 	protected Tile[][] mFace;
@@ -28,7 +29,9 @@ public class CubeFace implements PuzzleFace{
 	public void setSolved(){
 		for(int i = 0; i < mFace.length; i++){
 			for(int j = 0; j < mFace[i].length; j++){
-				mFace[i][j] = mSolvedColour;
+				mFace[i][j] = new Tile(mSolvedColour.getRed(),
+				mSolvedColour.getGreen(), mSolvedColour.getBlue(),
+				mSolvedColour.getAlpha());
 			}
 		}
 	}
