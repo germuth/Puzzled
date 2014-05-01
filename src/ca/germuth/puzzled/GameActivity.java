@@ -31,7 +31,7 @@ public class GameActivity extends PuzzledActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		mPuzzle = new Cube(3, 3, 3);
+		mPuzzle = new Cube(2, 2, 2);
 		this.setContentView(Cube.getLayout());
 		
 		TextView timer = (TextView) this.findViewById(R.id.activity_game_timer);

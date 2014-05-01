@@ -39,7 +39,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 
 	private static final String TAG = "MyGLRenderer";
 	//TODO make configureable
-	private static final int TURN_ANIMATION_TIME = 750;
+	private static final int TURN_ANIMATION_TIME = 2000;
 	
 	private static final boolean spin = false;
 	private static final boolean fortyFive = true;
@@ -167,11 +167,14 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 				this.currentAngle = 0f;
 				this.currentTurn = pendingMoves.poll();
 				
+				//get tiles from the positions in the array that change for each given turn
 				ArrayList<Tile> changed = currentTurn.getmChangedTiles();
 				
+				//covert each tile into the shape for it
 				//split myFaces into ones we are rotating and ones we are not
 				for(int i = 0; i < changed.size(); i++){
-					Shape sh = mPuzzle.getShapeFor( changed.get(i) );
+					//Shape sh = mPuzzle.getShapeFor( changed.get(i) );
+					Shape sh = changed.get(i).getmShape();
 					this.rotatingFaces.add(sh);
 				}
 				
@@ -198,10 +201,11 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 			
 			if( currentTime >= finalTime){
 				animating = false;
-				//THIS is either being called twice is contains duplicates
+
 				for(int i = 0; i < this.rotatingFaces.size(); i++){
 					Shape current = this.rotatingFaces.get(i);
-					//TODO why is this necessary
+					//TODO why is this necessary, I think you should abandon openGL rotation
+					//and just use our vertex rotations
 					float rotAngle = this.currentTurn.getmAngle();
 					if( rotAngle >= 0){
 						current.rotate(this.currentTurn.getAxis(), 
@@ -219,8 +223,8 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 				float net_time = finalTime - currentTime;
 				float fraction = net_time / (float)MyRenderer.TURN_ANIMATION_TIME;
 				angleToRotate = currentTurn.getmAngle() * (1.0f - fraction);
+				angleToRotate -= this.currentAngle;
 				
-				// Draw the triangle facing straight on.
 				Matrix.setIdentityM(mRotationMatrix, 0);
 				if(this.currentTurn.getAxis() == 'X'){
 					Matrix.setRotateM(mRotationMatrix, 0, angleToRotate, 1.0f, 0.0f,
@@ -240,6 +244,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 				
 				//draw all the rotating faces
 				for(Shape s : this.rotatingFaces){
+					s.rotate(this.currentTurn.getAxis(), (float)Math.toRadians(angleToRotate));
 					s.draw(mMVPMatrix);
 				}
 			}

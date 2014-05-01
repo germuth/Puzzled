@@ -37,8 +37,10 @@ public class PuzzleTurn {
 	/**
 	 * A list of the changed tiles used to animate the correct
 	 * pieces for that turn
+	 * 
+	 * probably accessed from multiple threads
 	 */
-	private ArrayList<Tile> mChangedTiles;
+	private volatile ArrayList<Tile> mChangedTiles;
 	/**
 	 * The amount of rotation in radians that the puzzle
 	 * turn encompasses. For example, every turn on the 3x3

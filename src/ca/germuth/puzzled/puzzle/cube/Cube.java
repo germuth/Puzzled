@@ -702,7 +702,8 @@ public class Cube implements Puzzle {
 		for(int i = 0; i < side.mFace.length; i++){
 			for(int j = 0; j < side.mFace[i].length; j++){
 				int index = i * side.mFace[i].length + j;
-				this.tileToShape.put(side.mFace[i][j], face.get(index));
+				side.mFace[i][j].setmShape(face.get(index));
+				//this.tileToShape.put(side.mFace[i][j], face.get(index));
 			}
 		}
 
@@ -723,4 +724,54 @@ public class Cube implements Puzzle {
 	public Shape getShapeFor(Tile tile) {
 		return this.tileToShape.get(tile);
 	}
+
+	public CubeFace getTop() {
+		return top;
+	}
+
+	public void setTop(CubeFace top) {
+		this.top = top;
+	}
+
+	public CubeFace getFront() {
+		return front;
+	}
+
+	public void setFront(CubeFace front) {
+		this.front = front;
+	}
+
+	public CubeFace getLeft() {
+		return left;
+	}
+
+	public void setLeft(CubeFace left) {
+		this.left = left;
+	}
+
+	public CubeFace getRight() {
+		return right;
+	}
+
+	public void setRight(CubeFace right) {
+		this.right = right;
+	}
+
+	public CubeFace getDown() {
+		return down;
+	}
+
+	public void setDown(CubeFace down) {
+		this.down = down;
+	}
+
+	public CubeFace getBack() {
+		return back;
+	}
+
+	public void setBack(CubeFace back) {
+		this.back = back;
+	}
+	
+	
 }

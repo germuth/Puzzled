@@ -101,6 +101,13 @@ public class GLVertex {
 		this.y = y2;
 		this.z = z2;
 	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "(" + x + ", " + y + ", " + z +")";
+	}
 
 	/**
 	 * @return the x

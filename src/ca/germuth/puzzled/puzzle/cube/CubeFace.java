@@ -35,4 +35,14 @@ public class CubeFace implements PuzzleFace{
 			}
 		}
 	}
+
+	public Tile[][] getmFace() {
+		return mFace;
+	}
+
+	public void setmFace(Tile[][] mFace) {
+		this.mFace = mFace;
+	}
+	
+	
 }

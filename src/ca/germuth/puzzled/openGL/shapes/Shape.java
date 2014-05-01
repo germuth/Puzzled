@@ -88,7 +88,7 @@ public abstract class Shape {
 			current.rotate(axis, radians);
 		}	
 	}
-
+	
 	public void translate(char axis, double distance){
 		for(int i = 0; i < this.verticies.size(); i++){
 			this.verticies.get(i).translate(axis, distance);

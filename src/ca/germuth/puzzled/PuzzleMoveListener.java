@@ -4,12 +4,15 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import ca.germuth.puzzled.openGL.MyGLSurfaceView;
 import ca.germuth.puzzled.puzzle.Puzzle;
 import ca.germuth.puzzled.puzzle.PuzzleTurn;
+import ca.germuth.puzzled.puzzle.Tile;
+import ca.germuth.puzzled.puzzle.cube.Cube;
 
 public class PuzzleMoveListener implements OnClickListener{
 	private Puzzle mPuzzle;
@@ -54,7 +57,42 @@ public class PuzzleMoveListener implements OnClickListener{
 				}
 			}
 			match.setmChangedTiles(mPuzzle.getChangedTiles());
-			
+			//TODO debug why probs hash map is wrong
+//			for(int i = 0; i < match.getmChangedTiles().size(); i++){
+//				Tile t = match.getmChangedTiles().get(i);
+//				Log.w("DEBUG", t.toString());
+//				
+//				Tile[][] cf = ((Cube)mPuzzle).getTop().getmFace();
+//				Tile[][] dow = ((Cube)mPuzzle).getDown().getmFace();
+//				Tile[][] lef = ((Cube)mPuzzle).getLeft().getmFace();
+//				Tile[][] rig = ((Cube)mPuzzle).getRight().getmFace();
+//				Tile[][] fro = ((Cube)mPuzzle).getFront().getmFace();
+//				Tile[][] bac = ((Cube)mPuzzle).getBack().getmFace();
+//				
+//				for(int j = 0; j < cf.length; j++){
+//					for(int k = 0; k < cf[j].length; k++){
+//						if( cf[j][k] == t ){
+//							Log.w("DEBUG", "TOP (" + j + "," + k + ")");
+//						}
+//						else if( dow[j][k] == t ){
+//							Log.w("DEBUG", "DOWN (" + j + "," + k + ")");
+//						}
+//						else if( lef[j][k] == t ){
+//							Log.w("DEBUG", "LEF (" + j + "," + k + ")");
+//						}
+//						else if( rig[j][k] == t ){
+//							Log.w("DEBUG", "RIG (" + j + "," + k + ")");
+//						}
+//						else if( fro[j][k] == t ){
+//							Log.w("DEBUG", "FRO (" + j + "," + k + ")");
+//						}
+//						else if( bac[j][k] == t ){
+//							Log.w("DEBUG", "BAC (" + j + "," + k + ")");
+//						}
+//					}
+//				}
+//				Log.w("DEBUG", mPuzzle.getShapeFor(match.getmChangedTiles().get(i)).toString());
+//			}
 			mPuzzle.moveFinished();
 			//pass changed tiles from move to renderer
 			this.openGLView.addPuzzleTurn( match );

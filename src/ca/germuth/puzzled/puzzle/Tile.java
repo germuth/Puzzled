@@ -2,6 +2,8 @@ package ca.germuth.puzzled.puzzle;
 
 import java.util.Random;
 
+import ca.germuth.puzzled.openGL.shapes.Shape;
+
 /**
  * Represents a Tile of a puzzle. Each tile has 
  * an RGBA colour where
@@ -22,8 +24,10 @@ public class Tile {
 	private int green;
 	private int blue;
 	private int alpha;
+	private int mCount;
+	private Shape mShape;
 	
-	private int test;
+	private static int count = 0;
 	
 	public Tile(int red, int green, int blue, int alpha){
 		assert(red >= 0 && red <= 255);
@@ -35,16 +39,15 @@ public class Tile {
 		this.green = green;
 		this.blue = blue;
 		this.alpha = alpha;
-		
-		test = new Random(Integer.MAX_VALUE).nextInt();
+		this.mCount = count++;
 	}
 	
 	
 	//TODO make proper
-	@Override
-	public boolean equals(Object o) {
-		return false;
-	}
+//	@Override
+//	public boolean equals(Object o) {
+//		return false;
+//	}
 
 
 	//TODO make proper
@@ -56,8 +59,9 @@ public class Tile {
 
 	@Override
 	public String toString() {
-		return "Tile: " + this.red + ", " + this.green + 
-				", " + this.blue + ": " + test;
+		//return "Tile: " + this.red + ", " + this.green + 
+		//		", " + this.blue + ": " + this.mCount;
+		return "Tile: " + this.mCount;
 	}
 
 	public int getRed() {
@@ -91,5 +95,17 @@ public class Tile {
 	public void setAlpha(int alpha) {
 		this.alpha = alpha;
 	}
+
+
+	public Shape getmShape() {
+		return mShape;
+	}
+
+
+	public void setmShape(Shape mShape) {
+		this.mShape = mShape;
+	}
+	
+	
 
 }
