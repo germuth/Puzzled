@@ -51,13 +51,7 @@ public abstract class Shape {
 	 */
 	protected ArrayList<GLVertex> verticies;
 	
-	public abstract void finalizeShape();
-
-	public void refresh() {
-		float[] coords = getCoords();
-		vertexBuffer.put(coords);
-		vertexBuffer.position(0);
-	}
+	public abstract void finalize();
 	
 	/**
 	 * Draw the species shape. Takes in the Model View Projection matrix. 
@@ -113,7 +107,7 @@ public abstract class Shape {
 	public static void finalizeAll(ArrayList<Square> face){
 		for(int i = 0; i < face.size(); i++){
 			Square s = face.get(i);
-			s.finalizeShape();
+			s.finalize();
 		}
 	}
 	
@@ -127,13 +121,6 @@ public abstract class Shape {
 		return new GLColour( red, blue ,green);
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if(this.verticies.equals( ((Shape)o).verticies)){
-			return true;
-		}
-		return false;
-	}
 
 	/**
 	 * @return the mColour

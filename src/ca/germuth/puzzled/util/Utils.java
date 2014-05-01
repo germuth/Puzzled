@@ -1,9 +1,9 @@
 package ca.germuth.puzzled.util;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-
-import ca.germuth.puzzled.puzzle.cube.Cube;
-import ca.germuth.puzzled.puzzle.minx.Minx;
 
 public class Utils {
 	 /**
@@ -16,56 +16,52 @@ public class Utils {
      */
     public static ArrayList<Class<?>> getConcreteTypes(Class<?> c) {
 
-//        String p = c.getPackage().getName();
-//
-//        String p_path = p.replace('.', File.separatorChar);
-//        ArrayList<Class<?>> subclasses = new ArrayList<Class<?>>();
-//        int modifiers = c.getModifiers();
-//        String[] classpath = System.getProperty("java.class.path").split(File.pathSeparator);
-//        for (int i = 0; i < classpath.length; i++) {
-//            File directory = new File(classpath[i], p_path);
-//            File[] classfiles = directory.listFiles(new FileFilter() {
-//
-//                public boolean accept(File f) {
-//                    return f.getName().endsWith(".class");
-//                }
-//            });
-//            for (int j = 0; classfiles != null && j < classfiles.length; j++) {
-//                String classfile = classfiles[j].getName();
-//
-//                classfile = classfile.substring(0, classfile.length() - 6);
-//                Class<?> class_in_package;
-//                try {
-//                    class_in_package = Class.forName(p + '.' + classfile);
-//                } catch (ClassNotFoundException e) {
-//                    throw new IllegalStateException(
-//                            "Should not happen.");
-//                }
-//                if (c.isAssignableFrom(class_in_package)) {
-//                    modifiers = class_in_package.getModifiers();
-//                    if (!(Modifier.isInterface(modifiers)
-//                            || Modifier.isAbstract(modifiers))) {
-//
-//                        subclasses.add(class_in_package);
-//                    }
-//                }
-//            }
-//        }
-//        if (subclasses.isEmpty()) {
-//            // Try to add class passed.
-//            modifiers = c.getModifiers();
-//            if (!Modifier.isAbstract(modifiers) && !Modifier.isInterface(modifiers) && Modifier.isPublic(modifiers)) {
-//                subclasses.add(c);
-//            } else {
-//                throw new IllegalStateException(
-//                        "No concrete subclasses found for " + c.getName());
-//            }
-//        }
-//
-//        return subclasses;
-    	ArrayList<Class<?>> puzzles = new ArrayList<Class<?>>();
-    	puzzles.add(Cube.class);
-    	//puzzles.add(Minx.class);
-    	return puzzles;
+        String p = c.getPackage().getName();
+
+        String p_path = p.replace('.', File.separatorChar);
+        ArrayList<Class<?>> subclasses = new ArrayList<Class<?>>();
+        int modifiers = c.getModifiers();
+        String[] classpath = System.getProperty("java.class.path").split(File.pathSeparator);
+        for (int i = 0; i < classpath.length; i++) {
+            File directory = new File(classpath[i], p_path);
+            File[] classfiles = directory.listFiles(new FileFilter() {
+
+                public boolean accept(File f) {
+                    return f.getName().endsWith(".class");
+                }
+            });
+            for (int j = 0; classfiles != null && j < classfiles.length; j++) {
+                String classfile = classfiles[j].getName();
+
+                classfile = classfile.substring(0, classfile.length() - 6);
+                Class<?> class_in_package;
+                try {
+                    class_in_package = Class.forName(p + '.' + classfile);
+                } catch (ClassNotFoundException e) {
+                    throw new IllegalStateException(
+                            "Should not happen.");
+                }
+                if (c.isAssignableFrom(class_in_package)) {
+                    modifiers = class_in_package.getModifiers();
+                    if (!(Modifier.isInterface(modifiers)
+                            || Modifier.isAbstract(modifiers))) {
+
+                        subclasses.add(class_in_package);
+                    }
+                }
+            }
+        }
+        if (subclasses.isEmpty()) {
+            // Try to add class passed.
+            modifiers = c.getModifiers();
+            if (!Modifier.isAbstract(modifiers) && !Modifier.isInterface(modifiers) && Modifier.isPublic(modifiers)) {
+                subclasses.add(c);
+            } else {
+                throw new IllegalStateException(
+                        "No concrete subclasses found for " + c.getName());
+            }
+        }
+
+        return subclasses;
     }
 }

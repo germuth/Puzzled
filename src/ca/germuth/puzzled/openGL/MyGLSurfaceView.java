@@ -1,10 +1,12 @@
 package ca.germuth.puzzled.openGL;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 import ca.germuth.puzzled.puzzle.Puzzle;
-import ca.germuth.puzzled.puzzle.PuzzleTurn;
+import ca.germuth.puzzled.puzzle.Tile;
 /**
  * Specialized view for drawing openGL ES graphics
  * @author Germuth
@@ -45,8 +47,8 @@ public class MyGLSurfaceView extends GLSurfaceView {
 
 	}
 	
-	public void addPuzzleTurn(PuzzleTurn turn){
-		mRenderer.pendingMoves.add(turn);
+	public void passChangedTiles(ArrayList<Tile> changed){
+		mRenderer.changedTiles.add(changed);
 	}
 	
 	/**

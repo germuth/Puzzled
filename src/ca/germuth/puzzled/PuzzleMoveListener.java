@@ -30,32 +30,24 @@ public class PuzzleMoveListener implements OnClickListener{
 		Button btn = (Button) v;
 		String name = (String) btn.getText();
 		try {
-			PuzzleTurn match = null;
 			//search through all turns to find the matching turn
 			for(int i = 0; i < mPuzzleTurns.size(); i++){
 				PuzzleTurn current = mPuzzleTurns.get(i);
-				if( current.getmName().equals( name )){
+				if( current.getmName().equals( name + "Turn")){
 					//found the matching turn
-					match = current;
 					//get all of the methods and their arguments
-					Method[] turns = current.getMethods();
-					//TODO compiler and variable arguments screwing me over
+					Method[] turns = current.getmMethod();
 					Object[] args = current.getmArguments();
 					//execute each method with it's arguments
 					for(int j = 0; j < turns.length; j++){
 						Method m = turns[j];
-						Object[] argsj = (Object[]) args[j];
-						if(argsj.length == 1){
-							m.invoke(mPuzzle, argsj[0]);
-						}
-						if(argsj.length == 2){
-							m.invoke(mPuzzle, argsj[0], argsj[1]);
-						}
+						m.invoke(mPuzzle, args[j]);
 					}
 					//turn found, no need to keep searching
 					break;
 				}
 			}
+<<<<<<< HEAD
 			match.setmChangedTiles(mPuzzle.getChangedTiles());
 			//TODO debug why probs hash map is wrong
 //			for(int i = 0; i < match.getmChangedTiles().size(); i++){
@@ -94,8 +86,12 @@ public class PuzzleMoveListener implements OnClickListener{
 //				Log.w("DEBUG", mPuzzle.getShapeFor(match.getmChangedTiles().get(i)).toString());
 //			}
 			mPuzzle.moveFinished();
+=======
+>>>>>>> parent of 33c3307... Turn animations completed except rotations
 			//pass changed tiles from move to renderer
-			this.openGLView.addPuzzleTurn( match );
+			this.openGLView.passChangedTiles( mPuzzle.getChangedTiles() );
+			//move is finished
+			this.mPuzzle.moveFinished();
 			
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block

@@ -29,7 +29,7 @@ public class Triangle extends Shape {
 	 * Compile ES Shaders and add to OpenGL ES Program object and link program.
 	 * Should only be called once!
 	 */
-	public void finalizeShape() {
+	public void finalize() {
 		float[] triangleCoords = getCoords();
 		
 		//verticies are passed to openGL in ByteBuffer because it 

@@ -20,32 +20,27 @@
         <Button style="@style/activity_game_button"
             android:background="#FFBB33" 
             android:layout_height="wrap_content"
-        	android:layout_width="55dp" 
-        	android:text="U'"/>
+        	android:layout_width="55dp" />
 
         <Button style="@style/activity_game_button" 
             android:background="#FF4444"
             android:layout_height="wrap_content"
-        	android:layout_width="55dp" 
-        	android:text="L'"/>
+        	android:layout_width="55dp" />
 
         <Button style="@style/activity_game_button"
             android:background="#FF4444"
             android:layout_height="wrap_content"
-        	android:layout_width="55dp" 
-        	android:text="L"/>
+        	android:layout_width="55dp" />
 
         <Button style="@style/activity_game_button"
             android:background="#99CC00"
             android:layout_height="wrap_content"
-        	android:layout_width="55dp" 
-        	android:text="F'"/>
+        	android:layout_width="55dp" />
 
         <Button style="@style/activity_game_button"
             android:background="#AA66CC"
             android:layout_height="wrap_content"
-        	android:layout_width="55dp" 
-        	android:text="D"/>
+        	android:layout_width="55dp" />
 
         <View
             android:layout_width="15dp"
@@ -56,8 +51,7 @@
         <Button style="@style/activity_game_button"
             android:background="#33B5E5" 
             android:layout_height="wrap_content"
-        	android:layout_width="55dp"
-        	android:text="y'" />
+        	android:layout_width="55dp" />
         
     </LinearLayout>
 
@@ -76,32 +70,27 @@
         <Button style="@style/activity_game_button"
             android:background="#FF8800" 
             android:layout_height="wrap_content"
-        	android:layout_width="55dp" 
-        	android:text="u'"/>
+        	android:layout_width="55dp" />
 
         <Button style="@style/activity_game_button" 
             android:background="#CC0000"
             android:layout_height="wrap_content"
-        	android:layout_width="55dp"
-        	android:text="l'"/>
+        	android:layout_width="55dp"/>
 
         <Button style="@style/activity_game_button"
             android:background="#CC0000"
             android:layout_height="wrap_content"
-        	android:layout_width="55dp"
-        	android:text="l"/>
+        	android:layout_width="55dp"/>
 
         <Button style="@style/activity_game_button"
             android:background="#669900" 
             android:layout_height="wrap_content"
-        	android:layout_width="55dp"
-        	android:text="f'"/>
+        	android:layout_width="55dp"/>
 
         <Button style="@style/activity_game_button"
             android:background="#9933CC" 
             android:layout_height="wrap_content"
-        	android:layout_width="55dp"
-        	android:text="d"/>
+        	android:layout_width="55dp"/>
 
         <View
             android:layout_width="15dp"
@@ -112,8 +101,7 @@
         <Button style="@style/activity_game_button"
             android:background="#0099CC" 
             android:layout_height="wrap_content"
-        	android:layout_width="55dp"
-        	android:text="x"/>
+        	android:layout_width="55dp"/>
         
     </LinearLayout>
 
@@ -133,32 +121,27 @@
          <Button style="@style/activity_game_button"
             android:background="#FFBB33" 
             android:layout_height="wrap_content"
-        	android:layout_width="55dp"
-        	android:text="U"/>
+        	android:layout_width="55dp"/>
 
         <Button style="@style/activity_game_button" 
             android:background="#FF4444"
             android:layout_height="wrap_content"
-        	android:layout_width="55dp"
-        	android:text="R"/>
+        	android:layout_width="55dp"/>
 
         <Button style="@style/activity_game_button"
             android:background="#FF4444" 
             android:layout_height="wrap_content"
-        	android:layout_width="55dp"
-        	android:text="R'"/>
+        	android:layout_width="55dp"/>
 
         <Button style="@style/activity_game_button"
             android:background="#99CC00" 
             android:layout_height="wrap_content"
-        	android:layout_width="55dp"
-        	android:text="F"/>
+        	android:layout_width="55dp"/>
 
         <Button style="@style/activity_game_button"
             android:background="#AA66CC" 
             android:layout_height="wrap_content"
-        	android:layout_width="55dp"
-        	android:text="D'"/>
+        	android:layout_width="55dp"/>
 
         <View
             android:layout_width="15dp"
@@ -169,8 +152,7 @@
         <Button style="@style/activity_game_button"
             android:background="#33B5E5" 
             android:layout_height="wrap_content"
-        	android:layout_width="55dp"
-        	android:text="y"/>
+        	android:layout_width="55dp"/>
         
     </LinearLayout>
 
@@ -189,32 +171,27 @@
         <Button style="@style/activity_game_button"
             android:background="#FF8800" 
             android:layout_height="wrap_content"
-        	android:layout_width="55dp"
-        	android:text="u"/>
+        	android:layout_width="55dp"/>
 
         <Button style="@style/activity_game_button" 
             android:background="#CC0000"
             android:layout_height="wrap_content"
-        	android:layout_width="55dp"
-        	android:text="r"/>
+        	android:layout_width="55dp"/>
 
         <Button style="@style/activity_game_button"
             android:background="#CC0000"
             android:layout_height="wrap_content"
-        	android:layout_width="55dp"
-        	android:text="r'"/>
+        	android:layout_width="55dp"/>
 
         <Button style="@style/activity_game_button"
             android:background="#669900" 
             android:layout_height="wrap_content"
-        	android:layout_width="55dp"
-        	android:text="f"/>
+        	android:layout_width="55dp"/>
 
         <Button style="@style/activity_game_button"
             android:background="#9933CC" 
             android:layout_height="wrap_content"
-        	android:layout_width="55dp"
-        	android:text="d'"/>
+        	android:layout_width="55dp"/>
 
         <View
             android:layout_width="15dp"
@@ -225,8 +202,7 @@
         <Button style="@style/activity_game_button"
             android:background="#0099CC" 
             android:layout_height="wrap_content"
-        	android:layout_width="55dp"
-        	android:text="x'"/>
+        	android:layout_width="55dp"/>
     </LinearLayout>
     
     <LinearLayout
@@ -237,7 +213,7 @@
         android:orientation="vertical"
         android:weightSum="20">
         
-        <ca.germuth.puzzled.openGL.MyGLSurfaceView
+        <MyGLSurfaceView
             android:id="@+id/activity_game_gl_surface_view"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

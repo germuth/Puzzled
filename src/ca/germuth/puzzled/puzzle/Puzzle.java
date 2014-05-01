@@ -30,6 +30,18 @@ public interface Puzzle {
 	 * @return
 	 */
 	abstract ArrayList<Shape> createPuzzleModel();
+<<<<<<< HEAD
+=======
+	
+	/**
+	 * Given a tile of the puzzle, returns the openGL shape for 
+	 * that tile.
+	 * This method can't be used until createPuzzleModel() is called
+	 * @param colour
+	 * @return
+	 */
+	abstract Shape getTileFor(Tile colour);
+>>>>>>> parent of 33c3307... Turn animations completed except rotations
 
 	/**
 	 * Returns an array of possible puzzle turn objects. The GUI can use this to

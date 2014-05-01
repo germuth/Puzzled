@@ -1,9 +1,12 @@
 package ca.germuth.puzzled.puzzle;
+<<<<<<< HEAD
 
 import java.util.Random;
 
 import ca.germuth.puzzled.openGL.shapes.Shape;
 
+=======
+>>>>>>> parent of 33c3307... Turn animations completed except rotations
 /**
  * Represents a Tile of a puzzle. Each tile has 
  * an RGBA colour where
@@ -27,8 +30,11 @@ public class Tile {
 	private int mCount;
 	private Shape mShape;
 	
+<<<<<<< HEAD
 	private static int count = 0;
 	
+=======
+>>>>>>> parent of 33c3307... Turn animations completed except rotations
 	public Tile(int red, int green, int blue, int alpha){
 		assert(red >= 0 && red <= 255);
 		assert(green >= 0 && green <= 255);
@@ -39,6 +45,7 @@ public class Tile {
 		this.green = green;
 		this.blue = blue;
 		this.alpha = alpha;
+<<<<<<< HEAD
 		this.mCount = count++;
 	}
 	
@@ -62,6 +69,8 @@ public class Tile {
 		//return "Tile: " + this.red + ", " + this.green + 
 		//		", " + this.blue + ": " + this.mCount;
 		return "Tile: " + this.mCount;
+=======
+>>>>>>> parent of 33c3307... Turn animations completed except rotations
 	}
 
 	public int getRed() {

@@ -2,11 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   
+    android:background="@drawable/shitty_cube_selection_screen"
     android:orientation="vertical" >
 
-    <!--   android:background="@drawable/shitty_cube_selection_screen" -->
-    
     <at.technikum.mti.fancycoverflow.FancyCoverFlow
         android:id="@+id/activity_puzzle_selection_fcf"
         android:layout_width="match_parent"

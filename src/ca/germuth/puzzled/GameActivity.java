@@ -39,7 +39,6 @@ public class GameActivity extends PuzzledActivity {
 		
 		MyGLSurfaceView glView = (MyGLSurfaceView) this.findViewById(R.id.activity_game_gl_surface_view);
 		OnClickListener listener = new PuzzleMoveListener(this.mPuzzle, glView);
-		glView.initializeRenderer(mPuzzle);
 		
 		ViewGroup container = (ViewGroup) this.findViewById(R.id.activity_game_container);
 		for(int i = 0; i < container.getChildCount(); i++){

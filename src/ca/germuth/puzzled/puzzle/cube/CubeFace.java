@@ -1,8 +1,13 @@
 package ca.germuth.puzzled.puzzle.cube;
 
+<<<<<<< HEAD
 import ca.germuth.puzzled.openGL.shapes.Shape;
 import ca.germuth.puzzled.puzzle.PuzzleFace;
 
+=======
+import ca.germuth.puzzled.puzzle.Tile;
+import ca.germuth.puzzled.puzzle.PuzzleFace;
+>>>>>>> parent of 33c3307... Turn animations completed except rotations
 
 public class CubeFace implements PuzzleFace{
 	protected Shape[][] mFace;
@@ -27,9 +32,13 @@ public class CubeFace implements PuzzleFace{
 	public void setSolved(){
 		for(int i = 0; i < mFace.length; i++){
 			for(int j = 0; j < mFace[i].length; j++){
+<<<<<<< HEAD
 //				mFace[i][j] = new Tile(mSolvedColour.getRed(),
 //				mSolvedColour.getGreen(), mSolvedColour.getBlue(),
 //				mSolvedColour.getAlpha());
+=======
+				mFace[i][j] = mSolvedColour;
+>>>>>>> parent of 33c3307... Turn animations completed except rotations
 			}
 		}
 	}
