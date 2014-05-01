@@ -1,16 +1,14 @@
 package ca.germuth.puzzled.puzzle.cube;
 
+import ca.germuth.puzzled.openGL.shapes.Shape;
 import ca.germuth.puzzled.puzzle.PuzzleFace;
-import ca.germuth.puzzled.puzzle.Tile;
 
 
 public class CubeFace implements PuzzleFace{
-	protected Tile[][] mFace;
-	protected Tile mSolvedColour;
+	protected Shape[][] mFace;
 	
-	public CubeFace(int rows, int columns, Tile colour){
-		mFace = new Tile[rows][columns];
-		mSolvedColour = colour;
+	public CubeFace(int rows, int columns, Shape[][] sh){
+		mFace = sh;
 		
 		setSolved();
 	}
@@ -29,20 +27,10 @@ public class CubeFace implements PuzzleFace{
 	public void setSolved(){
 		for(int i = 0; i < mFace.length; i++){
 			for(int j = 0; j < mFace[i].length; j++){
-				mFace[i][j] = new Tile(mSolvedColour.getRed(),
-				mSolvedColour.getGreen(), mSolvedColour.getBlue(),
-				mSolvedColour.getAlpha());
+//				mFace[i][j] = new Tile(mSolvedColour.getRed(),
+//				mSolvedColour.getGreen(), mSolvedColour.getBlue(),
+//				mSolvedColour.getAlpha());
 			}
 		}
 	}
-
-	public Tile[][] getmFace() {
-		return mFace;
-	}
-
-	public void setmFace(Tile[][] mFace) {
-		this.mFace = mFace;
-	}
-	
-	
 }

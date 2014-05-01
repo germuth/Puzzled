@@ -52,28 +52,12 @@ public class Cube implements Puzzle {
 	private CubeFace down;
 	private CubeFace back;
 	
-	private ArrayList<Tile> changedTiles;
-	private HashMap<Tile, Shape> tileToShape;
-	
 	public Cube(int width, int height, int depth) {
 		assert (width > 1 && height > 1 && depth > 1);
 
 		this.width = width;
 		this.height = height;
 		this.depth = depth;
-
-		// make 6 cube faces
-		// number of row then column
-		// TODO grab saved values here rather than always use defaults
-		this.top = new CubeFace(depth, width, new Tile(255, 255, 255, 0));
-		this.front = new CubeFace(height, width, new Tile(0, 255, 0, 0));
-		this.left = new CubeFace(depth, height, new Tile(255, 128, 0, 0));
-		this.right = new CubeFace(depth, height, new Tile(255, 0, 0, 0));
-		this.down = new CubeFace(depth, width, new Tile(255, 255, 0, 0));
-		this.back = new CubeFace(height, width, new Tile(0, 0, 255, 0));
-		
-		this.changedTiles = new ArrayList<Tile>();
-		this.tileToShape = new HashMap<Tile, Shape>();
 	}
 
 	@Override
@@ -98,279 +82,6 @@ public class Cube implements Puzzle {
 		this.right.setSolved();
 	}
 
-	/**
-	 * Performs a front turn. Used for F, S, and B Turns for a 3x3 F -> layer =
-	 * 2 S -> layer = 1 B -> layer = 0 TODO above might be wrong
-	 * 
-	 * @param layer
-	 */
-	private void frontRotation(int layer) {
-		// 90 degree turn
-		if (width == height) {
-			Tile[] temp = new Tile[width];
-			// saves the top
-			for (int j = 0; j < width; j++) {
-				temp[j] = this.top.mFace[layer][j];
-			}
-			for (int j = 0; j < width; j++) {
-				// replace top with left
-				this.top.mFace[layer][j] = this.left.mFace[layer][j];
-			}
-			for (int j = 0; j < width; j++) {
-				// replace left with bottom
-				this.left.mFace[layer][j] = this.down.mFace[width - layer - 1][width
-						- j - 1];
-			}
-			for (int j = 0; j < width; j++) {
-				// replace bottom with right
-				this.down.mFace[width - layer - 1][width - j - 1] = this.right.mFace[layer][j];
-			}
-			for (int j = 0; j < width; j++) {
-				// replace top
-				this.right.mFace[layer][j] = temp[j];
-			}
-		}
-		// 180 degree turn
-		if (width != height) {
-			Tile[] tempTop = new Tile[width];
-			// saves the top
-			for (int j = 0; j < width; j++) {
-				tempTop[j] = this.top.mFace[layer][j];
-			}
-			// move top to bottom
-			for (int j = 0; j < width; j++) {
-				// replace top with left
-				this.top.mFace[layer][j] = this.down.mFace[width - layer - 1][width
-						- j - 1];
-			}
-			// bottom to top
-			for (int j = 0; j < width; j++) {
-				this.down.mFace[width - layer - 1][width - j - 1] = tempTop[j];
-			}
-
-			Tile[] tempLeft = new Tile[height];
-			// save the left
-			for (int j = 0; j < width; j++) {
-				tempLeft[j] = this.left.mFace[layer][j];
-			}
-			for (int j = 0; j < width; j++) {
-				// replace left with bottom
-				this.left.mFace[layer][j] = this.right.mFace[layer][j];
-			}
-			for (int j = 0; j < width; j++) {
-				this.right.mFace[layer][j] = tempLeft[j];
-			}
-		}
-		
-		for (int j = 0; j < width; j++) {
-			 this.changedTiles.add( this.top.mFace[layer][j] );
-			 this.changedTiles.add( this.left.mFace[layer][j] );
-			 this.changedTiles.add( this.down.mFace[width - layer - 1][width - j - 1] );
-			 this.changedTiles.add( this.right.mFace[layer][j] );
-		}
-	}
-
-	/**
-	 * Performs a top turn. Used for F, S, and B Turns for a 3x3 U -> layer = 2
-	 * E -> layer = 1 D -> layer = 0 TODO above might be wrong
-	 * 
-	 * @param layer
-	 */
-	private void topRotation(int layer) {
-		// 90 degreeTurn
-		if (width == depth) {
-			Tile[] temp = new Tile[depth];
-
-			// saves the front
-			for (int j = 0; j < depth; j++) {
-				temp[j] = this.front.mFace[layer][j];
-			}
-
-			for (int j = 0; j < depth; j++) {
-				// replace front with right
-				this.front.mFace[layer][j] = this.right.mFace[depth - j - 1][layer];
-			}
-			for (int j = 0; j < depth; j++) {
-				// replace right with back
-				this.right.mFace[depth - j - 1][layer] = this.back.mFace[depth
-						- layer - 1][depth - j - 1];
-			}
-			for (int j = 0; j < depth; j++) {
-				// replace back with left
-				this.back.mFace[depth - layer - 1][j] = this.left.mFace[depth
-						- j - 1][depth - layer - 1];
-			}
-			for (int j = 0; j < depth; j++) {
-				// replace left
-				this.left.mFace[depth - j - 1][depth - layer - 1] = temp[depth
-						- j - 1];
-			}
-		}
-		if (width != depth) {
-			Tile[] tempFront = new Tile[width];
-
-			// saves the front
-			for (int j = 0; j < width; j++) {
-				tempFront[j] = this.front.mFace[layer][j];
-			}
-			for (int j = 0; j < width; j++) {
-				// replace front with right
-				this.front.mFace[layer][j] = this.back.mFace[depth - layer - 1][depth
-						- j - 1];
-			}
-			for (int j = 0; j < width; j++) {
-				// replace back with left
-				this.back.mFace[depth - layer - 1][j] = this.front.mFace[layer][j];
-			}
-
-			Tile[] tempRight = new Tile[depth];
-
-			for (int j = 0; j < depth; j++) {
-				// replace right with back
-				tempRight[j] = this.right.mFace[depth - j - 1][layer];
-			}
-			for (int j = 0; j < depth; j++) {
-				// replace left
-				// TODO tempRight[j] or[depth - j -1]?
-				this.left.mFace[depth - j - 1][depth - layer - 1] = tempRight[j];
-			}
-			for (int j = 0; j < depth; j++) {
-				// replace left
-				// TODO tempRight[j] or[depth - j -1]?
-				this.right.mFace[depth - j - 1][layer] = this.left.mFace[depth
-						- j - 1][depth - layer - 1];
-			}
-		}
-		
-		for (int j = 0; j < depth; j++) {
-			this.changedTiles.add( this.front.mFace[layer][j] );
-			this.changedTiles.add( this.right.mFace[depth - j - 1][layer] );
-			this.changedTiles.add( this.back.mFace[depth - layer - 1][depth - j - 1] );
-			this.changedTiles.add( this.left.mFace[depth - j - 1][depth - layer - 1] );
-		}
-	}
-
-	/**
-	 * Performs a top turn. Used for F, S, and B Turns for a 3x3 R -> layer = 2
-	 * M -> layer = 1 L' -> layer = 0 TODO above might be wrong
-	 * 
-	 * @param layer
-	 */
-	private void sideRotation(int layer) {
-		if (depth == height) {
-			Tile[] temp = new Tile[depth];
-
-			// saves the top for later
-			for (int j = 0; j < depth; j++) {
-				temp[j] = this.top.mFace[j][layer];
-			}
-			for (int j = 0; j < depth; j++) {
-				// replace top with front
-				this.top.mFace[j][layer] = this.front.mFace[j][layer];
-			}
-			for (int j = 0; j < depth; j++) {
-				// replace front with bottom
-				this.front.mFace[j][layer] = this.down.mFace[j][layer];
-			}
-			for (int j = 0; j < depth; j++) {
-				// replace bottom with back
-				this.down.mFace[j][layer] = this.back.mFace[j][layer];
-			}
-			for (int j = 0; j < depth; j++) {
-				// replace back with top
-				this.back.mFace[j][layer] = temp[j];
-			}
-		}
-
-		if (depth != height) {
-			Tile[] tempTop = new Tile[depth];
-
-			// saves the top for later
-			for (int j = 0; j < depth; j++) {
-				tempTop[j] = this.top.mFace[j][layer];
-			}
-			for (int j = 0; j < depth; j++) {
-				// replace bottom with back
-				this.down.mFace[j][layer] = this.top.mFace[j][layer];
-			}
-			for (int j = 0; j < depth; j++) {
-				// replace bottom with back
-				this.top.mFace[j][layer] = tempTop[j];
-			}
-
-			Tile[] tempFront = new Tile[height];
-			for (int j = 0; j < height; j++) {
-				tempFront[j] = this.front.mFace[j][layer];
-			}
-			for (int j = 0; j < height; j++) {
-				this.front.mFace[j][layer] = this.back.mFace[j][layer];
-			}
-			for (int j = 0; j < height; j++) {
-				this.back.mFace[j][layer] = this.top.mFace[j][layer];
-			}
-		}
-		
-		for(int j = 0; j < height; j++){
-			this.changedTiles.add( this.top.mFace[j][layer] );
-			this.changedTiles.add( this.down.mFace[j][layer] );
-			this.changedTiles.add( this.front.mFace[j][layer] );
-			this.changedTiles.add( this.back.mFace[j][layer] );
-		}
-	}
-
-	/**
-	 * Rotates the face of each turn. For example on a F turn in a 3x3, it would
-	 * rotate the 9 squares of the front face
-	 * 
-	 * rotates 90 or 180 degrees depending on the cube
-	 */
-	private void rotateFace(CubeFace cf) {
-		
-		// 90 degrees
-		if (cf.mFace.length == cf.mFace[0].length) {
-			rotateEvenFace(cf);
-		}// 180 degrees
-		else {
-			rotateEvenFace(cf);
-			rotateEvenFace(cf);
-		}
-		
-		for(int i = 0; i < cf.mFace.length; i++){
-			for(int j = 0; j < cf.mFace[i].length; j++){
-				this.changedTiles.add( cf.mFace[i][j] );
-			}
-		}
-	}
-
-	/**
-	 * Rotates a face 90 degrees
-	 * 
-	 * @param cf
-	 */
-	private void rotateEvenFace(CubeFace cf) {
-		Tile[][] face = cf.mFace;
-
-		final int M = face.length;
-		final int N = face[0].length;
-
-		Tile[][] faceCopy = new Tile[N][M];
-		// create copy
-		for (int i = 0; i < face.length; i++) {
-			Tile[] row = face[i];
-			int length = row.length;
-			faceCopy[i] = new Tile[length];
-			System.arraycopy(row, 0, faceCopy[i], 0, length);
-		}
-
-		// r designates row
-		for (int r = 0; r < M; r++) {
-			// c designates column
-			for (int c = 0; c < N; c++) {
-				face[c][M - 1 - r] = faceCopy[r][c];
-			}
-		}
-	}
-
 	@Override
 	public ArrayList<PuzzleTurn> getAllMoves() {
 		ArrayList<PuzzleTurn> moves = new ArrayList<PuzzleTurn>();
@@ -381,8 +92,7 @@ public class Cube implements Puzzle {
 			for (int i = 0; i <= ((width + 1) / 2) - 1; i++) {
 				// R, 2R, 3R, etc are single slice turns according to SiGN
 				PuzzleTurn R = new PuzzleTurn(this, (i + 1) + "R",
-						 new Method[] {c.getMethod("RTurn", int.class, int.class) },
-						 new Object[] { new Object[] { i, i } }, 90f, 'X');
+						90f, 'X');
 				
 				moves.add(R);
 				PuzzleTurn L = new PuzzleTurn(this, (i + 1) + "L'",
@@ -464,7 +174,7 @@ public class Cube implements Puzzle {
 		return moves;
 	}
 
-	@Override
+//	@Override
 	public ArrayList<PuzzleTurn> getAllRotationMoves() {
 		ArrayList<PuzzleTurn> rotations = new ArrayList<PuzzleTurn>();
 //		try {
@@ -503,108 +213,6 @@ public class Cube implements Puzzle {
 		return rotations;
 	}
 
-	public void RTurn(int startLayer, int endLayer) {
-		for (int i = startLayer; i <= endLayer; i++) {
-			this.sideRotation((depth - 1) - i);
-		}
-		//TODO this should only happen if startLayer = 0 || endLayer == end
-		this.rotateFace(this.right);
-	}
-
-	public void LPrimeTurn(int startLayer, int endLayer) {
-		for (int i = startLayer; i <= endLayer; i++) {
-			this.sideRotation(i);
-		}
-		this.rotateFace(this.left);
-		this.rotateFace(this.left);
-		this.rotateFace(this.left);
-	}
-
-	public void UTurn(int startLayer, int endLayer) {
-		for (int i = startLayer; i <= endLayer; i++) {
-			this.topRotation(i);
-		}
-		this.rotateFace(this.top);
-	}
-
-	public void DPrimeTurn(int startLayer, int endLayer) {
-		for (int i = startLayer; i <= endLayer; i++) {
-			this.topRotation((height - 1) - i);
-		}
-		this.rotateFace(this.down);
-		this.rotateFace(this.down);
-		this.rotateFace(this.down);
-	}
-
-	public void FTurn(int startLayer, int endLayer) {
-		for (int i = startLayer; i <= endLayer; i++) {
-			this.frontRotation((depth - 1) - i);
-		}
-		this.rotateFace(this.front);
-	}
-
-	public void BPrimeTurn(int startLayer, int endLayer) {
-		for (int i = startLayer; i <= endLayer; i++) {
-			this.frontRotation(i);
-		}
-		this.rotateFace(this.back);
-		this.rotateFace(this.back);
-		this.rotateFace(this.back);
-	}
-
-	// ---------------------------------------------
-	// CUBE ROTATIONS
-	// ---------------------------------------------
-	public void yTurn() {
-		for (int i = 0; i < height; i++) {
-			topRotation(i);
-		}
-		this.rotateFace(this.top);
-		this.rotateFace(this.down);
-		this.rotateFace(this.down);
-		this.rotateFace(this.down);
-	}
-
-	public void yPrimeTurn() {
-		yTurn();
-		yTurn();
-		yTurn();
-	}
-
-	// rotates the cube on R
-	public void xTurn() {
-		for (int i = 0; i < height; i++) {
-			sideRotation(i);
-		}
-		this.rotateFace(this.right);
-		this.rotateFace(this.left);
-		this.rotateFace(this.left);
-		this.rotateFace(this.left);
-	}
-
-	// rotates the cube on F
-	public void zTurn() {
-		for (int i = 0; i < height; i++) {
-			frontRotation(i);
-		}
-		this.rotateFace(this.front);
-		this.rotateFace(this.back);
-		this.rotateFace(this.back);
-		this.rotateFace(this.back);
-	}
-
-	public void zPrimeTurn() {
-		zTurn();
-		zTurn();
-		zTurn();
-	}
-
-	public void xPrimeTurn() {
-		xTurn();
-		xTurn();
-		xTurn();
-	}
-
 	public static int getLayout() {
 		return myLayout;
 	}
@@ -613,7 +221,7 @@ public class Cube implements Puzzle {
 	public ArrayList<Shape> createPuzzleModel() {
 		ArrayList<Shape> myFaces = new ArrayList<Shape>();
 
-		ArrayList<Square> topF = drawFace(top);
+		Square[][] topF = drawFace();
 		Square.finalizeAll(topF);
 		myFaces.addAll(topF);
 
@@ -650,8 +258,8 @@ public class Cube implements Puzzle {
 		return myFaces;
 	}
 
-	private ArrayList<Square> drawFace(CubeFace side) {
-		ArrayList<Square> face = new ArrayList<Square>();
+	private Square[][] drawFace(){
+		Square[][] face = new Square[this.depth][this.depth];
 
 		//TODO this will only work for square cubes!
 		//int cubeSize = this.mCube.getSize();
@@ -688,8 +296,7 @@ public class Cube implements Puzzle {
 								+ faceLength, height, currentTopRightZ
 								+ faceLength), new GLVertex(currentTopRightX
 								+ faceLength, height, currentTopRightZ));
-				current.setmColour(Shape.colourToGLColour(side.mFace[0][0]));
-				face.add(current);
+				face[i][j] = current;
 
 				currentTopRightX += faceLength + spaceLength;
 			}
@@ -697,81 +304,7 @@ public class Cube implements Puzzle {
 			// once we finish a row, we need to move down to next row
 			currentTopRightZ += faceLength + spaceLength;
 		}
-		
-		//update hashmap with tiles to shapes
-		for(int i = 0; i < side.mFace.length; i++){
-			for(int j = 0; j < side.mFace[i].length; j++){
-				int index = i * side.mFace[i].length + j;
-				side.mFace[i][j].setmShape(face.get(index));
-				//this.tileToShape.put(side.mFace[i][j], face.get(index));
-			}
-		}
 
 		return face;
 	}
-
-	@Override
-	public ArrayList<Tile> getChangedTiles() {
-		return this.changedTiles;
-	}
-
-	@Override
-	public void moveFinished() {
-		this.changedTiles.clear();
-	}
-
-	@Override
-	public Shape getShapeFor(Tile tile) {
-		return this.tileToShape.get(tile);
-	}
-
-	public CubeFace getTop() {
-		return top;
-	}
-
-	public void setTop(CubeFace top) {
-		this.top = top;
-	}
-
-	public CubeFace getFront() {
-		return front;
-	}
-
-	public void setFront(CubeFace front) {
-		this.front = front;
-	}
-
-	public CubeFace getLeft() {
-		return left;
-	}
-
-	public void setLeft(CubeFace left) {
-		this.left = left;
-	}
-
-	public CubeFace getRight() {
-		return right;
-	}
-
-	public void setRight(CubeFace right) {
-		this.right = right;
-	}
-
-	public CubeFace getDown() {
-		return down;
-	}
-
-	public void setDown(CubeFace down) {
-		this.down = down;
-	}
-
-	public CubeFace getBack() {
-		return back;
-	}
-
-	public void setBack(CubeFace back) {
-		this.back = back;
-	}
-	
-	
 }

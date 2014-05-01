@@ -1,7 +1,8 @@
 package ca.germuth.puzzled.puzzle;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
+
+import ca.germuth.puzzled.openGL.shapes.Shape;
 
 /**
  * PuzzleTurn
@@ -26,21 +27,12 @@ public class PuzzleTurn {
 	 */
 	private String mName;
 	/**
-	 * A reference to the actual method of puzzle that implements that turn
-	 */
-	private Method[] mMethods;
-	/**
-	 * Argument for each method. Assumes each method
-	 * can only take one parameter. 
-	 */
-	private Object[] mArguments;
-	/**
 	 * A list of the changed tiles used to animate the correct
 	 * pieces for that turn
 	 * 
 	 * probably accessed from multiple threads
 	 */
-	private volatile ArrayList<Tile> mChangedTiles;
+	private volatile ArrayList<Shape> mChangedTiles;
 	/**
 	 * The amount of rotation in radians that the puzzle
 	 * turn encompasses. For example, every turn on the 3x3
@@ -52,32 +44,14 @@ public class PuzzleTurn {
 	 */
 	private char axis;
 	
-	public static Method[] concatenate(Method[] input, int times){
-		Method[] triple = new Method[input.length * 3];
-		for(int i = 0; i < triple.length; i++){
-			triple[i] = input[i % input.length];
-		}
-		return triple;
-	}
-	
-	public static Object[] concatenate(Object[] input, int times){
-		Object[] triple = new Object[input.length * 3];
-		for(int i = 0; i < triple.length; i++){
-			triple[i] = input[i % input.length];
-		}
-		return triple;
-	}
-	
-	public PuzzleTurn(Puzzle p, String name, Method[] methods, Object[] args,
+	public PuzzleTurn(Puzzle p, String name, ArrayList<Shape> sh,
 			float rotation, char axis){
 		this.mPuzzle = p;
 		if(name.startsWith("1")){
 			name = name.substring(1);
 		}
 		this.mName = name;
-		this.mMethods = methods;
-		this.mArguments = args;
-		this.mChangedTiles = new ArrayList<Tile>();
+		this.mChangedTiles = sh;;
 		this.mAngle = rotation;
 		this.axis = axis;
 	}
@@ -98,30 +72,12 @@ public class PuzzleTurn {
 		this.mName = mName;
 	}
 	
-	public ArrayList<Tile> getmChangedTiles() {
+	public ArrayList<Shape> getmChangedTiles() {
 		return mChangedTiles;
 	}
 
-	public void setmChangedTiles(ArrayList<Tile> tiles) {
-		for(int i = 0; i < tiles.size(); i++){
-			this.mChangedTiles.add(tiles.get(i));
-		}
-	}
-
-	public Method[] getMethods() {
-		return mMethods;
-	}
-
-	public void setMethod(Method[] mMethod) {
-		this.mMethods = mMethod;
-	}
-
-	public Object[] getmArguments() {
-		return mArguments;
-	}
-
-	public void setmArguments(Object[] mArguments) {
-		this.mArguments = mArguments;
+	public void setmChangedTiles(ArrayList<Shape> tiles) {
+		this.mChangedTiles = tiles;
 	}
 
 	public float getmAngle() {
