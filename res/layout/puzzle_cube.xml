@@ -243,15 +243,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="18" />
         
-        <TextView
+        <ca.germuth.puzzled.util.Chronometer
             android:id="@+id/activity_game_timer"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="00:00.000"
             android:textColor="#FFFFFF"
-            android:textSize="28dp" />
+            android:background="#000000"
+            android:textSize="27dp"/>
         
     </LinearLayout>
 

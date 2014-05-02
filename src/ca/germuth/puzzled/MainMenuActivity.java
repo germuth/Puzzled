@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.LinearLayout;
 import ca.germuth.puzzled.openGL.GLVertex;
 import ca.germuth.puzzled.util.FontManager;

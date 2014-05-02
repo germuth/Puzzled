@@ -49,6 +49,8 @@ public class PuzzleTurn {
 	 * Axis for turn
 	 */
 	private char axis;
+	
+	private boolean isRotation;
 
 	public static Method[] concatenate(Method[] input, int times){
 		Method[] triple = new Method[input.length * 3];
@@ -78,6 +80,7 @@ public class PuzzleTurn {
 		this.mChangedTiles = new ArrayList<Tile>();
 		this.mAngle = rotation;
 		this.axis = axis;
+		this.isRotation = false;
 	}
 
 	public Puzzle getmPuzzle() {
@@ -143,5 +146,11 @@ public class PuzzleTurn {
 		this.axis = axis;
 	}
 
+	public boolean isRotation() {
+		return isRotation;
+	}
 
+	public void setRotation(boolean isRotation) {
+		this.isRotation = isRotation;
+	}
 }

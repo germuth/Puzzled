@@ -479,14 +479,17 @@ public class Cube implements Puzzle {
 			PuzzleTurn Y = new PuzzleTurn(this, "y",
 					new Method[] { c.getMethod("yTurn", (Class[]) null) },
 					new Object[]{null}, -90f, 'Y');
+			Y.setRotation(true);
 			rotations.add(Y);
 			PuzzleTurn X = new PuzzleTurn(this, "x",
 					new Method[] { c.getMethod("xTurn", (Class[]) null) },
 					new Object[]{null}, -90f, 'X');
+			X.setRotation(true);
 			rotations.add(X);
 			PuzzleTurn Z = new PuzzleTurn(this, "z",
 					new Method[] { c.getMethod("zTurn", (Class[]) null)},
 					new Object[]{null}, -90, 'Z');
+			Z.setRotation(true);
 			rotations.add(Z);
 
 			for (int i = 0; i < rotations.size(); i++) {
@@ -496,6 +499,7 @@ public class Cube implements Puzzle {
 						current.getmName() + "'", PuzzleTurn.concatenate(
 								current.getMethods(), 3), new Object[]{null, null, null}, 
 								current.getmAngle() * -1, current.getAxis());
+				reverse.setRotation(true);
 				moves.add(reverse);
 			}
 			
@@ -513,49 +517,60 @@ public class Cube implements Puzzle {
 		for (int i = startLayer; i <= endLayer; i++) {
 			this.sideRotation((depth - 1) - i);
 		}
-		// TODO this should only happen if startLayer = 0 || endLayer == end
-		this.rotateFace(this.right);
+		if(startLayer == 0){
+			this.rotateFace(this.right);
+		}
 	}
 
 	public void LPrimeTurn(int startLayer, int endLayer) {
 		for (int i = startLayer; i <= endLayer; i++) {
 			this.sideRotation(i);
 		}
-		this.rotateFace(this.left);
-		this.rotateFace(this.left);
-		this.rotateFace(this.left);
+		if(startLayer == 0){
+			this.rotateFace(this.left);
+			this.rotateFace(this.left);
+			this.rotateFace(this.left);
+		}
 	}
 
 	public void UTurn(int startLayer, int endLayer) {
 		for (int i = startLayer; i <= endLayer; i++) {
 			this.topRotation(i);
 		}
-		this.rotateFace(this.top);
+		if(startLayer == 0){
+			this.rotateFace(this.top);
+		}
 	}
 
 	public void DPrimeTurn(int startLayer, int endLayer) {
 		for (int i = startLayer; i <= endLayer; i++) {
 			this.topRotation((height - 1) - i);
 		}
-		this.rotateFace(this.down);
-		this.rotateFace(this.down);
-		this.rotateFace(this.down);
+		if(startLayer == 0){
+			this.rotateFace(this.down);
+			this.rotateFace(this.down);
+			this.rotateFace(this.down);
+		}
 	}
 
 	public void FTurn(int startLayer, int endLayer) {
 		for (int i = startLayer; i <= endLayer; i++) {
 			this.frontRotation((depth - 1) - i);
 		}
-		this.rotateFace(this.front);
+		if(startLayer == 0){
+			this.rotateFace(this.front);
+		}
 	}
 
 	public void BPrimeTurn(int startLayer, int endLayer) {
 		for (int i = startLayer; i <= endLayer; i++) {
 			this.frontRotation(i);
 		}
-		this.rotateFace(this.back);
-		this.rotateFace(this.back);
-		this.rotateFace(this.back);
+		if(startLayer == 0){
+			this.rotateFace(this.back);
+			this.rotateFace(this.back);
+			this.rotateFace(this.back);
+		}
 	}
 
 	// ---------------------------------------------

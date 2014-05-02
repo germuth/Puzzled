@@ -15,61 +15,74 @@ import ca.germuth.puzzled.puzzle.PuzzleTurn;
 public class PuzzleMoveListener implements OnClickListener{
 	private Puzzle mPuzzle;
 	private ArrayList<PuzzleTurn> mPuzzleTurns; 
-	private MyGLSurfaceView openGLView;
+	private MyGLSurfaceView mOpenGLView;
 
 	public PuzzleMoveListener(Puzzle p, MyGLSurfaceView view){
 		this.mPuzzle = p;
 		this.mPuzzleTurns = p.getAllMoves();
-		this.openGLView = view;
+		this.mOpenGLView = view;
 	}
 
 	@Override
 	public void onClick(View v) {
 		Button btn = (Button) v;
 		String name = (String) btn.getText();
+
+		PuzzleTurn match = null;
+		// search through all turns to find the matching turn
+		for (int i = 0; i < mPuzzleTurns.size(); i++) {
+			PuzzleTurn current = mPuzzleTurns.get(i);
+			if (current.getmName().equals(name)) {
+				// found the matching turn
+				match = current;
+				// execute this puzzleturn on the specied puzzle
+				this.execute(current);
+				// turn found, no need to keep searching
+				break;
+			}
+		}
+	}
+	
+	public void execute(PuzzleTurn current){
 		try {
-			PuzzleTurn match = null;
-			//search through all turns to find the matching turn
-			for(int i = 0; i < mPuzzleTurns.size(); i++){
-				PuzzleTurn current = mPuzzleTurns.get(i);
-				if( current.getmName().equals( name )){
-					//found the matching turn
-					match = current;
-					//get all of the methods and their arguments
-					Method[] turns = current.getMethods();
-					//TODO perhaps generic way of doing this rather than if length == 1, 2 etc
-					Object[] args = current.getmArguments();
-					//execute each method with it's arguments
-					for(int j = 0; j < turns.length; j++){
-						Method m = turns[j];
-						Object[] argsj = (Object[]) args[j];
-						if(argsj == null){
-							m.invoke(mPuzzle, (Object[]) null);
-						}else if(argsj.length == 1){
-							m.invoke(mPuzzle, argsj[0]);
-						}else if(argsj.length == 2){
-							m.invoke(mPuzzle, argsj[0], argsj[1]);
-						}
-					}
-					//turn found, no need to keep searching
-					break;
+			Method[] turns = current.getMethods();
+			// TODO perhaps generic way of doing this rather than if length ==
+			// 1, 2 etc
+			Object[] args = current.getmArguments();
+			// execute each method with it's arguments
+			for (int j = 0; j < turns.length; j++) {
+				Method m = turns[j];
+				Object[] argsj = (Object[]) args[j];
+				if (argsj == null) {
+					m.invoke(mPuzzle, (Object[]) null);
+				} else if (argsj.length == 1) {
+					m.invoke(mPuzzle, argsj[0]);
+				} else if (argsj.length == 2) {
+					m.invoke(mPuzzle, argsj[0], argsj[1]);
 				}
 			}
-			match.setmChangedTiles(mPuzzle.getChangedTiles());
+			
+			current.setmChangedTiles(mPuzzle.getChangedTiles());
 
 			mPuzzle.moveFinished();
-			//pass changed tiles from move to renderer
-			this.openGLView.addPuzzleTurn( match );
-
+			// pass changed tiles from move to renderer
+			mOpenGLView.addPuzzleTurn(current);
+			
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
+	public ArrayList<PuzzleTurn> getmPuzzleTurns() {
+		return mPuzzleTurns;
+	}
+
+	public void setmPuzzleTurns(ArrayList<PuzzleTurn> mPuzzleTurns) {
+		this.mPuzzleTurns = mPuzzleTurns;
+	}
+	
 }
