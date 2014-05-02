@@ -7,6 +7,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import ca.germuth.puzzled.PuzzleSelectActivity;
+import ca.germuth.puzzled.R;
 import ca.germuth.puzzled.puzzle.Puzzle;
 
 public class FancyCoverFlowPuzzleAdapter extends FancyCoverFlowAdapter{
@@ -57,8 +58,9 @@ public class FancyCoverFlowPuzzleAdapter extends FancyCoverFlowAdapter{
 					.setLayoutParams(new FancyCoverFlow.LayoutParams(300, 400));
 
 		}
-
-		imageView.setImageResource(this.getItem(i));
+		//TODO i don't know
+		//imageView.setImageResource(this.getItem(i));
+		imageView.setImageResource(R.drawable.puzzle_3by3);
 		imageView.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -67,5 +69,5 @@ public class FancyCoverFlowPuzzleAdapter extends FancyCoverFlowAdapter{
 		});
 		return imageView;
 	}
-	
+
 }

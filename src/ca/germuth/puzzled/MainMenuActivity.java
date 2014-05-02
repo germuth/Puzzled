@@ -3,10 +3,12 @@ package ca.germuth.puzzled;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import ca.germuth.puzzled.openGL.GLVertex;
 import ca.germuth.puzzled.util.FontManager;
 
 public class MainMenuActivity extends PuzzledActivity implements

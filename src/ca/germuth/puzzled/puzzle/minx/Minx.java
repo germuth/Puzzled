@@ -57,12 +57,6 @@ public class Minx implements Puzzle{
 	}
 
 	@Override
-	public ArrayList<PuzzleTurn> getAllRotationMoves() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void moveFinished() {
 		// TODO Auto-generated method stub
 		
@@ -75,15 +69,8 @@ public class Minx implements Puzzle{
 	}
 
 	@Override
-	public Shape getTileFor(Tile colour) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public ArrayList<Tile> getChangedTiles() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
 }

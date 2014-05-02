@@ -24,24 +24,25 @@ public interface Puzzle {
 	 * Sets the current puzzle to be in the solved position
 	 */
 	abstract void setSolved();
-	
+
+	/**
+	 * Returns all of the changed tiles since the last call
+	 * to moveFinished(); 
+	 * @return
+	 */
+	abstract ArrayList<Tile> getChangedTiles();
+
+	/**
+	 * Tells the cube that the current move is finished and to clear 
+	 * its current record of stored changed tiles
+	 */
+	abstract void moveFinished();
+
 	/**
 	 * Returns an arraylist of shapes for drawing this puzzle in openGL
 	 * @return
 	 */
 	abstract ArrayList<Shape> createPuzzleModel();
-<<<<<<< HEAD
-=======
-	
-	/**
-	 * Given a tile of the puzzle, returns the openGL shape for 
-	 * that tile.
-	 * This method can't be used until createPuzzleModel() is called
-	 * @param colour
-	 * @return
-	 */
-	abstract Shape getTileFor(Tile colour);
->>>>>>> parent of 33c3307... Turn animations completed except rotations
 
 	/**
 	 * Returns an array of possible puzzle turn objects. The GUI can use this to
@@ -53,5 +54,4 @@ public interface Puzzle {
 	 * @return
 	 */
 	abstract ArrayList<PuzzleTurn> getAllMoves();
-
 }

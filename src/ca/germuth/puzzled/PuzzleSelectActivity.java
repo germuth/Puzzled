@@ -25,31 +25,31 @@ import ca.germuth.puzzled.util.Utils;
  *
  */
 public class PuzzleSelectActivity extends PuzzledActivity implements OnClickListener {
-	
+
 	private FancyCoverFlowPuzzleAdapter adapter;
 	private ArrayList<Puzzle> puzzles;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_puzzle_select);
-		
+
 		//creates horizontally sliding list of images
 		createFancyCoverFlow();
-		
+
 		Button backBtn = (Button) this.findViewById(R.id.activity_puzzle_select_back_button);
 		backBtn.setTypeface( FontManager.getTypeface(this, FontManager.AGENT_ORANGE_FONT));
 		backBtn.setOnClickListener(this);
-		
+
 		Button optionBtn = (Button) this.findViewById(R.id.activity_puzzle_select_option_button);
 		optionBtn.setTypeface( FontManager.getTypeface(this, FontManager.AGENT_ORANGE_FONT));
 		optionBtn.setOnClickListener(this);
-		
+
 		Button goBtn = (Button) this.findViewById(R.id.activity_puzzle_select_go_button);
 		goBtn.setTypeface( FontManager.getTypeface(this, FontManager.AGENT_ORANGE_FONT));
 		goBtn.setOnClickListener(this);
 	}
-	
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -63,7 +63,7 @@ public class PuzzleSelectActivity extends PuzzledActivity implements OnClickList
 			break;
 		}
 	}
-	
+
 	/**
 	 * Creates the horizontally sliding list of images. It does this by 
 	 * getting all puzzles (all classes which implement Puzzle) and calling
@@ -73,7 +73,7 @@ public class PuzzleSelectActivity extends PuzzledActivity implements OnClickList
 	private void createFancyCoverFlow(){
 		//get the image for each puzzle
 		ArrayList<Integer> puzzleImageResources = getImageResources();
-		
+
 		FancyCoverFlow fancyCoverFlow = (FancyCoverFlow) this.findViewById(R.id.activity_puzzle_selection_fcf); 
 		this.adapter = new FancyCoverFlowPuzzleAdapter(this, puzzleImageResources);
 		fancyCoverFlow.setAdapter(this.adapter);
@@ -83,14 +83,14 @@ public class PuzzleSelectActivity extends PuzzledActivity implements OnClickList
 		fancyCoverFlow.setUnselectedSaturation(0.0f);
 		fancyCoverFlow.setUnselectedScale(0.4f);
 	}
-	
+
 	public void puzzleSelected(int i){
 		Puzzle p = puzzles.get(i);
-		
+
 		Intent myIntent = new Intent(PuzzleSelectActivity.this, GameActivity.class);
 		this.startActivity(myIntent);
 	}
-	
+
 	/**
 	 * Gets the image from Puzzle.getImage for each puzzle and returns the list.
 	 * Images are in the form of an int referencing R.java
@@ -106,15 +106,15 @@ public class PuzzleSelectActivity extends PuzzledActivity implements OnClickList
 		for(int i = 0; i < allPuzzles.size(); i++){
 			try {
 				Class<?> current = allPuzzles.get(i);
-				
-				Method getImage = current.getMethod("getImage", (Class[])null);
-				int imageResource = (Integer)getImage.invoke(null, (Object)null); 
+
+				Method getImage = current.getMethod("getLayout", (Class[]) null);
+				int imageResource = (Integer)getImage.invoke(null, (Object[]) null); 
 				images.add(imageResource);
-				
+
 				Constructor<?> constr = current.getConstructors()[0];
-				Object o = constr.newInstance(Integer.valueOf(3));
+				Object o = constr.newInstance(Integer.valueOf(3), Integer.valueOf(3), Integer.valueOf(3));
 				puzzles.add((Puzzle)o);
-				
+
 			} catch (NoSuchMethodException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {

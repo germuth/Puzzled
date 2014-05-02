@@ -1,11 +1,15 @@
 package ca.germuth.puzzled.puzzle;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
-
-import ca.germuth.puzzled.openGL.shapes.Shape;
 
 /**
  * PuzzleTurn
+ * 
+ * TODO: kind of done weird where these objects are 
+ * implied to be static and a puzzle has a defined set of 
+ * them, but really they are changed all over (mCHangedTiles)
+ * at runtime 
  * 
  * This class represents one turn of a twisty puzzle. 
  * It has the name of the method, a reference to the 
@@ -22,39 +26,30 @@ public class PuzzleTurn {
 	 */
 	private String mName;
 	/**
-<<<<<<< HEAD
-=======
 	 * A reference to the actual method of puzzle that implements that turn
 	 */
-	private Method[] mMethod;
+	private Method[] mMethods;
 	/**
 	 * Argument for each method. Assumes each method
 	 * can only take one parameter. 
 	 */
 	private Object[] mArguments;
 	/**
->>>>>>> parent of 33c3307... Turn animations completed except rotations
 	 * A list of the changed tiles used to animate the correct
 	 * pieces for that turn
-	 * 
-	 * probably accessed from multiple threads
 	 */
-<<<<<<< HEAD
-	private volatile ArrayList<Shape> mChangedTiles;
-=======
-	private ArrayList<ChangedTile> mChangedTiles;
->>>>>>> parent of 33c3307... Turn animations completed except rotations
+	private volatile ArrayList<Tile> mChangedTiles;
 	/**
 	 * The amount of rotation in radians that the puzzle
 	 * turn encompasses. For example, every turn on the 3x3
 	 * represents a 90 degree turn.
 	 */
-	private float mRotation;
-	
-<<<<<<< HEAD
-	public PuzzleTurn(Puzzle p, String name, ArrayList<Shape> sh,
-			float rotation, char axis){
-=======
+	private float mAngle;
+	/**
+	 * Axis for turn
+	 */
+	private char axis;
+
 	public static Method[] concatenate(Method[] input, int times){
 		Method[] triple = new Method[input.length * 3];
 		for(int i = 0; i < triple.length; i++){
@@ -62,25 +57,27 @@ public class PuzzleTurn {
 		}
 		return triple;
 	}
-	
-	public PuzzleTurn(Puzzle p, String name, Method[] method, Object[] args, ArrayList<ChangedTile> changed,
-			float rotation){
->>>>>>> parent of 33c3307... Turn animations completed except rotations
+
+	public static Object[] concatenate(Object[] input, int times){
+		Object[] triple = new Object[input.length * 3];
+		for(int i = 0; i < triple.length; i++){
+			triple[i] = input[i % input.length];
+		}
+		return triple;
+	}
+
+	public PuzzleTurn(Puzzle p, String name, Method[] methods, Object[] args,
+			float rotation, char axis){
 		this.mPuzzle = p;
 		if(name.startsWith("1")){
 			name = name.substring(1);
 		}
 		this.mName = name;
-<<<<<<< HEAD
-		this.mChangedTiles = sh;;
+		this.mMethods = methods;
+		this.mArguments = args;
+		this.mChangedTiles = new ArrayList<Tile>();
 		this.mAngle = rotation;
 		this.axis = axis;
-=======
-		this.mMethod = method;
-		this.mArguments = args;
-		this.mChangedTiles = changed;
-		this.mRotation = rotation;
->>>>>>> parent of 33c3307... Turn animations completed except rotations
 	}
 
 	public Puzzle getmPuzzle() {
@@ -98,38 +95,23 @@ public class PuzzleTurn {
 	public void setmName(String mName) {
 		this.mName = mName;
 	}
-	
-<<<<<<< HEAD
-	public ArrayList<Shape> getmChangedTiles() {
+
+	public ArrayList<Tile> getmChangedTiles() {
 		return mChangedTiles;
 	}
 
-	public void setmChangedTiles(ArrayList<Shape> tiles) {
-		this.mChangedTiles = tiles;
-=======
-	public ArrayList<ChangedTile> getmChangedTiles() {
-		return mChangedTiles;
+	public void setmChangedTiles(ArrayList<Tile> tiles) {
+		for(int i = 0; i < tiles.size(); i++){
+			this.mChangedTiles.add(tiles.get(i));
+		}
 	}
 
-	public void setmChangedTiles(ArrayList<ChangedTile> mChangedTiles) {
-		this.mChangedTiles = mChangedTiles;
+	public Method[] getMethods() {
+		return mMethods;
 	}
 
-	public float getmRotation() {
-		return mRotation;
-	}
-
-	public void setmRotation(float mRotation) {
-		this.mRotation = mRotation;
-	}
-
-	public Method[] getmMethod() {
-		return mMethod;
-	}
-
-	public void setmMethod(Method[] mMethod) {
-		this.mMethod = mMethod;
->>>>>>> parent of 33c3307... Turn animations completed except rotations
+	public void setMethod(Method[] mMethod) {
+		this.mMethods = mMethod;
 	}
 
 	public Object[] getmArguments() {
@@ -140,8 +122,26 @@ public class PuzzleTurn {
 		this.mArguments = mArguments;
 	}
 
+	public float getmAngle() {
+		return mAngle;
+	}
+
+	public void setmAngle(float mAngle) {
+		this.mAngle = mAngle;
+	}
+
 	@Override
 	public String toString() {
 		return "PuzzleTurn: " + this.mName;
 	}
+
+	public char getAxis() {
+		return axis;
+	}
+
+	public void setAxis(char axis) {
+		this.axis = axis;
+	}
+
+
 }

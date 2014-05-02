@@ -14,6 +14,7 @@ import android.os.SystemClock;
 import android.util.Log;
 import ca.germuth.puzzled.openGL.shapes.Shape;
 import ca.germuth.puzzled.puzzle.Puzzle;
+import ca.germuth.puzzled.puzzle.PuzzleTurn;
 import ca.germuth.puzzled.puzzle.Tile;
 
 /**O
@@ -37,12 +38,9 @@ import ca.germuth.puzzled.puzzle.Tile;
 public class MyRenderer implements GLSurfaceView.Renderer {
 
 	private static final String TAG = "MyGLRenderer";
-<<<<<<< HEAD
 	//TODO make configureable
-	private static final int TURN_ANIMATION_TIME = 2000;
-=======
->>>>>>> parent of 33c3307... Turn animations completed except rotations
-	
+	private static final int TURN_ANIMATION_TIME = 100;
+
 	private static final boolean spin = false;
 	private static final boolean fortyFive = true;
 
@@ -72,12 +70,12 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	 */
 	private final float[] mRotationMatrix = new float[16];
 
-	private ArrayList<Shape> myFaces;
+	private PuzzleTurn currentTurn;
+	private ArrayList<Shape> allFaces;
+	private ArrayList<Shape> rotatingFaces;
 
-	// Declare as volatile because we are updating it from another thread
-	public volatile float mAngle;
-	public volatile float mXAngle;
-	public volatile float mYAngle;
+	private float currentAngle;
+	private long finalTime;
 
 	public Puzzle mPuzzle;
 	/**
@@ -86,13 +84,17 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	 * Each puzzle turn consits of an array of individual tiles that
 	 * need to be animated turning. 
 	 */
-	public volatile Queue<ArrayList<Tile>> changedTiles;
+	public volatile Queue<PuzzleTurn> pendingMoves;
+	private boolean animating;
 
 	public MyRenderer(Puzzle p){
 		this.mPuzzle = p;
-		this.changedTiles = new LinkedList<ArrayList<Tile>>();
+		this.pendingMoves = new LinkedList<PuzzleTurn>();
+		this.animating = false;
+
+		this.rotatingFaces = new ArrayList<Shape>();
 	}
-	
+
 	/**
 	 * Called once when rendered is first created.
 	 * Should initialize all shapse here like:
@@ -128,24 +130,8 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	    // Set the view matrix. This matrix can be said to represent the camera position.
 	    Matrix.setLookAtM(mVMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
 
-	    this.myFaces = mPuzzle.createPuzzleModel();
+	    this.allFaces = mPuzzle.createPuzzleModel();
 	}
-	
-//	/**
-//	 * Takes bottom left corner of bottom left face
-//	 * @param bl
-//	 */
-//	private void updateColours(ArrayList<Square> face, Colour[][] side){
-//
-//		int k = 0;
-//		for(int i = 0; i < side.length; i++){
-//			for(int j = 0; j < side[i].length; j++){
-//				Square current = face.get(k);
-//				k++;
-//				current.setmColour( colourToGLColour( side[i][j] ) );
-//			}
-//		}
-//	}
 
 	/**
 	 * Called for each redraw of a frame
@@ -153,23 +139,16 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	@Override
 	public void onDrawFrame(GL10 unused) {
 
+
 		// GLES20.glClearDepthf(1.0f);
 		// Draw background color
 		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
-
-//		updateColours( this.mTop, this.mCube.getTop() );
-//		updateColours( this.mFront, this.mCube.getFront() );
-//		updateColours( this.mBottom, this.mCube.getBottom() );
-//		updateColours( this.mBack, this.mCube.getBack() );
-//		updateColours( this.mLeft, this.mCube.getLeft() );
-//		updateColours( this.mRight, this.mCube.getRight() );
 
 		// Combine the projection matrix (objects look good on any screen)
 		// and the View Matrix (simulate a camera) into the MVP Matrix
 		// Calculate the projection and view transformation
 		Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
 
-<<<<<<< HEAD
 		//Rotate entire cube 45 degrees downwards to get better perspective
 		float angleInDegrees = 45f;
 
@@ -183,59 +162,32 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 
 		if( ! this.animating ){
 			if( ! this.pendingMoves.isEmpty() ){
-				
+
 				this.animating = true;
 				this.currentAngle = 0f;
 				this.currentTurn = pendingMoves.poll();
-				
-				//get tiles from the positions in the array that change for each given turn
+
 				ArrayList<Tile> changed = currentTurn.getmChangedTiles();
-				
-				//covert each tile into the shape for it
 				//split myFaces into ones we are rotating and ones we are not
 				for(int i = 0; i < changed.size(); i++){
 					//Shape sh = mPuzzle.getShapeFor( changed.get(i) );
 					Shape sh = changed.get(i).getmShape();
 					this.rotatingFaces.add(sh);
 				}
-				
+
 				this.finalTime = SystemClock.uptimeMillis() + MyRenderer.TURN_ANIMATION_TIME;
 			}
-=======
-		if (fortyFive) {
-			float angleInDegrees = 45f;
-
-			// Draw the triangle facing straight on.
-			//clear rotation matrix from whatever is was before to identity matrix
-			Matrix.setIdentityM(mRotationMatrix, 0);
-			//set rotation matrix to specified rotation
-			Matrix.setRotateM(mRotationMatrix, 0, angleInDegrees, -1.0f, 0.0f,
-					.0f);
-
-			// Combine the rotation matrix with the projection and camera view
-			Matrix.multiplyMM(mMVPMatrix, 0, mRotationMatrix, 0, mMVPMatrix, 0);
-
->>>>>>> parent of 33c3307... Turn animations completed except rotations
 		}
-		// Create a rotation for the triangle
-		// long time = SystemClock.uptimeMillis() % 4000L;
-		// float angle = 0.090f * ((int) time);
-		// Matrix.setRotateM(mRotationMatrix, 0, mAngle, mYAngle, 0, mXAngle);
 
-		if (spin) {
-			// Do a complete rotation every 10 seconds.
-			long time = SystemClock.uptimeMillis() % 30000L;
-			float angleInDegrees = (360.0f / 10000.0f) * ((int) time);
-
-			// Draw the triangle facing straight on.
-			Matrix.setIdentityM(mRotationMatrix, 0);
-			Matrix.setRotateM(mRotationMatrix, 0, angleInDegrees, 1.0f, 0.0f,
-					0.0f);
-			// Combine the rotation matrix with the projection and camera view
-			Matrix.multiplyMM(mMVPMatrix, 0, mRotationMatrix, 0, mMVPMatrix, 0);
+		//TODO this solution is terrible and slow
+		//Draw all faces that aren't rotating
+		for(int i = 0; i < this.allFaces.size(); i++){
+			Shape curr = this.allFaces.get(i);
+			if( ! this.rotatingFaces.contains(curr) ){
+				this.allFaces.get(i).draw(mMVPMatrix);
+			}
 		}
-<<<<<<< HEAD
-		
+
 		if(animating){
 			//get current time and compare to final time
 			//from that find angle
@@ -243,22 +195,16 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 			//display at the end and animating = false
 			long currentTime = SystemClock.uptimeMillis();
 			float angleToRotate = 0f;
-			
+
 			if( currentTime >= finalTime){
 				animating = false;
-
+				//THIS is either being called twice is contains duplicates
 				for(int i = 0; i < this.rotatingFaces.size(); i++){
 					Shape current = this.rotatingFaces.get(i);
-					//TODO why is this necessary, I think you should abandon openGL rotation
-					//and just use our vertex rotations
-					float rotAngle = this.currentTurn.getmAngle();
-					if( rotAngle >= 0){
+
 						current.rotate(this.currentTurn.getAxis(), 
-								(float)-Math.toRadians( this.currentTurn.getmAngle()));
-					}else{
-						current.rotate(this.currentTurn.getAxis(), 
-								(float)Math.toRadians( this.currentTurn.getmAngle()));
-					}
+								toRadians( currentTurn.getmAngle() - this.currentAngle ));
+					
 					current.refresh();
 					current.draw(mMVPMatrix);
 				}
@@ -269,41 +215,21 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 				float fraction = net_time / (float)MyRenderer.TURN_ANIMATION_TIME;
 				angleToRotate = currentTurn.getmAngle() * (1.0f - fraction);
 				angleToRotate -= this.currentAngle;
-				
-				Matrix.setIdentityM(mRotationMatrix, 0);
-				if(this.currentTurn.getAxis() == 'X'){
-					Matrix.setRotateM(mRotationMatrix, 0, angleToRotate, 1.0f, 0.0f,
-							0.0f);
-				}
-				else if(this.currentTurn.getAxis() == 'Y'){
-					Matrix.setRotateM(mRotationMatrix, 0, angleToRotate, 0.0f, 1.0f,
-							0.0f);
-				}
-				else if(this.currentTurn.getAxis() == 'Z'){
-					Matrix.setRotateM(mRotationMatrix, 0, angleToRotate, 0.0f, 0.0f,
-							1.0f);
-				}
-				
-				// Combine the rotation matrix with the projection and camera view
-				Matrix.multiplyMM(mMVPMatrix, 0, mRotationMatrix, 0, mMVPMatrix, 0);
-				
+				this.currentAngle += angleToRotate;
+				// Draw the triangle facing straight on.
 				//draw all the rotating faces
 				for(Shape s : this.rotatingFaces){
-					s.rotate(this.currentTurn.getAxis(), (float)Math.toRadians(angleToRotate));
+					s.rotate(currentTurn.getAxis(), toRadians( angleToRotate ));
+					s.refresh();
 					s.draw(mMVPMatrix);
 				}
 			}
-			
-=======
 
-		/**
-		 * Need to iterate over shapes i want to rotate and give them just mMVP matrix with rotatiod added
-		 * then iterate over every other shape and give them normal mMVP matrix
-		 */
-		for(int i = 0; i < this.myFaces.size(); i++){
-			this.myFaces.get(i).draw(mMVPMatrix);
->>>>>>> parent of 33c3307... Turn animations completed except rotations
 		}
+	}
+	
+	public float toRadians(float degrees){
+		return (float) (degrees * Math.PI / 180f);
 	}
 
 	/**

@@ -24,18 +24,18 @@ public class Triangle extends Shape {
 		this.verticies.add(bottomLeft);
 		this.verticies.add(bottomRight);
 	}
-	
+
 	/**
 	 * Compile ES Shaders and add to OpenGL ES Program object and link program.
 	 * Should only be called once!
 	 */
-	public void finalize() {
+	public void finalizeShape() {
 		float[] triangleCoords = getCoords();
-		
+
 		//verticies are passed to openGL in ByteBuffer because it 
 		// is more efficenct
 		//so grab all of the triangles verticies, and place in byteBuffer
-		
+
 		// initialize vertex byte buffer for shape coordinate
 		//size is num verticies * num coordinates (x, y and z) * 4 bytes per float
 		ByteBuffer bb = ByteBuffer.allocateDirect(

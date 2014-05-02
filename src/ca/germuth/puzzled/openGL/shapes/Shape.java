@@ -39,10 +39,10 @@ public abstract class Shape {
 	protected int mColorHandle;
 	protected int mMVPMatrixHandle;
 	protected GLColour mColour;
-	
+
 	// number of coordinates per vertex in this array
 	protected static final int COORDS_PER_VERTEX = 3;
-	
+
 	protected final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per
 	// vertex
 
@@ -50,9 +50,15 @@ public abstract class Shape {
 	 * The List of verticies for this shape
 	 */
 	protected ArrayList<GLVertex> verticies;
-	
-	public abstract void finalize();
-	
+
+	public abstract void finalizeShape();
+
+	public void refresh() {
+		float[] coords = getCoords();
+		vertexBuffer.put(coords);
+		vertexBuffer.position(0);
+	}
+
 	/**
 	 * Draw the species shape. Takes in the Model View Projection matrix. 
 	 * Shape defines list of coordinates, which are modified by above matrix
@@ -60,7 +66,7 @@ public abstract class Shape {
 	 * @param mvpMatrix
 	 */
 	public abstract void draw(float[] mvpMatrix);
-	
+
 	protected float[] getCoords(){
 		float[] coords = new float[this.verticies.size() * 3];
 		int last = 0;
@@ -82,7 +88,7 @@ public abstract class Shape {
 			current.rotate(axis, radians);
 		}	
 	}
-	
+
 	public void translate(char axis, double distance){
 		for(int i = 0; i < this.verticies.size(); i++){
 			this.verticies.get(i).translate(axis, distance);
@@ -107,10 +113,10 @@ public abstract class Shape {
 	public static void finalizeAll(ArrayList<Square> face){
 		for(int i = 0; i < face.size(); i++){
 			Square s = face.get(i);
-			s.finalize();
+			s.finalizeShape();
 		}
 	}
-	
+
 	public static GLColour colourToGLColour( Tile c){
 		float one = 1f;
 		float half = 0.5f;
@@ -121,6 +127,13 @@ public abstract class Shape {
 		return new GLColour( red, blue ,green);
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if(this.verticies.equals( ((Shape)o).verticies)){
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * @return the mColour

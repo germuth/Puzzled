@@ -51,13 +51,37 @@ public class Cube implements Puzzle {
 	private CubeFace right;
 	private CubeFace down;
 	private CubeFace back;
-	
+
+	private volatile ArrayList<Tile> changedTiles;
+
 	public Cube(int width, int height, int depth) {
 		assert (width > 1 && height > 1 && depth > 1);
 
 		this.width = width;
 		this.height = height;
 		this.depth = depth;
+
+		// make 6 cube faces
+		// number of row then column
+		// TODO grab saved values here rather than always use defaults
+		this.top = new CubeFace(depth, width, new Tile(255, 255, 255, 0));
+		this.front = new CubeFace(height, width, new Tile(0, 255, 0, 0));
+		this.left = new CubeFace(depth, height, new Tile(255, 128, 0, 0));
+		this.right = new CubeFace(depth, height, new Tile(255, 0, 0, 0));
+		this.down = new CubeFace(depth, width, new Tile(255, 255, 0, 0));
+		this.back = new CubeFace(height, width, new Tile(0, 0, 255, 0));
+
+		// TODO also slow and terrible
+		this.changedTiles = new ArrayList<Tile>() {
+			@Override
+			public boolean add(Tile object) {
+				if (this.contains(object)) {
+					return false;
+				} else {
+					return super.add(object);
+				}
+			}
+		};
 	}
 
 	@Override
@@ -82,8 +106,6 @@ public class Cube implements Puzzle {
 		this.right.setSolved();
 	}
 
-<<<<<<< HEAD
-=======
 	/**
 	 * Performs a front turn. Used for F, S, and B Turns for a 3x3 F -> layer =
 	 * 2 S -> layer = 1 B -> layer = 0 TODO above might be wrong
@@ -146,6 +168,14 @@ public class Cube implements Puzzle {
 			for (int j = 0; j < width; j++) {
 				this.right.mFace[layer][j] = tempLeft[j];
 			}
+		}
+
+		for (int j = 0; j < width; j++) {
+			this.changedTiles.add(this.top.mFace[layer][j]);
+			this.changedTiles.add(this.left.mFace[layer][j]);
+			this.changedTiles.add(this.down.mFace[width - layer - 1][width - j
+					- 1]);
+			this.changedTiles.add(this.right.mFace[layer][j]);
 		}
 	}
 
@@ -220,6 +250,15 @@ public class Cube implements Puzzle {
 						- j - 1][depth - layer - 1];
 			}
 		}
+
+		for (int j = 0; j < depth; j++) {
+			this.changedTiles.add(this.front.mFace[layer][j]);
+			this.changedTiles.add(this.right.mFace[depth - j - 1][layer]);
+			this.changedTiles.add(this.back.mFace[depth - layer - 1][depth - j
+					- 1]);
+			this.changedTiles.add(this.left.mFace[depth - j - 1][depth - layer
+					- 1]);
+		}
 	}
 
 	/**
@@ -281,6 +320,13 @@ public class Cube implements Puzzle {
 				this.back.mFace[j][layer] = this.top.mFace[j][layer];
 			}
 		}
+
+		for (int j = 0; j < height; j++) {
+			this.changedTiles.add(this.top.mFace[j][layer]);
+			this.changedTiles.add(this.down.mFace[j][layer]);
+			this.changedTiles.add(this.front.mFace[j][layer]);
+			this.changedTiles.add(this.back.mFace[j][layer]);
+		}
 	}
 
 	/**
@@ -290,6 +336,7 @@ public class Cube implements Puzzle {
 	 * rotates 90 or 180 degrees depending on the cube
 	 */
 	private void rotateFace(CubeFace cf) {
+
 		// 90 degrees
 		if (cf.mFace.length == cf.mFace[0].length) {
 			rotateEvenFace(cf);
@@ -297,6 +344,12 @@ public class Cube implements Puzzle {
 		else {
 			rotateEvenFace(cf);
 			rotateEvenFace(cf);
+		}
+
+		for (int i = 0; i < cf.mFace.length; i++) {
+			for (int j = 0; j < cf.mFace[i].length; j++) {
+				this.changedTiles.add(cf.mFace[i][j]);
+			}
 		}
 	}
 
@@ -329,7 +382,6 @@ public class Cube implements Puzzle {
 		}
 	}
 
->>>>>>> parent of 33c3307... Turn animations completed except rotations
 	@Override
 	public ArrayList<PuzzleTurn> getAllMoves() {
 		ArrayList<PuzzleTurn> moves = new ArrayList<PuzzleTurn>();
@@ -340,43 +392,39 @@ public class Cube implements Puzzle {
 			for (int i = 0; i <= ((width + 1) / 2) - 1; i++) {
 				// R, 2R, 3R, etc are single slice turns according to SiGN
 				PuzzleTurn R = new PuzzleTurn(this, (i + 1) + "R",
-<<<<<<< HEAD
-						90f, 'X');
-				
-=======
 						new Method[] { c.getMethod("RTurn", int.class,
-								int.class) }, new Object[] { i, i }, null,
-						(float) Math.PI);
->>>>>>> parent of 33c3307... Turn animations completed except rotations
+								int.class) }, new Object[] { new Object[] { i,
+								i } }, -90f, 'X');
+
 				moves.add(R);
 				PuzzleTurn L = new PuzzleTurn(this, (i + 1) + "L'",
 						new Method[] { c.getMethod("LPrimeTurn", int.class,
-								int.class) }, new Object[] { i, i }, null,
-						(float) Math.PI);
+								int.class) }, new Object[] { new Object[] { i,
+								i } }, -90f, 'X');
 				moves.add(L);
 			}
 			for (int i = 0; i <= ((height + 1) / 2) - 1; i++) {
 				PuzzleTurn U = new PuzzleTurn(this, (i + 1) + "U",
 						new Method[] { c.getMethod("UTurn", int.class,
-								int.class) }, new Object[] { i, i }, null,
-						(float) Math.PI);
+								int.class) }, new Object[] { new Object[] { i,
+								i } }, -90f, 'Y');
 				moves.add(U);
-				PuzzleTurn D = new PuzzleTurn(this, (i + 1) + "D",
-						new Method[] { c.getMethod("DTurn", int.class,
-								int.class) }, new Object[] { i, i }, null,
-						(float) Math.PI);
+				PuzzleTurn D = new PuzzleTurn(this, (i + 1) + "D'",
+						new Method[] { c.getMethod("DPrimeTurn", int.class,
+								int.class) }, new Object[] { new Object[] { i,
+								i } }, -90f, 'Y');
 				moves.add(D);
 			}
 			for (int i = 0; i <= ((depth + 1) / 2) - 1; i++) {
 				PuzzleTurn F = new PuzzleTurn(this, (i + 1) + "F",
 						new Method[] { c.getMethod("FTurn", int.class,
-								int.class) }, new Object[] { i, i }, null,
-						(float) Math.PI);
+								int.class) }, new Object[] { new Object[] { i,
+								i } }, -90f, 'Z');
 				moves.add(F);
 				PuzzleTurn B = new PuzzleTurn(this, (i + 1) + "B'",
 						new Method[] { c.getMethod("BPrimeTurn", int.class,
-								int.class) }, new Object[] { i, i }, null,
-						(float) Math.PI);
+								int.class) }, new Object[] { new Object[] { i,
+								i } }, -90f, 'Z');
 				moves.add(B);
 			}
 			// add the multislice turns
@@ -391,10 +439,12 @@ public class Cube implements Puzzle {
 					if (firstChar == '2') {
 						newName = newName.substring(1);
 					}
+					Object[] args = current.getmArguments();
+					Object[] args1 = (Object[]) args[0];
 					PuzzleTurn bigTurn = new PuzzleTurn(this, newName,
-							current.getmMethod(), new Object[] { 0,
-									(Integer) (current.getmArguments()[0]) },
-							null, (current.getmRotation()));
+							current.getMethods(), new Object[] { new Object[] {
+									0, (Integer) (args1[0]) } },
+							(current.getmAngle()), current.getAxis());
 					moves.add(bigTurn);
 				}
 			}
@@ -405,68 +455,65 @@ public class Cube implements Puzzle {
 				String name = null;
 				if (current.getmName().endsWith("'")) {
 					name = current.getmName().substring(0,
-							current.getmName().length());
+							current.getmName().length() - 1);
 				} else {
 					name = current.getmName() + "'";
 				}
-				PuzzleTurn reverseTurn = new PuzzleTurn(this, name,
+				Object[] args = current.getmArguments();
+				Object[] arg1 = (Object[]) args[0];
+				PuzzleTurn reverseTurn = new PuzzleTurn(this,
+						name,
 						// triple whatever turn was done before to turn the
 						// other way
-						PuzzleTurn.concatenate(current.getmMethod(), 3),
-						new Object[] { i, i }, null, -(current.getmRotation()));
+						PuzzleTurn.concatenate(current.getMethods(), 3),
+						new Object[] { new Object[] { arg1[0], arg1[1] },
+								new Object[] { arg1[0], arg1[1] },
+								new Object[] { arg1[0], arg1[1] } },
+						(current.getmAngle() * -1), current.getAxis());
 				moves.add(reverseTurn);
+
 			}
+			
+			ArrayList<PuzzleTurn> rotations = new ArrayList<PuzzleTurn>();
+			// add rotations
+			PuzzleTurn Y = new PuzzleTurn(this, "y",
+					new Method[] { c.getMethod("yTurn", (Class[]) null) },
+					new Object[]{null}, -90f, 'Y');
+			rotations.add(Y);
+			PuzzleTurn X = new PuzzleTurn(this, "x",
+					new Method[] { c.getMethod("xTurn", (Class[]) null) },
+					new Object[]{null}, -90f, 'X');
+			rotations.add(X);
+			PuzzleTurn Z = new PuzzleTurn(this, "z",
+					new Method[] { c.getMethod("zTurn", (Class[]) null)},
+					new Object[]{null}, -90, 'Z');
+			rotations.add(Z);
+
+			for (int i = 0; i < rotations.size(); i++) {
+				PuzzleTurn current = rotations.get(i);
+
+				PuzzleTurn reverse = new PuzzleTurn(this,
+						current.getmName() + "'", PuzzleTurn.concatenate(
+								current.getMethods(), 3), new Object[]{null, null, null}, 
+								current.getmAngle() * -1, current.getAxis());
+				moves.add(reverse);
+			}
+			
+			for(int k = 0; k < rotations.size(); k++){
+				moves.add(rotations.get(k));
+			}
+			
 		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
 		}
 		return moves;
 	}
 
-//	@Override
-	public ArrayList<PuzzleTurn> getAllRotationMoves() {
-		ArrayList<PuzzleTurn> rotations = new ArrayList<PuzzleTurn>();
-		try {
-			Class<? extends Cube> c = this.getClass();
-			PuzzleTurn Y = new PuzzleTurn(
-					this,
-					"y",
-					new Method[] { c.getMethod("YTurn", int.class, int.class) },
-					null, null, 0);
-			rotations.add(Y);
-			PuzzleTurn X = new PuzzleTurn(
-					this,
-					"x",
-					new Method[] { c.getMethod("XTurn", int.class, int.class) },
-					null, null, 0);
-			rotations.add(X);
-			PuzzleTurn Z = new PuzzleTurn(
-					this,
-					"z",
-					new Method[] { c.getMethod("ZTurn", int.class, int.class) },
-					null, null, 0);
-			rotations.add(Z);
-
-			for (int i = 0; i < rotations.size(); i++) {
-				PuzzleTurn current = rotations.get(i);
-
-				PuzzleTurn reverse = new PuzzleTurn(this, current.getmName()
-						+ "'", PuzzleTurn.concatenate(current.getmMethod(), 3),
-						null, null, 0);
-				rotations.add(reverse);
-			}
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		}
-
-		return rotations;
-	}
-
-<<<<<<< HEAD
-=======
 	public void RTurn(int startLayer, int endLayer) {
 		for (int i = startLayer; i <= endLayer; i++) {
 			this.sideRotation((depth - 1) - i);
 		}
+		// TODO this should only happen if startLayer = 0 || endLayer == end
 		this.rotateFace(this.right);
 	}
 
@@ -486,9 +533,9 @@ public class Cube implements Puzzle {
 		this.rotateFace(this.top);
 	}
 
-	public void DTurn(int startLayer, int endLayer) {
+	public void DPrimeTurn(int startLayer, int endLayer) {
 		for (int i = startLayer; i <= endLayer; i++) {
-			this.sideRotation((height - 1) - i);
+			this.topRotation((height - 1) - i);
 		}
 		this.rotateFace(this.down);
 		this.rotateFace(this.down);
@@ -564,7 +611,6 @@ public class Cube implements Puzzle {
 		xTurn();
 	}
 
->>>>>>> parent of 33c3307... Turn animations completed except rotations
 	public static int getLayout() {
 		return myLayout;
 	}
@@ -573,7 +619,7 @@ public class Cube implements Puzzle {
 	public ArrayList<Shape> createPuzzleModel() {
 		ArrayList<Shape> myFaces = new ArrayList<Shape>();
 
-		Square[][] topF = drawFace();
+		ArrayList<Square> topF = drawFace(top);
 		Square.finalizeAll(topF);
 		myFaces.addAll(topF);
 
@@ -607,14 +653,14 @@ public class Cube implements Puzzle {
 		Square.finalizeAll(bottomF);
 		myFaces.addAll(bottomF);
 
-		return null;
+		return myFaces;
 	}
 
-	private Square[][] drawFace(){
-		Square[][] face = new Square[this.depth][this.depth];
+	private ArrayList<Square> drawFace(CubeFace side) {
+		ArrayList<Square> face = new ArrayList<Square>();
 
-		//TODO this will only work for square cubes!
-		//int cubeSize = this.mCube.getSize();
+		// TODO this will only work for square cubes!
+		// int cubeSize = this.mCube.getSize();
 		int cubeSize = width;
 
 		float faceLength = 120f / cubeSize;
@@ -648,7 +694,8 @@ public class Cube implements Puzzle {
 								+ faceLength, height, currentTopRightZ
 								+ faceLength), new GLVertex(currentTopRightX
 								+ faceLength, height, currentTopRightZ));
-				face[i][j] = current;
+				current.setmColour(Shape.colourToGLColour(side.mFace[0][0]));
+				face.add(current);
 
 				currentTopRightX += faceLength + spaceLength;
 			}
@@ -656,17 +703,15 @@ public class Cube implements Puzzle {
 			// once we finish a row, we need to move down to next row
 			currentTopRightZ += faceLength + spaceLength;
 		}
-<<<<<<< HEAD
 
-		return face;
-	}
-=======
-		
-		//update hashmap with tiles to shapes
-		for(int i = 0; i < side.mFace.length; i++){
-			for(int j = 0; j < side.mFace[i].length; j++){
-				this.tileToShape.put(side.mFace[i][j], 
-						face.get(i * side.mFace[i].length + j));
+		// update hashmap with tiles to shapes
+		for (int i = 0; i < side.mFace.length; i++) {
+			for (int j = 0; j < side.mFace[i].length; j++) {
+				int index = i * side.mFace[i].length + j;
+
+				Tile t1 = side.mFace[i][j];
+				t1.setmShape(face.get(index));
+
 			}
 		}
 
@@ -682,10 +727,4 @@ public class Cube implements Puzzle {
 	public void moveFinished() {
 		this.changedTiles.clear();
 	}
-
-	@Override
-	public Shape getTileFor(Tile colour) {
-		return this.tileToShape.get(colour);
-	}
->>>>>>> parent of 33c3307... Turn animations completed except rotations
 }
