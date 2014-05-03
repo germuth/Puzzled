@@ -1,6 +1,9 @@
 package ca.germuth.puzzled.util;
 
-/*
+/**
+ * I changed it so it can count up and down. I also added and removed a listener. I 
+ * also added another digit when it displays shit. maybe i should set the font 
+ * in here not sure
  * The Android chronometer widget revised so as to count milliseconds
  */
 
@@ -20,12 +23,18 @@ public class Chronometer extends TextView {
 
         void onChronometerTick(Chronometer chronometer);
     }
+    
+    public interface OnChronometerFinishListener {
+    	void onChronometerFinish(Chronometer chronometer);
+    }
 
     private long mBase;
     private boolean mVisible;
     private boolean mStarted;
     private boolean mRunning;
-    private OnChronometerTickListener mOnChronometerTickListener;
+    private boolean mCountingDown;
+    private long mLimit;
+    private OnChronometerFinishListener mOnChronometerFinishListener;
 
     private static final int TICK_WHAT = 2;
     //TODO: only at font size 28
@@ -71,26 +80,34 @@ public class Chronometer extends TextView {
 
 	public void setBase(long base) {
         mBase = base;
-        dispatchChronometerTick();
         updateText(SystemClock.elapsedRealtime());
     }
 
     public long getBase() {
         return mBase;
     }
+    
+    public OnChronometerFinishListener getOnChronometerFinishListener() {
+		return mOnChronometerFinishListener;
+	}
 
-    public void setOnChronometerTickListener(
-            OnChronometerTickListener listener) {
-        mOnChronometerTickListener = listener;
-    }
+	public void setOnChronometerFinishListener(
+			OnChronometerFinishListener mOnChronometerFinishListener) {
+		this.mOnChronometerFinishListener = mOnChronometerFinishListener;
+	}
 
-    public OnChronometerTickListener getOnChronometerTickListener() {
-        return mOnChronometerTickListener;
+	public void startCountingDown(long milliTime){
+    	mBase = SystemClock.elapsedRealtime();
+    	mStarted = true;
+    	mCountingDown = true;
+    	mLimit = milliTime;
+    	updateRunning();
     }
 
     public void start() {
         mBase = SystemClock.elapsedRealtime();
         mStarted = true;
+        mCountingDown = false;
         updateRunning();
     }
 
@@ -120,8 +137,18 @@ public class Chronometer extends TextView {
     }
 
     private synchronized void updateText(long now) {
-        timeElapsed = now - mBase;
-        
+    	if( mCountingDown ){
+    		timeElapsed = now - mBase;
+    		timeElapsed = mLimit - timeElapsed;
+    		
+    		if(timeElapsed < 0){
+    			this.stop();
+    			dispatchChronometerFinish();
+    		}
+    	}else{
+    		timeElapsed = now - mBase;
+    	}
+    	
         DecimalFormat df = new DecimalFormat("00");
         
         int hours = (int)(timeElapsed / (3600 * 1000));
@@ -144,7 +171,7 @@ public class Chronometer extends TextView {
        	text += df.format(minutes) + ":";
        	text += df.format(seconds) + ":";
        	text += Integer.toString(milliseconds);
-        if(milliseconds == 0){
+        if(milliseconds < 10){
         	text += "0";
         }
         setText(text);
@@ -155,7 +182,6 @@ public class Chronometer extends TextView {
         if (running != mRunning) {
             if (running) {
                 updateText(SystemClock.elapsedRealtime());
-                dispatchChronometerTick();
                 mHandler.sendMessageDelayed(Message.obtain(mHandler,
                         TICK_WHAT), 50);
             } else {
@@ -169,17 +195,16 @@ public class Chronometer extends TextView {
         public void handleMessage(Message m) {
             if (mRunning) {
                 updateText(SystemClock.elapsedRealtime());
-                dispatchChronometerTick();
                 sendMessageDelayed(Message.obtain(this , TICK_WHAT),
                         50);
             }
         }
     };
-
-    void dispatchChronometerTick() {
-        if (mOnChronometerTickListener != null) {
-            mOnChronometerTickListener.onChronometerTick(this);
-        }
+    
+    private void dispatchChronometerFinish(){
+    	if (mOnChronometerFinishListener != null){
+    		mOnChronometerFinishListener.onChronometerFinish(this);
+    	}
     }
 
 	public long getTimeElapsed() {

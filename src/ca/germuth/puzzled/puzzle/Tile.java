@@ -25,7 +25,17 @@ public class Tile {
 	private int blue;
 	private int alpha;
 	private Shape mShape;
-
+	
+	public static boolean matches(Tile a, Tile b){
+		if( a.getRed() == b.getRed() &&
+				a.getGreen() == b.getGreen() &&
+				a.getBlue() == b.getBlue() &&
+				a.getAlpha() == b.getAlpha()){
+			return true;
+		}
+		return false;
+	}
+	
 	public Tile(int red, int green, int blue, int alpha){
 		assert(red >= 0 && red <= 255);
 		assert(green >= 0 && green <= 255);
@@ -37,7 +47,7 @@ public class Tile {
 		this.blue = blue;
 		this.alpha = alpha;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Tile: " + this.red + ", " + this.green + 
@@ -75,7 +85,6 @@ public class Tile {
 	public void setAlpha(int alpha) {
 		this.alpha = alpha;
 	}
-
 
 	public Shape getmShape() {
 		return mShape;

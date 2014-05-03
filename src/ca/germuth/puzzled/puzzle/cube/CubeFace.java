@@ -18,7 +18,7 @@ public class CubeFace implements PuzzleFace{
 	public boolean isSolved(){
 		for(int i = 0; i < mFace.length; i++){
 			for(int j = 0; j < mFace[i].length; j++){
-				if( ! this.mFace[i][j].equals( this.mFace[0][0] )){
+				if( ! Tile.matches(this.mFace[i][j], this.mFace[0][0] )){
 					return false;
 				}
 			}

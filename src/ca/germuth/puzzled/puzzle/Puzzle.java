@@ -13,6 +13,10 @@ import ca.germuth.puzzled.openGL.shapes.Shape;
  */
 public interface Puzzle {
 
+	public interface OnPuzzleSolvedListener{
+		abstract void onPuzzleSolved();
+	}
+	
 	/**
 	 * Checks whether the puzzle is currently in the solved state
 	 * 
@@ -25,6 +29,9 @@ public interface Puzzle {
 	 */
 	abstract void setSolved();
 
+	abstract void setOnPuzzleSolvedListener(OnPuzzleSolvedListener list);
+	abstract OnPuzzleSolvedListener getOnPuzzleSolvedListener();
+	
 	/**
 	 * Returns all of the changed tiles since the last call
 	 * to moveFinished(); 

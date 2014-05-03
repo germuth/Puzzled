@@ -73,4 +73,16 @@ public class Minx implements Puzzle{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void setOnPuzzleSolvedListener(OnPuzzleSolvedListener list) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public OnPuzzleSolvedListener getOnPuzzleSolvedListener() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

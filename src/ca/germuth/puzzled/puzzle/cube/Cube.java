@@ -53,6 +53,7 @@ public class Cube implements Puzzle {
 	private CubeFace back;
 
 	private volatile ArrayList<Tile> changedTiles;
+	private OnPuzzleSolvedListener mOnPuzzleSolvedListener;
 
 	public Cube(int width, int height, int depth) {
 		assert (width > 1 && height > 1 && depth > 1);
@@ -104,6 +105,12 @@ public class Cube implements Puzzle {
 		this.down.setSolved();
 		this.left.setSolved();
 		this.right.setSolved();
+	}
+	
+	private void checkSolved(){
+		if(this.isSolved()){
+			this.mOnPuzzleSolvedListener.onPuzzleSolved();
+		}
 	}
 
 	/**
@@ -520,6 +527,8 @@ public class Cube implements Puzzle {
 		if(startLayer == 0){
 			this.rotateFace(this.right);
 		}
+		
+		checkSolved();
 	}
 
 	public void LPrimeTurn(int startLayer, int endLayer) {
@@ -531,6 +540,8 @@ public class Cube implements Puzzle {
 			this.rotateFace(this.left);
 			this.rotateFace(this.left);
 		}
+		
+		checkSolved();
 	}
 
 	public void UTurn(int startLayer, int endLayer) {
@@ -540,6 +551,8 @@ public class Cube implements Puzzle {
 		if(startLayer == 0){
 			this.rotateFace(this.top);
 		}
+		
+		checkSolved();
 	}
 
 	public void DPrimeTurn(int startLayer, int endLayer) {
@@ -551,6 +564,8 @@ public class Cube implements Puzzle {
 			this.rotateFace(this.down);
 			this.rotateFace(this.down);
 		}
+		
+		checkSolved();
 	}
 
 	public void FTurn(int startLayer, int endLayer) {
@@ -560,6 +575,8 @@ public class Cube implements Puzzle {
 		if(startLayer == 0){
 			this.rotateFace(this.front);
 		}
+		
+		checkSolved();
 	}
 
 	public void BPrimeTurn(int startLayer, int endLayer) {
@@ -571,6 +588,8 @@ public class Cube implements Puzzle {
 			this.rotateFace(this.back);
 			this.rotateFace(this.back);
 		}
+		
+		checkSolved();
 	}
 
 	// ---------------------------------------------
@@ -741,5 +760,15 @@ public class Cube implements Puzzle {
 	@Override
 	public void moveFinished() {
 		this.changedTiles.clear();
+	}
+
+	@Override
+	public void setOnPuzzleSolvedListener(OnPuzzleSolvedListener list) {
+		mOnPuzzleSolvedListener = list;
+	}
+
+	@Override
+	public OnPuzzleSolvedListener getOnPuzzleSolvedListener() {
+		return mOnPuzzleSolvedListener;
 	}
 }
