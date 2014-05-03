@@ -771,4 +771,8 @@ public class Cube implements Puzzle {
 	public OnPuzzleSolvedListener getOnPuzzleSolvedListener() {
 		return mOnPuzzleSolvedListener;
 	}
+
+	public int getWidth() {
+		return width;
+	}
 }

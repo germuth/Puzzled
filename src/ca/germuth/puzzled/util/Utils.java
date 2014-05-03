@@ -2,6 +2,7 @@ package ca.germuth.puzzled.util;
 
 import java.util.ArrayList;
 
+import android.graphics.Rect;
 import android.view.View;
 import android.view.ViewGroup;
 import ca.germuth.puzzled.puzzle.cube.Cube;
@@ -77,4 +78,26 @@ public class Utils {
             v.requestLayout();
         }
     }
+    
+    public static View findViewAtPosition(View parent, int x, int y) {
+	    if (parent instanceof ViewGroup) {
+	        ViewGroup viewGroup = (ViewGroup)parent;
+	        for (int i=0; i<viewGroup.getChildCount(); i++) {
+	            View child = viewGroup.getChildAt(i);
+	            View viewAtPosition = findViewAtPosition(child, x, y);
+	            if (viewAtPosition != null) {
+	                return viewAtPosition;
+	            }
+	        }
+	        return null;
+	    } else {
+	        Rect rect = new Rect();
+	        parent.getGlobalVisibleRect(rect);
+	        if (rect.contains(x, y)) {
+	            return parent;
+	        } else {
+	            return null;
+	        }
+	    }
+	}
 }

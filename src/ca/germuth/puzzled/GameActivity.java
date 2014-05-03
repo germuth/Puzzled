@@ -3,14 +3,17 @@ package ca.germuth.puzzled;
 import java.util.ArrayList;
 import java.util.Random;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import ca.germuth.puzzled.ShakeListener.OnShakeListener;
+import ca.germuth.puzzled.gui.GameActivityLayout;
 import ca.germuth.puzzled.openGL.MyGLSurfaceView;
 import ca.germuth.puzzled.puzzle.Puzzle;
+import ca.germuth.puzzled.puzzle.Puzzle.OnPuzzleSolvedListener;
 import ca.germuth.puzzled.puzzle.PuzzleTurn;
 import ca.germuth.puzzled.puzzle.cube.Cube;
 import ca.germuth.puzzled.util.Chronometer;
@@ -43,8 +46,25 @@ public class GameActivity extends PuzzledActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		Bundle extras = getIntent().getExtras();
+		int size = 2;
+		if(extras != null){
+			size = extras.getInt("puzzle_size");
+		}
+		
 		//TODO recieve puzzle somehow
-		mPuzzle = new Cube(3, 3, 3);
+		mPuzzle = new Cube(size, size, size);
+		mPuzzle.setOnPuzzleSolvedListener(new OnPuzzleSolvedListener(){
+			@Override
+			public void onPuzzleSolved() {
+				mTimer.stop();
+				
+				Intent mainIntent = new Intent(GameActivity.this, StatisticActivity.class);
+                GameActivity.this.startActivity(mainIntent);
+                GameActivity.this.finish();
+			}
+		});
+		
 		this.setContentView(Cube.getLayout());
 		
 		//grab and set up timer
@@ -64,6 +84,10 @@ public class GameActivity extends PuzzledActivity {
 		mPuzzleMoveListener = new PuzzleMoveListener(this.mPuzzle, mGlView);
 		mGlView.initializeRenderer(mPuzzle);
 		
+		GameActivityLayout container = (GameActivityLayout) this.findViewById(R.id.activity_game_container);
+		container.setmActivity(this);
+		container.setmGlView(mGlView);
+
 		// add PuzzeMoveListener to each button 
 		addButtonListeners();
 		
@@ -91,6 +115,8 @@ public class GameActivity extends PuzzledActivity {
 	/**
 	 * Invokes SCRAMBLE_LENGTH random non-rotation moves to the cube. Is performed
 	 * on another thread to it doesnt't freeze the gui
+	 * 
+	 * TODO: Also starts the timer (maybe should be removed from this method
 	 */
 	private void scramblePuzzle(){
 		new Thread(new Runnable(){
@@ -117,8 +143,35 @@ public class GameActivity extends PuzzledActivity {
 						e.printStackTrace();
 					}
 				}
+				
+				GameActivity.this.runOnUiThread(new Runnable(){
+					@Override
+					public void run() {
+						// inspection length is in seconds, mTimer accepts miliseconds
+						mTimer.startCountingDown(INSPECTION_LENGTH * 1000);
+					}
+				});
+				
 			}
 		}).start();
+	}
+	
+	public void changeButtonLevel(boolean advance){
+		//TODO should only increment if the cube needs it
+		//TODO this might be SiGN specific
+		for(Button btn : getAllButtons()){
+			String name = btn.getText().toString();
+			if( advance ){
+				if( Character.isLowerCase( name.charAt(0) ) ){
+					btn.setText("3" + name);				
+				}else{
+					btn.setText("2" + name);
+				}
+			}
+			else{
+				btn.setText( name.substring(1));
+			}
+		}
 	}
 	
 	/**
@@ -134,27 +187,37 @@ public class GameActivity extends PuzzledActivity {
 				continue;
 			}
 			
-			ViewGroup container = (ViewGroup) this.findViewById(R.id.activity_game_container);
 			//iterate through buttons
-			for(int j = 0; j < container.getChildCount(); j++){
-				View v = container.getChildAt(j);
-				if( v instanceof LinearLayout){
-					LinearLayout l = (LinearLayout) v;
-					for(int k = 0; k < l.getChildCount(); k++){
-						View v2 = l.getChildAt(k);
-						if( v2 instanceof Button){
-							final Button btn = (Button) v2;
-							
-							if(btn.getText().toString().equals(current.getmName())){
-								btn.setEnabled(!disable);
-								break;
-							}
-						}
+			for(Button btn: getAllButtons()){
+				if(btn.getText().toString().equals(current.getmName())){
+					btn.setEnabled(!disable);
+					break;
+				}
+			}
+		}
+	}
+	
+	//TODO: change so this method is only ever called once and stored rather than
+	//recomputing it over and over
+	private ArrayList<Button> getAllButtons(){
+		ArrayList<Button> buttons = new ArrayList<Button>();
+		ViewGroup container = (ViewGroup) this.findViewById(R.id.activity_game_container);
+		//iterate through buttons
+		for(int j = 0; j < container.getChildCount(); j++){
+			View v = container.getChildAt(j);
+			if( v instanceof LinearLayout){
+				LinearLayout l = (LinearLayout) v;
+				for(int k = 0; k < l.getChildCount(); k++){
+					View v2 = l.getChildAt(k);
+					if( v2 instanceof Button){
+						final Button btn = (Button) v2;
+						
+						buttons.add(btn);
 					}
 				}
 			}
-			
 		}
+		return buttons;
 	}
 	
 	private void addShakeListener(){
@@ -164,11 +227,15 @@ public class GameActivity extends PuzzledActivity {
 			public void onShake() {
 				
 				disableButtons(true);
+				
 				scramblePuzzle();
-				// inspection length is in seconds, mTimer accepts miliseconds
-				mTimer.startCountingDown(INSPECTION_LENGTH * 1000);
 			}
 		});
 	}
+
+	public Puzzle getPuzzle() {
+		return mPuzzle;
+	}
+	
 	
 }
