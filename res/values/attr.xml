@@ -16,6 +16,7 @@
   ~    limitations under the License.
   -->
 <resources>
+    
     <declare-styleable name="FancyCoverFlow">
         <attr name="unselectedAlpha" format="float"/>
         <attr name="unselectedSaturation" format="float"/>
@@ -26,4 +27,11 @@
             <enum name="auto" value="2147483647" />
         </attr>
     </declare-styleable>
+    
+    <declare-styleable name="SwipeyTabs">
+        <attr name="bottomBarColor" format="color" />
+        <attr name="bottomBarHeight" format="dimension" />
+        <attr name="tabIndicatorHeight" format="dimension" />
+    </declare-styleable>
+    
 </resources>

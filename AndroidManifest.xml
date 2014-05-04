@@ -9,6 +9,7 @@
         android:targetSdkVersion="19" />
     <!-- Tell the system this app requires OpenGL ES 2.0. -->
 	<uses-feature android:glEsVersion="0x00020000" android:required="true" />
+	<uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -32,6 +33,8 @@
             android:name="ca.germuth.puzzled.PuzzleSelectActivity"/>
         <activity
             android:name="ca.germuth.puzzled.GameActivity" />  
+        <activity
+            android:name="ca.germuth.puzzled.StatisticActivity" />
     </application>
 
 </manifest>

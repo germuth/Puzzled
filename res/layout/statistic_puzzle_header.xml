@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="2" >
+    
+	<ImageView
+	    android:layout_width="0dip"
+	    android:layout_height="match_parent"
+	    android:src="@drawable/puzzle_3by3"
+	    android:layout_weight="1"
+	    android:maxHeight="125dp"
+	    android:adjustViewBounds="true"
+	    />
+	
+	<LinearLayout
+	    android:layout_width="0dip"
+    	android:layout_height="match_parent"
+    	android:orientation="vertical" 
+    	android:layout_weight="1">
+	    
+	    <TextView 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" 
+	        android:text="Puzzle Stats:"
+	        android:gravity="center" />
+	    
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:weightSum="2" >
+	        
+	        <TextView 
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="Times Solved:"
+	        	android:gravity="left"
+	        	android:layout_weight="1" />
+	        
+	        <TextView 
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="48"
+	        	android:gravity="right"
+	        	android:layout_weight="1" />
+	        
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:weightSum="2" >
+	        
+	        <TextView 
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="Mean Solve Time:"
+	        	android:gravity="left"
+	        	android:layout_weight="1" />
+	        
+	        <TextView 
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="20.04"
+	        	android:gravity="right"
+	        	android:layout_weight="1" />
+	        
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:weightSum="2" >
+	        
+	        <TextView 
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="Fastest Solve:"
+	        	android:gravity="left"
+	        	android:layout_weight="1" />
+	        
+	        <TextView 
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="13.60"
+	        	android:gravity="right"
+	        	android:layout_weight="1" />
+	        
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:weightSum="2" >
+	        
+	        <TextView 
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="Slowest Solve:"
+	        	android:gravity="left"
+	        	android:layout_weight="1" />
+	        
+	        <TextView 
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="31.61"
+	        	android:gravity="right"
+	        	android:layout_weight="1" />
+	        
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:weightSum="2" >
+	        
+	        <TextView 
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="Fewest Move Solve:"
+	        	android:gravity="left"
+	        	android:layout_weight="1" />
+	        
+	        <TextView 
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="48"
+	        	android:gravity="right"
+	        	android:layout_weight="1" />
+	        
+	    </LinearLayout>
+	        
+	</LinearLayout>
+    
+</LinearLayout>

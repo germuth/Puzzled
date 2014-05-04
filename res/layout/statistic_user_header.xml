@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="2" >
+    
+	<ImageView
+	    android:layout_width="0dip"
+	    android:layout_height="match_parent"
+	    android:src="@drawable/person_image"
+	    android:layout_weight="1"
+	    android:maxHeight="125dp"
+	    android:adjustViewBounds="true"
+	    />
+	
+	<LinearLayout
+	    android:layout_width="0dip"
+    	android:layout_height="match_parent"
+    	android:orientation="vertical" 
+    	android:layout_weight="1">
+	    
+	    <TextView 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" 
+	        android:text="User Stats:"
+	        android:gravity="center" />
+	    
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:weightSum="2" >
+	        
+	        <TextView 
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="Time played:"
+	        	android:gravity="left"
+	        	android:layout_weight="1" />
+	        
+	        <TextView 
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="21 hours"
+	        	android:gravity="right"
+	        	android:layout_weight="1" />
+	        
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:weightSum="2" >
+	        
+	        <TextView 
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="Total puzzles solved:"
+	        	android:gravity="left"
+	        	android:layout_weight="1" />
+	        
+	        <TextView 
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="91"
+	        	android:gravity="right"
+	        	android:layout_weight="1" />
+	        
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:weightSum="2" >
+	        
+	        <TextView 
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="Most popular puzzle:"
+	        	android:gravity="left"
+	        	android:layout_weight="1" />
+	        
+	        <TextView 
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="3x3"
+	        	android:gravity="right"
+	        	android:layout_weight="1" />
+	        
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:weightSum="2" >
+	        
+	        <TextView 
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="Fastest Solve:"
+	        	android:gravity="left"
+	        	android:layout_weight="1" />
+	        
+	        <TextView 
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="10.67"
+	        	android:gravity="right"
+	        	android:layout_weight="1" />
+	        
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:weightSum="2" >
+	        
+	        <TextView 
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="Longest Solve:"
+	        	android:gravity="left"
+	        	android:layout_weight="1" />
+	        
+	        <TextView 
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="11:07.64"
+	        	android:gravity="right"
+	        	android:layout_weight="1" />
+	        
+	    </LinearLayout>
+	        
+	</LinearLayout>
+    
+</LinearLayout>

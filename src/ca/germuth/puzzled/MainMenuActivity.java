@@ -19,40 +19,46 @@ public class MainMenuActivity extends PuzzledActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_menu);
-		
+
 		this.setUpButtons();
 	}
 
 	@Override
 	public void onClick(View v) {
+		Intent myIntent = null;
 		switch (v.getId()) {
-		case R.id.activity_main_menu_play_button:
-			Intent myIntent = new Intent(MainMenuActivity.this, PuzzleSelectActivity.class);
-			MainMenuActivity.this.startActivity(myIntent);
-			break;
-		case R.id.activity_main_menu_statistic_button:
-			break;
-		case R.id.activity_main_menu_achievement_button:
-			break;
-		case R.id.activity_main_menu_leaderboard_button:
-			break;
-		case R.id.activity_main_menu_setting_button:
-			break;
-		case R.id.activity_main_menu_quit_button:
-			MainMenuActivity.this.finish();
-			System.exit(0);
-			break;
+			case R.id.activity_main_menu_play_button:
+				myIntent = new Intent(MainMenuActivity.this,
+						PuzzleSelectActivity.class);
+				MainMenuActivity.this.startActivity(myIntent);
+				break;
+			case R.id.activity_main_menu_statistic_button:
+				myIntent = new Intent(MainMenuActivity.this,
+						StatisticActivity.class);
+				MainMenuActivity.this.startActivity(myIntent);
+				break;
+			case R.id.activity_main_menu_achievement_button:
+				break;
+			case R.id.activity_main_menu_leaderboard_button:
+				break;
+			case R.id.activity_main_menu_setting_button:
+				break;
+			case R.id.activity_main_menu_quit_button:
+				MainMenuActivity.this.finish();
+				System.exit(0);
+				break;
 		}
 
 	}
 
 	private void setUpButtons() {
-		Typeface agentOrange = FontManager.getTypeface(this, FontManager.AGENT_ORANGE_FONT);
+		Typeface agentOrange = FontManager.getTypeface(this,
+				FontManager.AGENT_ORANGE_FONT);
 		LinearLayout ll = (LinearLayout) this
 				.findViewById(R.id.activity_main_menu_container);
 		for (int i = 0; i < ll.getChildCount(); i++) {
 			View child = ll.getChildAt(i);
-			if( child instanceof Button){
+			if (child instanceof Button) {
 				Button btn = (Button) child;
 				btn.setOnClickListener(this);
 				btn.setTypeface(agentOrange);
