@@ -9,6 +9,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import ca.germuth.puzzled.R;
+import ca.germuth.puzzled.gui.Graph;
 import ca.germuth.puzzled.gui.StatisticsPanel;
 import net.peterkuterna.android.apps.swipeytabs.SwipeyTabFragment;
 
@@ -37,52 +38,25 @@ public class UserFragment extends SwipeyTabFragment{
         webview.requestFocusFromTouch();
         webview.setWebViewClient(new WebViewClient());
         webview.setWebChromeClient(new WebChromeClient());
+        
+        Graph g = new Graph("Average Solve Duration over Time", 
+        		"Solve Number",
+        		new String[]{"Average Duration"},
+        		new double[]{1, 20, 30, 40},
+        		new double[][]{ {25.14, 24.67, 24.11, 24.01} });
+        
         // Load the URL
-        webview.loadDataWithBaseURL( "file:///android_asset/", getURL(), "text/html", "utf-8", null );
+        webview.loadDataWithBaseURL( "file:///android_asset/", g.getJavaScript(), "text/html", "utf-8", null );
         st2.addView(webview);
-        //webview.loadUrl("file:///android_asset/www/rG.html");
-
+        
 		list.addView(st);
 		list.addView(st2);
 		
-		final String title = this.getName();
-		//((TextView) root.findViewById(R.id.text)).setText(title);
 		return root;
 	}
 	
 	@Override
 	public String getName() {
 		return NAME;
-	}
-
-	private String getURL(){
-		String content = "<html>"
-                + "  <head>"
-                + "    <script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script>"
-                + "    <script type=\"text/javascript\">"
-                + "      google.load(\"visualization\", \"1\", {packages:[\"corechart\"]});"
-                + "      google.setOnLoadCallback(drawChart);"
-                + "      function drawChart() {"
-                + "        var data = google.visualization.arrayToDataTable(["
-                + "          ['Total Solves', 'Average Duration'],"
-                + "          ['1',   25.14],"
-                + "          ['20',  24.67],"
-                + "          ['30',  24.11],"
-                + "          ['40',  24.01]"
-                + "        ]);"
-                + "        var options = {"
-                + "          title: 'Average Solve Duration over Time',"
-                + "          hAxis: {title: 'Solve Number', titleTextStyle: {color: 'red'}}"
-                + "        };"
-                + "        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));"
-                + "        chart.draw(data, options);"
-                + "      }"
-                + "    </script>"
-                + "  </head>"
-                + "  <body>"
-                + "    <div id=\"chart_div\" style=\"width: 500px; height: 250px;\"></div>"
-                + "       <img style=\"padding: 0; margin: 0 0 0 330px; display: block;\" src=\"truiton.png\"/>"
-                + "  </body>" + "</html>";
-		return content;
 	}
 }
