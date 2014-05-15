@@ -84,7 +84,12 @@ public class Cube implements Puzzle {
 			}
 		};
 	}
-
+	
+	@Override
+	public String getName() {
+		return this.width + "x" + this.height + "x" + this.depth + " cube";
+	}
+	
 	@Override
 	public boolean isSolved() {
 		// check if every colour in top is the same

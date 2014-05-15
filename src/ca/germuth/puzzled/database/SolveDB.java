@@ -6,9 +6,16 @@ public class SolveDB {
 	private int mDuration;
 	private String mReplay;
 	private PuzzleDB mPuzzle;
-	private int mDateTime;
+	private long mDateTime;
 	
-	public SolveDB(int id, int duration, String replay, PuzzleDB puz, int dateTime){
+	public SolveDB(int duration, String replay, PuzzleDB puz, long dateTime){
+		mDuration = duration;
+		mReplay = replay;
+		mPuzzle = puz;
+		mDateTime = dateTime;
+	}
+	
+	public SolveDB(int id, int duration, String replay, PuzzleDB puz, long dateTime){
 		mId = id;
 		mDuration = duration;
 		mReplay = replay;
@@ -48,11 +55,11 @@ public class SolveDB {
 		this.mPuzzle = mPuzzle;
 	}
 
-	public int getmDateTime() {
+	public long getmDateTime() {
 		return mDateTime;
 	}
 
-	public void setmDateTime(int mDateTime) {
+	public void setmDateTime(long mDateTime) {
 		this.mDateTime = mDateTime;
 	}
 	

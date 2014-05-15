@@ -40,7 +40,7 @@ public class UserFragment extends SwipeyTabFragment{
         webview.setWebChromeClient(new WebChromeClient());
         
         Graph g = new Graph("Average Solve Duration over Time", 
-        		"Solve Number",
+        		"Solve Number", "Seconds", 
         		new String[]{"Average Duration"},
         		new double[]{1, 20, 30, 40},
         		new double[][]{ {25.14, 24.67, 24.11, 24.01} });
@@ -49,8 +49,8 @@ public class UserFragment extends SwipeyTabFragment{
         webview.loadDataWithBaseURL( "file:///android_asset/", g.getJavaScript(), "text/html", "utf-8", null );
         st2.addView(webview);
         
-		list.addView(st);
-		list.addView(st2);
+		list.addView(st, 0);
+		list.addView(st2, 1);
 		
 		return root;
 	}

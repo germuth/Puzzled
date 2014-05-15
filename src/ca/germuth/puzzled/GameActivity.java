@@ -1,15 +1,21 @@
 package ca.germuth.puzzled;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import ca.germuth.puzzled.ShakeListener.OnShakeListener;
+import ca.germuth.puzzled.database.PuzzledDatabase;
+import ca.germuth.puzzled.database.SolveDB;
 import ca.germuth.puzzled.gui.GameActivityLayout;
 import ca.germuth.puzzled.openGL.MyGLSurfaceView;
 import ca.germuth.puzzled.puzzle.Puzzle;
@@ -41,6 +47,7 @@ public class GameActivity extends PuzzledActivity {
 	private PuzzleMoveListener mPuzzleMoveListener;
 	private MyGLSurfaceView mGlView;
 	private Chronometer mTimer;
+	private boolean solving;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +64,32 @@ public class GameActivity extends PuzzledActivity {
 		mPuzzle.setOnPuzzleSolvedListener(new OnPuzzleSolvedListener(){
 			@Override
 			public void onPuzzleSolved() {
-				mTimer.stop();
-				
-				Intent mainIntent = new Intent(GameActivity.this, StatisticActivity.class);
-                GameActivity.this.startActivity(mainIntent);
-                GameActivity.this.finish();
+				if(solving){
+					solving = false;
+					mTimer.stop();
+					
+					//async task to insert solve in database
+					//when done switch windows
+					new AsyncTask<Void, Void, Void>(){
+						@Override
+						protected Void doInBackground(Void... params) {
+							PuzzledDatabase db = new PuzzledDatabase(GameActivity.this);
+							//int duration, String replay, PuzzleDB puz, long dateTime){
+							Date d = new Date();
+							SolveDB ss = new SolveDB((int)mTimer.getTimeElapsed(), "R F R U", db.convert(new Cube(3,3,3)), d.getTime());
+							db.insertSolve(ss);
+							return null;
+						}
+						@Override
+						protected void onPostExecute(Void result) {
+							super.onPostExecute(result);
+							Intent mainIntent = new Intent(GameActivity.this, StatisticActivity.class);
+							GameActivity.this.startActivity(mainIntent);
+							GameActivity.this.finish();
+						}
+					}.execute((Void[]) null);;
+	
+				}
 			}
 		});
 		
@@ -76,6 +104,7 @@ public class GameActivity extends PuzzledActivity {
 			public void onChronometerFinish(Chronometer chronometer) {
 				disableButtons(false);
 				mTimer.start();
+				solving = true;
 			}
 		});
 		

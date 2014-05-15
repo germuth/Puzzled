@@ -6,27 +6,27 @@ public class DatabaseSchema {
 	
 	/* Inner class that defines the table contents */
 	//BaseColumn provides _id column for primary key
-    public static abstract class Puzzle implements BaseColumns {
+    public static abstract class PuzzleTable implements BaseColumns {
         public static final String TABLE_NAME = "puzzle";
         public static final String COLUMN_PUZZLE_NAME = "name";
         
         protected static final String SQL_CREATE_TABLE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
-                Puzzle._ID + " integer primary key autoincrement," + 
+                PuzzleTable._ID + " integer primary key autoincrement," + 
                 COLUMN_PUZZLE_NAME + " varchar(50) not null );";
     }
     
-    public static abstract class Solve implements BaseColumns {
+    public static abstract class SolveTable implements BaseColumns {
     	public static final String TABLE_NAME = "solve";
-    	public static final String COLUMN_SOLVE_TIME = "duration";
+    	public static final String COLUMN_SOLVE_DURATION = "duration";
     	public static final String COLUMN_REPLAY = "replay";
     	public static final String COLUMN_PUZZLE = "puzzle";
     	public static final String COLUMN_SOLVE_DATE = "time";
-    	
-    	protected static final String SQL_CREATE_TABLE = 
+    	//TODO make protected
+    	public static final String SQL_CREATE_TABLE = 
     			"CREATE TABLE " + TABLE_NAME + " (" + 
-    			Solve._ID + " integer primary key autoincrement," + 
-    			COLUMN_SOLVE_TIME + " integer," + 
+    			SolveTable._ID + " integer primary key autoincrement," + 
+    			COLUMN_SOLVE_DURATION + " integer," + 
     			COLUMN_REPLAY + " TEXT," + 
     			COLUMN_PUZZLE + " integer," + 
     			//milliseconds since 1970 or System.currentTimeMillis()
@@ -36,7 +36,7 @@ public class DatabaseSchema {
     			//  convert to SimpleDateFormat
     			//  bam you can prompt for day, year, month, etc
     			COLUMN_SOLVE_DATE + " integer," + 
-    			"FOREIGN KEY(" + COLUMN_PUZZLE + ") REFERENCES " + Puzzle.TABLE_NAME + "(" + Puzzle._ID + ") );";
+    			"FOREIGN KEY(" + COLUMN_PUZZLE + ") REFERENCES " + PuzzleTable.TABLE_NAME + "(" + PuzzleTable._ID + ") );";
     }
 
 }

@@ -150,9 +150,24 @@ containing a value of this type.
         public static final int auto=0x7f040000;
         public static final int leftInnerColumn=0x7f040011;
         public static final int leftOuterColumn=0x7f040010;
+        public static final int puzzle_panel_avg_100=0x7f040020;
+        public static final int puzzle_panel_avg_12=0x7f04001e;
+        public static final int puzzle_panel_avg_5=0x7f04001d;
+        public static final int puzzle_panel_avg_50=0x7f04001f;
+        public static final int puzzle_panel_avg_all_time=0x7f04001c;
         public static final int rightInnerColumn=0x7f040013;
         public static final int rightOuterColumn=0x7f040012;
-        public static final int swipey_tab=0x7f040016;
+        public static final int statistic_panel_list=0x7f040017;
+        public static final int stats_puzzle_current_avg_100=0x7f040024;
+        public static final int stats_puzzle_current_avg_12=0x7f040022;
+        public static final int stats_puzzle_current_avg_5=0x7f040021;
+        public static final int stats_puzzle_current_avg_50=0x7f040023;
+        public static final int stats_puzzle_delete_button=0x7f040016;
+        public static final int stats_puzzle_fastest_solve=0x7f040019;
+        public static final int stats_puzzle_fewest_moves=0x7f04001b;
+        public static final int stats_puzzle_slowest_solve=0x7f04001a;
+        public static final int stats_puzzle_times_solved=0x7f040018;
+        public static final int swipey_tab=0x7f040025;
         public static final int swipeytabs=0x7f04000c;
         public static final int text=0x7f04000e;
         public static final int viewpager=0x7f04000d;
@@ -197,6 +212,9 @@ containing a value of this type.
         /**  The Navigation buttons in PuzzleSelection Activity 
          */
         public static final int activity_puzzle_selection_button=0x7f090001;
+        /**  The textviews for statistics 
+         */
+        public static final int activity_statistics_textview=0x7f090003;
     }
     public static final class styleable {
         /** Attributes that can be used with a FancyCoverFlow.

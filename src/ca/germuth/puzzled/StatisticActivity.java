@@ -89,6 +89,5 @@ public class StatisticActivity extends PuzzledFragmentActivity {
 
 			return view;
 		}
-
 	}
 }

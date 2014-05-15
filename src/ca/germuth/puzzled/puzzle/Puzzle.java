@@ -32,6 +32,8 @@ public interface Puzzle {
 	abstract void setOnPuzzleSolvedListener(OnPuzzleSolvedListener list);
 	abstract OnPuzzleSolvedListener getOnPuzzleSolvedListener();
 	
+	abstract String getName();
+	
 	/**
 	 * Returns all of the changed tiles since the last call
 	 * to moveFinished(); 

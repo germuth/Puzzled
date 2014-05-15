@@ -43,8 +43,8 @@ public class SolveFragment extends SwipeyTabFragment{
         st2.addView(webview);
         //webview.loadUrl("file:///android_asset/www/rG.html");
 
-		list.addView(st);
-		list.addView(st2);
+		list.addView(st, 0);
+		list.addView(st2, 1);
 		
 		final String title = this.getName();
 		//((TextView) root.findViewById(R.id.text)).setText(title);

@@ -2,135 +2,305 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:weightSum="2" >
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2" >
+
+        <ImageView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:maxHeight="125dp"
+            android:src="@drawable/puzzle_3by3" />
+
+        <LinearLayout
+            android:id="@+id/statistic_panel_list"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Puzzle Stats:"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <!-- Here goes other stats -->
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2" >
+
+                <TextView
+                    style="@style/activity_statistics_textview"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="Times Solved:" />
+
+                <TextView
+                    style="@style/activity_statistics_textview"
+                    android:id="@+id/stats_puzzle_times_solved"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2" >
+
+                <TextView
+                    style="@style/activity_statistics_textview"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="Fastest Solve:" />
+
+                <TextView
+                    style="@style/activity_statistics_textview"
+                    android:id="@+id/stats_puzzle_fastest_solve"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2" >
+
+                <TextView
+                    style="@style/activity_statistics_textview"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="Slowest Solve:" />
+
+                <TextView
+                    style="@style/activity_statistics_textview"
+                    android:id="@+id/stats_puzzle_slowest_solve"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2" >
+
+                <TextView
+                    style="@style/activity_statistics_textview"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="Fewest Moves:" />
+
+                <TextView
+                    style="@style/activity_statistics_textview"
+                    android:id="@+id/stats_puzzle_fewest_moves"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2" >
+
+                <TextView
+                    style="@style/activity_statistics_textview"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="All Time Average:" />
+
+                <TextView
+                    style="@style/activity_statistics_textview"
+                    android:id="@+id/puzzle_panel_avg_all_time"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4" >
+
+        <TextView
+            style="@style/activity_statistics_textview"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="Best Avg of 5:" />
+
+        <TextView
+            style="@style/activity_statistics_textview"
+            android:id="@+id/puzzle_panel_avg_5"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right" />
+
+        <TextView
+            style="@style/activity_statistics_textview"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="Best Avg of 12:" />
+
+        <TextView
+            style="@style/activity_statistics_textview"
+            android:id="@+id/puzzle_panel_avg_12"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4" >
+
+        <TextView
+            style="@style/activity_statistics_textview"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="Best Avg of 50:" />
+
+        <TextView
+            style="@style/activity_statistics_textview"
+            android:id="@+id/puzzle_panel_avg_50"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right" />
+
+        <TextView
+            style="@style/activity_statistics_textview"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="Best Avg of 100:" />
+
+        <TextView
+            style="@style/activity_statistics_textview"
+            android:id="@+id/puzzle_panel_avg_100"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right" />
+    </LinearLayout>
     
-	<ImageView
-	    android:layout_width="0dip"
-	    android:layout_height="match_parent"
-	    android:src="@drawable/puzzle_3by3"
-	    android:layout_weight="1"
-	    android:maxHeight="125dp"
-	    android:adjustViewBounds="true"
-	    />
-	
-	<LinearLayout
-	    android:layout_width="0dip"
-    	android:layout_height="match_parent"
-    	android:orientation="vertical" 
-    	android:layout_weight="1">
-	    
-	    <TextView 
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content" 
-	        android:text="Puzzle Stats:"
-	        android:gravity="center" />
-	    
-	    <LinearLayout
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:weightSum="2" >
-	        
-	        <TextView 
-	        	android:layout_width="0dip"
-	        	android:layout_height="wrap_content" 
-	        	android:text="Times Solved:"
-	        	android:gravity="left"
-	        	android:layout_weight="1" />
-	        
-	        <TextView 
-	        	android:layout_width="0dip"
-	        	android:layout_height="wrap_content" 
-	        	android:text="48"
-	        	android:gravity="right"
-	        	android:layout_weight="1" />
-	        
-	    </LinearLayout>
-	    
-	    <LinearLayout
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:weightSum="2" >
-	        
-	        <TextView 
-	        	android:layout_width="0dip"
-	        	android:layout_height="wrap_content" 
-	        	android:text="Mean Solve Time:"
-	        	android:gravity="left"
-	        	android:layout_weight="1" />
-	        
-	        <TextView 
-	        	android:layout_width="0dip"
-	        	android:layout_height="wrap_content" 
-	        	android:text="20.04"
-	        	android:gravity="right"
-	        	android:layout_weight="1" />
-	        
-	    </LinearLayout>
-	    
-	    <LinearLayout
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:weightSum="2" >
-	        
-	        <TextView 
-	        	android:layout_width="0dip"
-	        	android:layout_height="wrap_content" 
-	        	android:text="Fastest Solve:"
-	        	android:gravity="left"
-	        	android:layout_weight="1" />
-	        
-	        <TextView 
-	        	android:layout_width="0dip"
-	        	android:layout_height="wrap_content" 
-	        	android:text="13.60"
-	        	android:gravity="right"
-	        	android:layout_weight="1" />
-	        
-	    </LinearLayout>
-	    
-	    <LinearLayout
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:weightSum="2" >
-	        
-	        <TextView 
-	        	android:layout_width="0dip"
-	        	android:layout_height="wrap_content" 
-	        	android:text="Slowest Solve:"
-	        	android:gravity="left"
-	        	android:layout_weight="1" />
-	        
-	        <TextView 
-	        	android:layout_width="0dip"
-	        	android:layout_height="wrap_content" 
-	        	android:text="31.61"
-	        	android:gravity="right"
-	        	android:layout_weight="1" />
-	        
-	    </LinearLayout>
-	    
-	    <LinearLayout
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:weightSum="2" >
-	        
-	        <TextView 
-	        	android:layout_width="0dip"
-	        	android:layout_height="wrap_content" 
-	        	android:text="Fewest Move Solve:"
-	        	android:gravity="left"
-	        	android:layout_weight="1" />
-	        
-	        <TextView 
-	        	android:layout_width="0dip"
-	        	android:layout_height="wrap_content" 
-	        	android:text="48"
-	        	android:gravity="right"
-	        	android:layout_weight="1" />
-	        
-	    </LinearLayout>
-	        
-	</LinearLayout>
-    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4" >
+
+        <TextView
+            style="@style/activity_statistics_textview"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="Current Avg of 5:" />
+
+        <TextView
+            style="@style/activity_statistics_textview"
+            android:id="@+id/stats_puzzle_current_avg_5"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right" />
+
+        <TextView
+            style="@style/activity_statistics_textview"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="Current Avg of 12:" />
+
+        <TextView
+            style="@style/activity_statistics_textview"
+            android:id="@+id/stats_puzzle_current_avg_12"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4" >
+
+        <TextView
+            style="@style/activity_statistics_textview"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="Current Avg of 50:" />
+
+        <TextView
+            style="@style/activity_statistics_textview"
+            android:id="@+id/stats_puzzle_current_avg_50"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right" />
+
+        <TextView
+            style="@style/activity_statistics_textview"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="Current Avg of 100:" />
+
+        <TextView
+            style="@style/activity_statistics_textview"
+            android:id="@+id/stats_puzzle_current_avg_100"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right" />
+    </LinearLayout>
+
 </LinearLayout>

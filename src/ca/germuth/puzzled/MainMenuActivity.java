@@ -1,15 +1,18 @@
 package ca.germuth.puzzled;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Chronometer;
 import android.widget.LinearLayout;
-import ca.germuth.puzzled.openGL.GLVertex;
+import android.widget.Toast;
+import ca.germuth.puzzled.database.DatabaseSchema;
+import ca.germuth.puzzled.database.PuzzledDatabase;
+import ca.germuth.puzzled.database.DatabaseSchema.SolveTable;
+import ca.germuth.puzzled.puzzle.cube.Cube;
 import ca.germuth.puzzled.util.FontManager;
 
 public class MainMenuActivity extends PuzzledActivity implements
@@ -38,6 +41,7 @@ public class MainMenuActivity extends PuzzledActivity implements
 				MainMenuActivity.this.startActivity(myIntent);
 				break;
 			case R.id.activity_main_menu_achievement_button:
+
 				break;
 			case R.id.activity_main_menu_leaderboard_button:
 				break;

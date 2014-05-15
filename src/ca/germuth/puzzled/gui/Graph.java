@@ -2,22 +2,44 @@ package ca.germuth.puzzled.gui;
 
 public class Graph {
 	
-	private static final int X_SIZE = 500;
-	private static final int Y_SIZE = 250;
+	public static final int X_SIZE = 500;
+	public static final int Y_SIZE = 250;
 	
 	private String mTitle;
 	private String mXAxisName;
+	private String mYAxisUnit;
 	private String[] mYAxesName;
-	private double[] mXValues;
-	private double[][] mYValues;
+	private String[] mXValues;
+	private String[][] mYValues;
 	
-	public Graph(String title, String xAxisName, String[] yAxesName, double xValues[], double yValues[][]){
+	public Graph(String title, String xAxisName, String yAxisUnit, String[] yAxesName, String xValues[], String yValues[][]){
 		assert ( yAxesName.length == yValues.length && xValues.length == yValues[0].length);
 		mTitle = title;
 		mXAxisName = xAxisName;
+		mYAxisUnit = yAxisUnit;
 		mYAxesName = yAxesName;
 		mXValues = xValues;
 		mYValues = yValues;
+	}
+	
+	public Graph(String title, String xAxisName, String yAxisUnit, String[] yAxesName, double xValues[], double yValues[][]){
+		assert ( yAxesName.length == yValues.length && xValues.length == yValues[0].length);
+		mTitle = title;
+		mXAxisName = xAxisName;
+		mYAxisUnit = yAxisUnit;
+		mYAxesName = yAxesName;
+		String[] xVals = new String[xValues.length];
+		for(int i = 0; i < xValues.length; i++){
+			xVals[i] = xValues[i] + "";
+		}
+		mXValues = xVals;
+		String[][] yVals = new String[yValues.length][yValues[0].length];
+		for(int i = 0; i < yValues.length; i++){
+			for(int j = 0; j < yValues[i].length; j++){
+				yVals[i][j] = yValues[i][j] + "";
+			}
+		}
+		mYValues = yVals;
 	}
 	
 	//TODO stringbuilder much better
@@ -65,7 +87,8 @@ public class Graph {
                   "        ]);"
                 + "        var options = {"
                 + "          title: '" + mTitle + "',"
-                + "          hAxis: {title: '" + mXAxisName + "', titleTextStyle: {color: 'red'}}"
+                + "          hAxis: {title: '" + mXAxisName      + "', titleTextStyle: {color: 'blue'}},"
+                + "          vAxis: {title: '" + this.mYAxisUnit + "', titleTextStyle: {color: 'blue'}}"
                 + "        };"
                 + "        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));"
                 + "        chart.draw(data, options);"
