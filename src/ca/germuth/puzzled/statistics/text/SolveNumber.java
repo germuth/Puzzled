@@ -6,31 +6,27 @@ import android.app.Activity;
 import ca.germuth.puzzled.database.PuzzleDB;
 import ca.germuth.puzzled.database.PuzzledDatabase;
 import ca.germuth.puzzled.database.SolveDB;
-import ca.germuth.puzzled.util.Utils;
 
-public class TimesSolved implements TextStatisticsMeasure{
-	public static double getValues(ArrayList<SolveDB> solves)
-			throws IllegalArgumentException {
-		return solves.size();
-	}
+public class SolveNumber implements TextStatisticsMeasure{
 
 	@Override
 	public int getType() {
-		return TextStatisticsMeasure.PUZZLE_TYPE;
+		return TextStatisticsMeasure.SOLVE_TYPE;
 	}
 
 	@Override
 	public String getValue(Activity mActivity, Object mDBObject,
 			int optionalParam) {
-		PuzzleDB puzz = (PuzzleDB) mDBObject;
+		SolveDB solve = (SolveDB) mDBObject;
 		
 		PuzzledDatabase db = new PuzzledDatabase(mActivity);
-		ArrayList<SolveDB> solves = db.getAllSolves(puzz);
+		ArrayList<SolveDB> solves = db.getAllSolves(solve.getmPuzzle());
 		
-		if( solves.isEmpty() ){
-			return null;
+		for(int i = 0; i < solves.size(); i++){
+			if( solves.get(i).equals(solve)){
+				return i + 1 + "";
+			}
 		}
-		return solves.size() + "";
+		return "N/A";
 	}
-
 }

@@ -6,10 +6,12 @@
     android:weightSum="2" >
     
 	<TextView
+	    android:id="@+id/stats_solve_duration"
 	    android:layout_width="0dip"
 	    android:layout_height="match_parent"
-	    android:text="14.32"
-	    android:textSize="72sp"
+	    android:textColor="#000000"
+	    android:textSize="72dp"
+	    android:gravity="center"
 	    android:layout_weight="1"
 	    />
 	
@@ -22,7 +24,9 @@
 	    <TextView 
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content" 
-	        android:text="Current Averages:"
+	        android:text="Solve Stats:"
+	        android:textSize="18sp"
+	        android:textColor="#000000"
 	        android:gravity="center" />
 	    
 	    <LinearLayout
@@ -31,16 +35,18 @@
 	        android:weightSum="2" >
 	        
 	        <TextView 
+	            style="@style/activity_statistics_textview"
 	        	android:layout_width="0dip"
 	        	android:layout_height="wrap_content" 
-	        	android:text="5:"
+	        	android:text="Puzzle:"
 	        	android:gravity="left"
 	        	android:layout_weight="1" />
 	        
 	        <TextView 
+	            style="@style/activity_statistics_textview"
+	            android:id="@+id/stats_solve_puzzle"
 	        	android:layout_width="0dip"
 	        	android:layout_height="wrap_content" 
-	        	android:text="15.72"
 	        	android:gravity="right"
 	        	android:layout_weight="1" />
 	        
@@ -52,16 +58,41 @@
 	        android:weightSum="2" >
 	        
 	        <TextView 
+	            style="@style/activity_statistics_textview"
 	        	android:layout_width="0dip"
 	        	android:layout_height="wrap_content" 
-	        	android:text="12:"
+	        	android:text="Solve Number:"
 	        	android:gravity="left"
 	        	android:layout_weight="1" />
 	        
 	        <TextView 
+	            android:id="@+id/stats_solve_number"
+	            style="@style/activity_statistics_textview"
 	        	android:layout_width="0dip"
 	        	android:layout_height="wrap_content" 
-	        	android:text="17.89"
+	        	android:gravity="right"
+	        	android:layout_weight="1" />
+	        
+	    </LinearLayout>
+	    
+	     <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:weightSum="2" >
+	        
+	        <TextView 
+	            style="@style/activity_statistics_textview"
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
+	        	android:text="Solve Date:"
+	        	android:gravity="left"
+	        	android:layout_weight="1" />
+	        
+	        <TextView 
+	            android:id="@+id/stats_solve_date"
+	            style="@style/activity_statistics_textview"
+	        	android:layout_width="0dip"
+	        	android:layout_height="wrap_content" 
 	        	android:gravity="right"
 	        	android:layout_weight="1" />
 	        
@@ -73,16 +104,18 @@
 	        android:weightSum="2" >
 	        
 	        <TextView 
+	            style="@style/activity_statistics_textview"
 	        	android:layout_width="0dip"
 	        	android:layout_height="wrap_content" 
-	        	android:text="50:"
+	        	android:text="Percentile:"
 	        	android:gravity="left"
 	        	android:layout_weight="1" />
 	        
 	        <TextView 
+	            android:id="@+id/stats_solve_percentile"
+	            style="@style/activity_statistics_textview"
 	        	android:layout_width="0dip"
 	        	android:layout_height="wrap_content" 
-	        	android:text="18.78"
 	        	android:gravity="right"
 	        	android:layout_weight="1" />
 	        
@@ -94,41 +127,28 @@
 	        android:weightSum="2" >
 	        
 	        <TextView 
+	            style="@style/activity_statistics_textview"
 	        	android:layout_width="0dip"
 	        	android:layout_height="wrap_content" 
-	        	android:text="100:"
+	        	android:text="Number of Turns:"
 	        	android:gravity="left"
 	        	android:layout_weight="1" />
 	        
 	        <TextView 
+	            android:id="@+id/stats_solve_move_count"
+	            style="@style/activity_statistics_textview"
 	        	android:layout_width="0dip"
 	        	android:layout_height="wrap_content" 
-	        	android:text="19.48"
 	        	android:gravity="right"
 	        	android:layout_weight="1" />
 	        
 	    </LinearLayout>
 	    
-	    <LinearLayout
+	    <Button
+	        android:id="@+id/stats_solve_replay_button"
 	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:weightSum="2" >
-	        
-	        <TextView 
-	        	android:layout_width="0dip"
-	        	android:layout_height="wrap_content" 
-	        	android:text="All Time:"
-	        	android:gravity="left"
-	        	android:layout_weight="1" />
-	        
-	        <TextView 
-	        	android:layout_width="0dip"
-	        	android:layout_height="wrap_content" 
-	        	android:text="20.49"
-	        	android:gravity="right"
-	        	android:layout_weight="1" />
-	        
-	    </LinearLayout>
+	        android:layout_height="42dp"
+	        android:text="Replay" />
 	        
 	</LinearLayout>
     

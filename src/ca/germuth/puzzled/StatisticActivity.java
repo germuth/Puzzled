@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+import ca.germuth.puzzled.database.PuzzledDatabase;
+import ca.germuth.puzzled.database.SolveDB;
 import ca.germuth.puzzled.fragments.PuzzleFragment;
 import ca.germuth.puzzled.fragments.SolveFragment;
 import ca.germuth.puzzled.fragments.UserFragment;
@@ -33,11 +35,15 @@ public class StatisticActivity extends PuzzledFragmentActivity {
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		setContentView(R.layout.activity_statistic);
-		
-		mSolveFragment = new SolveFragment();
-		mPuzzleFragment = new PuzzleFragment();
+
+		PuzzledDatabase db = new PuzzledDatabase(StatisticActivity.this);
+		//TODO bad
+		SolveDB theSolve = db.getLastSolve();
+
+		mSolveFragment = SolveFragment.newInstance(theSolve);
+		mPuzzleFragment = PuzzleFragment.newInstance(theSolve.getmPuzzle());
 		mUserFragment = new UserFragment();
-		
+
 		mFragments = new SwipeyTabFragment[3];
 		mFragments[0] = mSolveFragment;
 		mFragments[1] = mPuzzleFragment;

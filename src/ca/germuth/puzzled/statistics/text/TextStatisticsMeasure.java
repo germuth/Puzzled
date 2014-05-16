@@ -2,14 +2,16 @@ package ca.germuth.puzzled.statistics.text;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import ca.germuth.puzzled.database.SolveDB;
 
 
 public interface TextStatisticsMeasure {
 	
-	static final Class<?>[] myMeasures = {Highest.class, Lowest.class};
+	public static final int SOLVE_TYPE = 0;
+	public static final int PUZZLE_TYPE = 1;
 	
-	//static abstract ArrayList<Integer> getValues(ArrayList<SolveDB> solves);
+	public abstract int getType();
+	public abstract String getValue(Activity mActivity, Object mDBObject, int optionalParam);
 	
-	//static abstract ArrayList<String> getNames();
 }

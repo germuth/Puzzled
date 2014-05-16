@@ -2,14 +2,29 @@ package ca.germuth.puzzled.statistics.text;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
+import ca.germuth.puzzled.database.PuzzleDB;
+import ca.germuth.puzzled.database.PuzzledDatabase;
 import ca.germuth.puzzled.database.SolveDB;
+import ca.germuth.puzzled.util.Utils;
 
-public class Average {
-	
-	public static double getValues(ArrayList<SolveDB> solves, int size) throws IllegalArgumentException {
+public class Average implements TextStatisticsMeasure{
+
+	@Override
+	public int getType() {
+		return PUZZLE_TYPE;
+	}
+
+	@Override
+	public String getValue(Activity mActivity, Object mDBObject, int optionalParam) {
+		PuzzleDB puzz = (PuzzleDB) mDBObject;
+		int size = optionalParam;
+		
+		PuzzledDatabase db = new PuzzledDatabase(mActivity);
+		ArrayList<SolveDB> solves = db.getAllSolves(puzz);
 		
 		if( size > solves.size() || solves.isEmpty()){
-			throw new IllegalArgumentException();
+			return null;
 		}
 		if( size == Integer.MAX_VALUE){
 			size = solves.size();
@@ -23,6 +38,6 @@ public class Average {
 		}
 		avg /= count;
 		
-		return avg;
+		return Utils.solveDurationToStringSeconds((int)avg);
 	}
 }

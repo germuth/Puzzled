@@ -1,6 +1,8 @@
 package ca.germuth.puzzled.util;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.graphics.Rect;
 import android.view.View;
@@ -8,6 +10,44 @@ import android.view.ViewGroup;
 import ca.germuth.puzzled.puzzle.cube.Cube;
 
 public class Utils {
+	
+	public static String solveDurationToStringSeconds(int duration){
+		//duration is in ms
+		//int hours = duration / ( 1000 * 60 * 60);
+		//int milliLeft = duration - (hours * 1000 * 60 * 60);
+		
+		//int minutes = milliLeft / (1000 * 60);
+		//milliLeft = milliLeft - ( minutes * 1000 * 60);
+		
+		//int seconds = milliLeft / 1000;
+		int seconds = duration / 1000;
+		int milliLeft = duration - (seconds * 1000);
+		
+		//return hours + ":" + minutes + ":" + seconds + "." + milliLeft;
+		return seconds + "." + milliLeft;
+	}
+	
+	public static String solveDurationToStringMinutes(int duration){
+		//duration is in ms
+		// int hours = duration / ( 1000 * 60 * 60);
+		// int milliLeft = duration - (hours * 1000 * 60 * 60);
+
+		int minutes = duration / (1000 * 60);
+		int milliLeft = duration - (minutes * 1000 * 60);
+
+		int seconds = milliLeft / 1000;
+		milliLeft = duration - (seconds * 1000);
+
+		// return hours + ":" + minutes + ":" + seconds + "." + milliLeft;
+		return seconds + "." + milliLeft;
+	}
+
+	public static String solveDateToString(long msSince1970 ){
+		Date date = new Date( msSince1970);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy HH:mm:ss");
+		return sdf.format(date);
+	}
+	
 	 /**
 	  * TODO: Test if slower than using Java reflection: Reflection.getAllSubtypes
      * Get a list of classes that are subclasses of a given class, in the same

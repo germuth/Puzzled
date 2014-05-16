@@ -1,13 +1,13 @@
 package ca.germuth.puzzled.database;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import ca.germuth.puzzled.database.DatabaseSchema.PuzzleTable;
 import ca.germuth.puzzled.database.DatabaseSchema.SolveTable;
 import ca.germuth.puzzled.puzzle.Puzzle;
@@ -62,6 +62,16 @@ public class PuzzledDatabase extends SQLiteOpenHelper{
     	db.insert(SolveTable.TABLE_NAME, null, values);
     }
     
+    public void deleteSolve(SolveDB solve){
+    	SQLiteDatabase db = this.getWritableDatabase();
+    	
+    	if( solve.getmId() != 0){
+    		db.delete(SolveTable.TABLE_NAME, SolveTable._ID + " =?", new String[]{solve.getmId() + ""});
+    	}else{
+    		Log.wtf("DATABASE", "CANNOT delete solve without its id bro");
+    	}
+    }
+    
     public void deleteAllSolves(PuzzleDB puz){
     	SQLiteDatabase db = this.getWritableDatabase();
     	if( puz != null){
@@ -75,6 +85,39 @@ public class PuzzledDatabase extends SQLiteOpenHelper{
     	}
     }
     
+    public SolveDB getLastSolve(){
+    	SQLiteDatabase db = this.getWritableDatabase();
+    	Cursor c = db.rawQuery(
+    			" SELECT * " + 
+    			" FROM " + SolveTable.TABLE_NAME +
+    			//most recent solves last
+    			" ORDER BY " + SolveTable.COLUMN_SOLVE_DATE + " ASC", 
+    			
+    			null );
+    	if( c.moveToLast() ){
+    		int SolveTableID = c.getInt(c.getColumnIndex(SolveTable._ID));
+    		String replay = c.getString(c.getColumnIndex(SolveTable.COLUMN_REPLAY));
+    		long dateTime = c.getLong(c.getColumnIndex(SolveTable.COLUMN_SOLVE_DATE));
+    		int duration = c.getInt(c.getColumnIndex(SolveTable.COLUMN_SOLVE_DURATION));
+    		int puzzleId = c.getInt(c.getColumnIndex(SolveTable.COLUMN_PUZZLE));
+    		
+    		Cursor c2 = db.rawQuery(
+    				" SELECT * " +
+    				" FROM " + PuzzleTable.TABLE_NAME +
+    				" WHERE " + PuzzleTable._ID + " =? ",
+    				new String[]{ puzzleId + "" });
+    		if( c2.moveToFirst() ){
+    			PuzzleDB puz = new PuzzleDB(c2.getInt(c2.getColumnIndex(PuzzleTable._ID)),
+        				c2.getString(c2.getColumnIndex(PuzzleTable.COLUMN_PUZZLE_NAME)));  
+    			SolveDB SolveTable = new SolveDB( SolveTableID, duration, replay, puz, dateTime);
+        		return SolveTable;
+    		}else{
+    			return null;
+    		}
+    	}else{
+    		return null;
+    	}
+    }
     /**
      * Returns all solves for a given puzzle. Solves are ordered by date, 
      * with more recent solves appearing later in the list

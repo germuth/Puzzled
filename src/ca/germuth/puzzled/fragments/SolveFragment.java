@@ -4,18 +4,39 @@ import net.peterkuterna.android.apps.swipeytabs.SwipeyTabFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import ca.germuth.puzzled.R;
+import ca.germuth.puzzled.database.PuzzledDatabase;
+import ca.germuth.puzzled.database.SolveDB;
 import ca.germuth.puzzled.gui.StatisticsPanel;
-
+import ca.germuth.puzzled.statistics.graph.GraphStatisticsTask;
+import ca.germuth.puzzled.statistics.graph.MoveDistribution;
+import ca.germuth.puzzled.statistics.graph.TimeDistribution;
+import ca.germuth.puzzled.statistics.text.MoveCount;
+import ca.germuth.puzzled.statistics.text.Percentile;
+import ca.germuth.puzzled.statistics.text.SolveNumber;
+import ca.germuth.puzzled.statistics.text.TextStatisticsTask;
+import ca.germuth.puzzled.util.Utils;
+//add guage for turns per second
+//graph for turns per second overtime
 public class SolveFragment extends SwipeyTabFragment{
 	private static final String name = "SOLVE";
 	
+	private SolveDB mSolve;
+	
+	public static final SolveFragment newInstance(SolveDB solve)
+	{
+	    SolveFragment fragment = new SolveFragment();
+	    Bundle bundle = new Bundle(1);
+	    bundle.putParcelable("solve", solve);
+	    fragment.setArguments(bundle);
+	    return fragment ;
+	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -24,66 +45,48 @@ public class SolveFragment extends SwipeyTabFragment{
 				R.layout.statistic_panel, null);
 		ViewGroup list = (ViewGroup) root.getChildAt(0);
 		
+		mSolve = this.getArguments().getParcelable("solve");
+		
 		//create header panel which left half is last solve, and right half is averages
 		StatisticsPanel st = new StatisticsPanel(this.getActivity());
 		View.inflate(this.getActivity(), R.layout.statistic_solve_header, st);
 		
-		//create graph
-		StatisticsPanel st2 = new StatisticsPanel(this.getActivity());
-		
-		WebView webview = new WebView(this.getActivity());
-        WebSettings webSettings = webview.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setBuiltInZoomControls(true);
-        webview.requestFocusFromTouch();
-        webview.setWebViewClient(new WebViewClient());
-        webview.setWebChromeClient(new WebChromeClient());
-        // Load the URL
-        webview.loadDataWithBaseURL( "file:///android_asset/", getURL(), "text/html", "utf-8", null );
-        st2.addView(webview);
-        //webview.loadUrl("file:///android_asset/www/rG.html");
-
 		list.addView(st, 0);
-		list.addView(st2, 1);
+		((Button)list.findViewById(R.id.stats_puzzle_delete_button)).setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				PuzzledDatabase db = new PuzzledDatabase(getActivity());
+				db.deleteSolve(mSolve);
+			}
+		});
 		
-		final String title = this.getName();
-		//((TextView) root.findViewById(R.id.text)).setText(title);
+		setHeader(root);
+		
+		new GraphStatisticsTask(this.getActivity(), MoveDistribution.class, (ScrollView)root, list, new StatisticsPanel(this.getActivity())).execute((Void[]) null);
+		new GraphStatisticsTask(this.getActivity(), TimeDistribution.class, (ScrollView)root, list, new StatisticsPanel(this.getActivity())).execute((Void[]) null);
+		
+		
 		return root;
+	}
+	
+	private void setHeader(ViewGroup root){
+		TextView time = (TextView) root.findViewById(R.id.stats_solve_duration);
+		time.setText( Utils.solveDurationToStringMinutes( mSolve.getmDuration() ) );
+		TextView puzName = (TextView) root.findViewById(R.id.stats_solve_puzzle);
+		puzName.setText( mSolve.getmPuzzle().getmName() );
+		TextView solDate = (TextView) root.findViewById(R.id.stats_solve_date);
+		solDate.setText( Utils.solveDateToString( mSolve.getmDateTime() ) );
+		
+		TextView moveCount = (TextView) root.findViewById(R.id.stats_solve_move_count);
+		TextView solveNum = (TextView) root.findViewById(R.id.stats_solve_number);
+		TextView percentile = (TextView) root.findViewById(R.id.stats_solve_percentile);
+		
+		TextStatisticsTask.runAll(new Class[]{MoveCount.class, SolveNumber.class, Percentile.class},
+				new TextView[]{moveCount, solveNum, percentile}, new int[3], mSolve, getActivity());
 	}
 	
 	@Override
 	public String getName() {
 		return name;
-	}
-
-	private String getURL(){
-		String content = "<html>"
-                + "  <head>"
-                + "    <script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script>"
-                + "    <script type=\"text/javascript\">"
-                + "      google.load(\"visualization\", \"1\", {packages:[\"corechart\"]});"
-                + "      google.setOnLoadCallback(drawChart);"
-                + "      function drawChart() {"
-                + "        var data = google.visualization.arrayToDataTable(["
-                + "          ['Solve Number', '3x3 Duration', '4x4 Duration'],"
-                + "          ['1',  18.67,      37.89],"
-                + "          ['2',  17.14,      32.14],"
-                + "          ['3',  15.66,      35.77],"
-                + "          ['4',  16.84,      40.04]"
-                + "        ]);"
-                + "        var options = {"
-                + "          title: 'Solve Duration over Time',"
-                + "          hAxis: {title: 'Solve Number', titleTextStyle: {color: 'red'}}"
-                + "        };"
-                + "        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));"
-                + "        chart.draw(data, options);"
-                + "      }"
-                + "    </script>"
-                + "  </head>"
-                + "  <body>"
-                + "    <div id=\"chart_div\" style=\"width: 500px; height: 250px;\"></div>"
-                + "       <img style=\"padding: 0; margin: 0 0 0 330px; display: block;\" src=\"truiton.png\"/>"
-                + "  </body>" + "</html>";
-		return content;
 	}
 }

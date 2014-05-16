@@ -14,8 +14,9 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import ca.germuth.puzzled.database.PuzzledDatabase;
-import ca.germuth.puzzled.gui.Graph;
 import ca.germuth.puzzled.gui.StatisticsPanel;
+import ca.germuth.puzzled.gui.graph.Graph;
+import ca.germuth.puzzled.gui.graph.LineGraph;
 import ca.germuth.puzzled.puzzle.Puzzle;
 import ca.germuth.puzzled.puzzle.cube.Cube;
 
@@ -41,8 +42,8 @@ public GraphStatisticsTask(Activity activity, Class<?> c, ScrollView scrolly, Vi
 		super.onPreExecute();
 
 		mPB = new ProgressBar(mActivity);
-		sPanel.setMinimumHeight(Graph.Y_SIZE);
-		sPanel.setMinimumWidth(Graph.X_SIZE);
+		sPanel.setMinimumHeight(LineGraph.Y_SIZE);
+		sPanel.setMinimumWidth(LineGraph.X_SIZE);
 		sPanel.setGravity(Gravity.CENTER);
 		sPanel.addView(mPB);
 		list.addView(sPanel, 1);

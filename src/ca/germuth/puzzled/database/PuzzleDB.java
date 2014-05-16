@@ -1,6 +1,9 @@
 package ca.germuth.puzzled.database;
 
-public class PuzzleDB {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class PuzzleDB extends ObjectDB implements Parcelable{
 	private int mId;
 	private String mName;
 	
@@ -24,5 +27,33 @@ public class PuzzleDB {
 	public void setmName(String mName) {
 		this.mName = mName;
 	}
+	
+	  public PuzzleDB(Parcel in){
+          this.mId = in.readInt();
+          this.mName = in.readString();
+    }
+
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(mId);
+		dest.writeString(mName);
+		
+	}
+	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public PuzzleDB createFromParcel(Parcel in) {
+            return new PuzzleDB(in); 
+        }
+
+        public PuzzleDB[] newArray(int size) {
+            return new PuzzleDB[size];
+        }
+    };
+	
 	
 }

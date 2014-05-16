@@ -1,6 +1,6 @@
-package ca.germuth.puzzled.gui;
+package ca.germuth.puzzled.gui.graph;
 
-public class Graph {
+public class LineGraph extends Graph{
 	
 	public static final int X_SIZE = 500;
 	public static final int Y_SIZE = 250;
@@ -12,7 +12,7 @@ public class Graph {
 	private String[] mXValues;
 	private String[][] mYValues;
 	
-	public Graph(String title, String xAxisName, String yAxisUnit, String[] yAxesName, String xValues[], String yValues[][]){
+	public LineGraph(String title, String xAxisName, String yAxisUnit, String[] yAxesName, String xValues[], String yValues[][]){
 		assert ( yAxesName.length == yValues.length && xValues.length == yValues[0].length);
 		mTitle = title;
 		mXAxisName = xAxisName;
@@ -22,7 +22,7 @@ public class Graph {
 		mYValues = yValues;
 	}
 	
-	public Graph(String title, String xAxisName, String yAxisUnit, String[] yAxesName, double xValues[], double yValues[][]){
+	public LineGraph(String title, String xAxisName, String yAxisUnit, String[] yAxesName, double xValues[], double yValues[][]){
 		assert ( yAxesName.length == yValues.length && xValues.length == yValues[0].length);
 		mTitle = title;
 		mXAxisName = xAxisName;

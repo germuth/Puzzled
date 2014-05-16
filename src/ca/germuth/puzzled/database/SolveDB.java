@@ -1,6 +1,9 @@
 package ca.germuth.puzzled.database;
 
-public class SolveDB {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class SolveDB extends ObjectDB implements Parcelable{
 	
 	private int mId;
 	private int mDuration;
@@ -61,6 +64,35 @@ public class SolveDB {
 
 	public void setmDateTime(long mDateTime) {
 		this.mDateTime = mDateTime;
+	}	
+	
+	@Override
+	public boolean equals(Object o) {
+		return mId == ((SolveDB)o).mId;
+	}
+
+	public SolveDB(Parcel in){
+		this.mId = in.readInt();
+		this.mDuration = in.readInt();
+		this.mReplay = in.readString();
+		this.mDateTime = in.readLong();
+		this.mPuzzle = in.readParcelable(PuzzleDB.class.getClassLoader());
+	}
+
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		// TODO Auto-generated method stub
+		dest.writeInt(mId);
+		dest.writeInt(mDuration);
+		dest.writeString(mReplay);
+		dest.writeLong(mDateTime);
+		dest.writeParcelable(this.mPuzzle, 0);
 	}
 	
 }

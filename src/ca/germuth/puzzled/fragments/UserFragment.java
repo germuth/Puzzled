@@ -9,8 +9,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import ca.germuth.puzzled.R;
-import ca.germuth.puzzled.gui.Graph;
 import ca.germuth.puzzled.gui.StatisticsPanel;
+import ca.germuth.puzzled.gui.graph.LineGraph;
 import net.peterkuterna.android.apps.swipeytabs.SwipeyTabFragment;
 
 public class UserFragment extends SwipeyTabFragment{
@@ -39,7 +39,7 @@ public class UserFragment extends SwipeyTabFragment{
         webview.setWebViewClient(new WebViewClient());
         webview.setWebChromeClient(new WebChromeClient());
         
-        Graph g = new Graph("Average Solve Duration over Time", 
+        LineGraph g = new LineGraph("Average Solve Duration over Time", 
         		"Solve Number", "Seconds", 
         		new String[]{"Average Duration"},
         		new double[]{1, 20, 30, 40},

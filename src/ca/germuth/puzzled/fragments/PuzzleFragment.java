@@ -15,6 +15,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import ca.germuth.puzzled.R;
 import ca.germuth.puzzled.StatisticActivity;
+import ca.germuth.puzzled.database.PuzzleDB;
 import ca.germuth.puzzled.database.PuzzledDatabase;
 import ca.germuth.puzzled.database.SolveDB;
 import ca.germuth.puzzled.gui.StatisticsPanel;
@@ -27,18 +28,33 @@ import ca.germuth.puzzled.statistics.text.BestAverage;
 import ca.germuth.puzzled.statistics.text.FewestMoves;
 import ca.germuth.puzzled.statistics.text.Highest;
 import ca.germuth.puzzled.statistics.text.Lowest;
+import ca.germuth.puzzled.statistics.text.MoveCount;
+import ca.germuth.puzzled.statistics.text.Percentile;
+import ca.germuth.puzzled.statistics.text.SolveNumber;
+import ca.germuth.puzzled.statistics.text.TextStatisticsMeasure;
+import ca.germuth.puzzled.statistics.text.TextStatisticsTask;
 import ca.germuth.puzzled.statistics.text.TimesSolved;
-
+//add histogram
 public class PuzzleFragment extends SwipeyTabFragment {
 
 	private static final String name = "PUZZLE";
-	private Puzzle mPuzzle;
+	private PuzzleDB mPuzzle;
 	private ScrollView mRoot;
+	
+	public static final PuzzleFragment newInstance(PuzzleDB puz)
+	{
+	    PuzzleFragment fragment = new PuzzleFragment();
+	    Bundle bundle = new Bundle(1);
+	    bundle.putParcelable("puzzle", puz);
+	    fragment.setArguments(bundle);
+	    return fragment ;
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		mPuzzle = new Cube(3, 3, 3);
+		mPuzzle = this.getArguments().getParcelable("puzzle");
 		mRoot = (ScrollView) inflater.inflate(R.layout.statistic_panel,
 				null);
 		final ViewGroup list = (ViewGroup) mRoot.getChildAt(0);
@@ -53,7 +69,7 @@ public class PuzzleFragment extends SwipeyTabFragment {
 			@Override
 			public void onClick(View v) {
 				PuzzledDatabase db = new PuzzledDatabase(getActivity());
-				db.deleteAllSolves( db.convert(mPuzzle) );
+				db.deleteAllSolves( mPuzzle );
 				db.close();
 				
 				Intent mainIntent = new Intent(getActivity(), StatisticActivity.class);
@@ -83,120 +99,32 @@ public class PuzzleFragment extends SwipeyTabFragment {
 	}
 	
 	private void setUpHeaderStats(StatisticsPanel st){
-		View[] averages = new View[]{ st.findViewById(R.id.stats_puzzle_times_solved),
-				st.findViewById(R.id.stats_puzzle_fastest_solve), st.findViewById(R.id.stats_puzzle_slowest_solve),
-				st.findViewById(R.id.stats_puzzle_fewest_moves)};
+		TextView[] averages = new TextView[]{ (TextView) st.findViewById(R.id.stats_puzzle_times_solved),
+				(TextView) st.findViewById(R.id.stats_puzzle_fastest_solve), (TextView) st.findViewById(R.id.stats_puzzle_slowest_solve),
+				(TextView) st.findViewById(R.id.stats_puzzle_fewest_moves)};
+		Class<?>[] operations = new Class[]{ TimesSolved.class, Highest.class, Lowest.class, FewestMoves.class };
 		
-		
-		for(int i = 0; i < averages.length; i++){
-			final TextView cur = (TextView) averages[i];
-			final int index = i;
-			final PuzzledDatabase db = new PuzzledDatabase(this.getActivity());
-			new AsyncTask<Void, Void, Void>(){
-				private String value;
-				@Override
-				protected Void doInBackground(Void... params) {
-					ArrayList<SolveDB> solves = db.getAllSolves( db.convert(mPuzzle) );
-					
-					try{
-						if(index == 0){
-							double highest = TimesSolved.getValues(solves);
-							value = (int)highest + "";							
-						}if(index == 1){
-							double highest = Highest.getValues(solves);
-							value = SolveHistory.solveDurationToString((int)highest);
-						}if(index == 2){
-							double highest = Lowest.getValues(solves);
-							value = SolveHistory.solveDurationToString((int)highest);
-						}if(index == 3){
-							double highest = FewestMoves.getValues(solves);
-							value = (int)highest + "";
-						}
-					}catch(IllegalArgumentException e){
-						value = "N/A";
-					}
-					
-					return null;
-				}
-				@Override
-				protected void onPostExecute(Void result) {
-					super.onPostExecute(result);
-					
-					cur.setText(value);
-				}
-			}.execute((Void[])null);
-		}
+		TextStatisticsTask.runAll(operations, averages, new int[4], mPuzzle, getActivity());
 	}
 	private void setCurrentAverages(StatisticsPanel st){
-		View[] averages = new View[]{ st.findViewById(R.id.stats_puzzle_current_avg_5),
-				st.findViewById(R.id.stats_puzzle_current_avg_12), st.findViewById(R.id.stats_puzzle_current_avg_50),
-				st.findViewById(R.id.stats_puzzle_current_avg_100)};
+		TextView[] averages = new TextView[]{ (TextView) st.findViewById(R.id.stats_puzzle_current_avg_5),
+				(TextView) st.findViewById(R.id.stats_puzzle_current_avg_12), (TextView) st.findViewById(R.id.stats_puzzle_current_avg_50),
+				(TextView) st.findViewById(R.id.stats_puzzle_current_avg_100)};
 		int[] average = new int[]{5, 12, 50, 100};
+		Class<?>[] operations = new Class[]{ Average.class, Average.class, Average.class, Average.class};
 		
-		for(int i = 0; i < averages.length; i++){
-			final TextView cur = (TextView) averages[i];
-			final int avg = average[i];
-			
-			final PuzzledDatabase db = new PuzzledDatabase(this.getActivity());
-			new AsyncTask<Void, Void, Void>(){
-				private String value;
-				@Override
-				protected Void doInBackground(Void... params) {
-					ArrayList<SolveDB> solves = db.getAllSolves( db.convert(mPuzzle) );
-					
-					try{
-						double average = Average.getValues(solves, avg);
-						value = SolveHistory.solveDurationToString((int)average);
-					}catch(IllegalArgumentException e){
-						value = "N/A";
-					}
-					
-					return null;
-				}
-				@Override
-				protected void onPostExecute(Void result) {
-					super.onPostExecute(result);
-					
-					cur.setText(value);
-				}
-			}.execute((Void[])null);
-		}
+		TextStatisticsTask.runAll(operations, averages, average, mPuzzle, getActivity());
 	}
 
 	private void setAllTimeAverages(StatisticsPanel st){
-		View[] averages = new View[]{ st.findViewById(R.id.puzzle_panel_avg_5),
-				st.findViewById(R.id.puzzle_panel_avg_12), st.findViewById(R.id.puzzle_panel_avg_50),
-				st.findViewById(R.id.puzzle_panel_avg_100), st.findViewById(R.id.puzzle_panel_avg_all_time)};
+		TextView[] averages = new TextView[]{ (TextView) st.findViewById(R.id.puzzle_panel_avg_5),
+				(TextView) st.findViewById(R.id.puzzle_panel_avg_12), (TextView) st.findViewById(R.id.puzzle_panel_avg_50),
+				(TextView) st.findViewById(R.id.puzzle_panel_avg_100), (TextView) st.findViewById(R.id.puzzle_panel_avg_all_time)};
 		int[] average = new int[]{5, 12, 50, 100, Integer.MAX_VALUE};
+		Class<?>[] operations = new Class<?>[]{BestAverage.class, BestAverage.class, BestAverage.class, BestAverage.class};
 		
-		for(int i = 0; i < averages.length; i++){
-			final TextView cur = (TextView) averages[i];
-			final int avg = average[i];
-			
-			final PuzzledDatabase db = new PuzzledDatabase(this.getActivity());
-			new AsyncTask<Void, Void, Void>(){
-				private String value;
-				@Override
-				protected Void doInBackground(Void... params) {
-					ArrayList<SolveDB> solves = db.getAllSolves( db.convert(mPuzzle) );
-					
-					try{
-						double average = BestAverage.getValues(solves, avg);
-						value = SolveHistory.solveDurationToString((int)average);
-					}catch(IllegalArgumentException e){
-						value = "N/A";
-					}
-					
-					return null;
-				}
-				@Override
-				protected void onPostExecute(Void result) {
-					super.onPostExecute(result);
-					
-					cur.setText(value);
-				}
-			}.execute((Void[])null);
-		}
+		TextStatisticsTask.runAll(operations, averages, average, mPuzzle, getActivity());
+		
 	}
 	@Override
 	public String getName() {
