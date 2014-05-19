@@ -71,7 +71,7 @@ public class SolveFragment extends SwipeyTabFragment{
 	
 	private void setHeader(ViewGroup root){
 		TextView time = (TextView) root.findViewById(R.id.stats_solve_duration);
-		time.setText( Utils.solveDurationToStringMinutes( mSolve.getmDuration() ) );
+		time.setText( Utils.solveDurationToString( mSolve.getmDuration() ) );
 		TextView puzName = (TextView) root.findViewById(R.id.stats_solve_puzzle);
 		puzName.setText( mSolve.getmPuzzle().getmName() );
 		TextView solDate = (TextView) root.findViewById(R.id.stats_solve_date);

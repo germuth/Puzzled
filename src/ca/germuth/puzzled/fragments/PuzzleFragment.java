@@ -121,7 +121,7 @@ public class PuzzleFragment extends SwipeyTabFragment {
 				(TextView) st.findViewById(R.id.puzzle_panel_avg_12), (TextView) st.findViewById(R.id.puzzle_panel_avg_50),
 				(TextView) st.findViewById(R.id.puzzle_panel_avg_100), (TextView) st.findViewById(R.id.puzzle_panel_avg_all_time)};
 		int[] average = new int[]{5, 12, 50, 100, Integer.MAX_VALUE};
-		Class<?>[] operations = new Class<?>[]{BestAverage.class, BestAverage.class, BestAverage.class, BestAverage.class};
+		Class<?>[] operations = new Class<?>[]{BestAverage.class, BestAverage.class, BestAverage.class, BestAverage.class, BestAverage.class};
 		
 		TextStatisticsTask.runAll(operations, averages, average, mPuzzle, getActivity());
 		

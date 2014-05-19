@@ -37,6 +37,6 @@ public class FewestMoves implements TextStatisticsMeasure{
 			}
 		}
 
-		return Utils.solveDurationToStringSeconds(min);
+		return min + "";
 	}
 }

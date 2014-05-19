@@ -1,5 +1,6 @@
 package ca.germuth.puzzled.util;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,35 +12,34 @@ import ca.germuth.puzzled.puzzle.cube.Cube;
 
 public class Utils {
 	
+	//used for graphs
 	public static String solveDurationToStringSeconds(int duration){
-		//duration is in ms
-		//int hours = duration / ( 1000 * 60 * 60);
-		//int milliLeft = duration - (hours * 1000 * 60 * 60);
-		
-		//int minutes = milliLeft / (1000 * 60);
-		//milliLeft = milliLeft - ( minutes * 1000 * 60);
-		
-		//int seconds = milliLeft / 1000;
 		int seconds = duration / 1000;
 		int milliLeft = duration - (seconds * 1000);
-		
-		//return hours + ":" + minutes + ":" + seconds + "." + milliLeft;
+
 		return seconds + "." + milliLeft;
 	}
 	
-	public static String solveDurationToStringMinutes(int duration){
-		//duration is in ms
-		// int hours = duration / ( 1000 * 60 * 60);
-		// int milliLeft = duration - (hours * 1000 * 60 * 60);
-
-		int minutes = duration / (1000 * 60);
-		int milliLeft = duration - (minutes * 1000 * 60);
-
-		int seconds = milliLeft / 1000;
-		milliLeft = duration - (seconds * 1000);
-
-		// return hours + ":" + minutes + ":" + seconds + "." + milliLeft;
-		return seconds + "." + milliLeft;
+	public static String solveDurationToString(int duration){
+		Date date = new Date(duration);
+		//atleast one hour
+		String s = null;
+		if( duration > 3600000 ){
+			DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
+			s = formatter.format(date);			
+		}
+		//atleast one minute
+		if( duration > 60000 ){
+			DateFormat formatter = new SimpleDateFormat("mm:ss.SSS");
+			s = formatter.format(date);			
+		}
+		//else
+		else {
+			DateFormat formatter = new SimpleDateFormat("ss.SSS");
+			s = formatter.format(date);			
+		}
+		//trim off third digit of ms
+		return s.substring(0, s.length() - 1);
 	}
 
 	public static String solveDateToString(long msSince1970 ){

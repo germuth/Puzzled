@@ -29,6 +29,7 @@ public class BestAverage implements TextStatisticsMeasure{
 		if( ( size > solves.size() && size != Integer.MAX_VALUE) || solves.isEmpty()){
 			return null;
 		}
+		
 		if( size == Integer.MAX_VALUE){
 			size = solves.size();
 		}
@@ -45,7 +46,7 @@ public class BestAverage implements TextStatisticsMeasure{
 				min = avg;
 			}
 		}
-		return Utils.solveDurationToStringSeconds(min);
+		return Utils.solveDurationToString(min);
 	}
 
 }

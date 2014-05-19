@@ -33,7 +33,7 @@ public class Highest implements TextStatisticsMeasure{
 			}
 		}
 		
-		return Utils.solveDurationToStringSeconds(max);
+		return Utils.solveDurationToString(max);
 	}
 
 }

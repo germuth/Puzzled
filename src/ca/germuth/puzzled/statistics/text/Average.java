@@ -38,6 +38,6 @@ public class Average implements TextStatisticsMeasure{
 		}
 		avg /= count;
 		
-		return Utils.solveDurationToStringSeconds((int)avg);
+		return Utils.solveDurationToString((int)avg);
 	}
 }

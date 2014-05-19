@@ -33,6 +33,6 @@ public class Lowest implements TextStatisticsMeasure{
 			}
 		}
 		
-		return Utils.solveDurationToStringSeconds(min);
+		return Utils.solveDurationToString(min);
 	}
 }
