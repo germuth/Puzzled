@@ -38,7 +38,7 @@ import ca.germuth.puzzled.puzzle.Tile;
 public class MyRenderer implements GLSurfaceView.Renderer {
 
 	private static final String TAG = "MyGLRenderer";
-	//TODO make configureable
+	//TODO make configurable
 	private static final int TURN_ANIMATION_TIME = 100;
 
 	private static final boolean spin = false;
@@ -77,6 +77,16 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	private float currentAngle;
 	private long finalTime;
 
+	private float zoom = 1;
+	
+	float ratio;// = (float) width / height;
+    float left;// = -ratio;
+    float right;// = ratio;
+    final float bottom = -1.5f;
+    final float top = 1.5f;
+    final float near = 21.0f;
+    final float far = 71.0f;
+	
 	public Puzzle mPuzzle;
 	/**
 	 * Queue of puzzle turns that need to be rendered by renderer. 
@@ -114,8 +124,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		// Position the eye behind the origin.
 	    final float eyeX = 0.0f;
 	    final float eyeY = 0.0f;
-	    final float eyeZ = 2.9f;
-	    // WAS 0, 0, 2.5
+	    final float eyeZ = 30.00f;
 
 	    // We are looking toward the distance
 	    final float lookX = 0.0f;
@@ -244,17 +253,35 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 
 		// Create a new perspective projection matrix. The height will stay the same
 	    // while the width will vary as per aspect ratio.
-	    final float ratio = (float) width / height;
-	    final float left = -ratio;
-	    final float right = ratio;
-	    final float bottom = -1.0f;
-	    final float top = 1.0f;
-	    final float near = 0.5f;
-	    final float far = 1.5f;
 
+		float ratio = (float) width / height;
+		ratio *= 1.5;
+		left = -ratio;
+		right = +ratio;
 	    //populates projection Matrix with appropriate values based on view 
 	    //size and desired frustrum
-	    Matrix.frustumM(mProjMatrix, 0, -ratio, ratio, -1f, 1f, 1.9f, 100.5f);
+		Matrix.frustumM(mProjMatrix, 0, left, right, bottom, top, near, far);
+	    //Matrix.frustumM(mProjMatrix, 0, -ratio, ratio, -1f, 1f, 16.0f, 80.0f);
+	    //Matrix.frustumM(mProjMatrix, 0, -1f, 1f, -1f, 1f, 1.9f, 100.5f);
+	}
+	
+	public final void zoom(float mult){
+		 zoom *= mult;
+//		  Matrix.frustumM(
+//		           mProjMatrix, 0, 
+//		           zoom*left, zoom*right, zoom*bottom, zoom*top, 
+//		           near, far);
+//		 Log.wtf("POSITion", zoom + " " + left + " " + right + " " + top + " " + bottom);
+//		 Matrix.frustumM(
+//		           mProjMatrix, 0, 
+//		           left, right, bottom, top, 
+//		           zoom*near, far);
+//		 Log.wtf("STUFF", near + " " + zoom + " " + zoom*near);
+//		 Matrix.frustumM(
+//		           mProjMatrix, 0, 
+//		           left, right, bottom, top, 
+//		           near, zoom*far);
+//		 Log.wtf("STUFF", far + " " + zoom + " " + zoom*far);
 	}
 
 	public static int loadShader(int type, String shaderCode) {

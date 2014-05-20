@@ -16,7 +16,7 @@ public class PuzzleMoveListener implements OnClickListener{
 	private Puzzle mPuzzle;
 	private ArrayList<PuzzleTurn> mPuzzleTurns; 
 	private MyGLSurfaceView mOpenGLView;
-
+	
 	public PuzzleMoveListener(Puzzle p, MyGLSurfaceView view){
 		this.mPuzzle = p;
 		this.mPuzzleTurns = p.getAllMoves();
@@ -62,11 +62,15 @@ public class PuzzleMoveListener implements OnClickListener{
 				}
 			}
 			
-			current.setmChangedTiles(mPuzzle.getChangedTiles());
-
+			PuzzleTurn now = new PuzzleTurn(current.getmPuzzle(), current.getmName(), current.getMethods(),
+					current.getmArguments(), current.getmAngle(), current.getAxis());
+			now.setmChangedTiles( mPuzzle.getChangedTiles() );
+			
 			mPuzzle.moveFinished();
-			// pass changed tiles from move to renderer
-			mOpenGLView.addPuzzleTurn(current);
+			// pass puzzleTurn to openGL
+			// puzzleTurn must be duplicated becuase if same button is pressed again
+			// before openGL has had its way with it, this puzzleturns changed tiles will be changed
+			mOpenGLView.addPuzzleTurn(now);
 			
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();

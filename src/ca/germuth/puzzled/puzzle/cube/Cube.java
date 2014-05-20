@@ -702,14 +702,17 @@ public class Cube implements Puzzle {
 		// int cubeSize = this.mCube.getSize();
 		int cubeSize = width;
 
-		float faceLength = 120f / cubeSize;
+		//move up from 70 to 140
+		
+		float faceLength = 240f / cubeSize;
 		faceLength /= 100;
-		float spaceLength = 20f / (cubeSize + 1);
+		float spaceLength = 40f / (cubeSize + 1);
 		spaceLength /= 100;
-		final float height = 0.70f;
+		
+		final float height = 1.40f;
 
-		float topCornerX = -0.70f;
-		float topCornerZ = -0.70f;
+		float topCornerX = -1.40f;
+		float topCornerZ = -1.40f;
 
 		topCornerX += spaceLength;
 		topCornerZ += spaceLength;

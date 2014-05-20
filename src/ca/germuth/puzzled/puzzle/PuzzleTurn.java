@@ -38,7 +38,7 @@ public class PuzzleTurn {
 	 * A list of the changed tiles used to animate the correct
 	 * pieces for that turn
 	 */
-	private volatile ArrayList<Tile> mChangedTiles;
+	private ArrayList<Tile> mChangedTiles;
 	/**
 	 * The amount of rotation in radians that the puzzle
 	 * turn encompasses. For example, every turn on the 3x3
@@ -82,7 +82,7 @@ public class PuzzleTurn {
 		this.axis = axis;
 		this.isRotation = false;
 	}
-
+	
 	public Puzzle getmPuzzle() {
 		return mPuzzle;
 	}
@@ -104,6 +104,8 @@ public class PuzzleTurn {
 	}
 
 	public void setmChangedTiles(ArrayList<Tile> tiles) {
+		//problem is this is being executed at the same time as get
+		//this.mChangedTiles.clear();
 		for(int i = 0; i < tiles.size(); i++){
 			this.mChangedTiles.add(tiles.get(i));
 		}

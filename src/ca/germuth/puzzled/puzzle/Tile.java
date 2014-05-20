@@ -1,7 +1,5 @@
 package ca.germuth.puzzled.puzzle;
 
-import java.util.Random;
-
 import ca.germuth.puzzled.openGL.shapes.Shape;
 
 /**
@@ -25,6 +23,9 @@ public class Tile {
 	private int blue;
 	private int alpha;
 	private Shape mShape;
+	private int mCount;
+	
+	private static int count = 0;
 	
 	public static boolean matches(Tile a, Tile b){
 		if( a.getRed() == b.getRed() &&
@@ -46,12 +47,15 @@ public class Tile {
 		this.green = green;
 		this.blue = blue;
 		this.alpha = alpha;
+		
+		mCount = count++;
 	}
 	
 	@Override
 	public String toString() {
-		return "Tile: " + this.red + ", " + this.green + 
-				", " + this.blue;
+		//return "Tile: " + this.red + ", " + this.green + 
+		//		", " + this.blue;
+		return mCount + "";
 	}
 
 	public int getRed() {
