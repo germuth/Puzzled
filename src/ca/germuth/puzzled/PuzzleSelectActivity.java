@@ -86,7 +86,8 @@ public class PuzzleSelectActivity extends PuzzledActivity implements OnClickList
 
 	public void puzzleSelected(int i){
 		Puzzle p = puzzles.get(i);
-
+		((PuzzledApplication)this.getApplication()).setPuzzle(p);
+		
 		Intent myIntent = new Intent(PuzzleSelectActivity.this, GameActivity.class);
 		this.startActivity(myIntent);
 	}

@@ -12,7 +12,7 @@ import ca.germuth.puzzled.openGL.shapes.Shape;
  * @author germuth
  */
 public interface Puzzle {
-
+	
 	public interface OnPuzzleSolvedListener{
 		abstract void onPuzzleSolved();
 	}

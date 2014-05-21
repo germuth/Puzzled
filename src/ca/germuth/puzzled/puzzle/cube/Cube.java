@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Scanner;
 
 import ca.germuth.puzzled.R;
 import ca.germuth.puzzled.openGL.GLVertex;

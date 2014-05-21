@@ -27,8 +27,8 @@ public class PuzzleDB extends ObjectDB implements Parcelable{
 	public void setmName(String mName) {
 		this.mName = mName;
 	}
-	
-	  public PuzzleDB(Parcel in){
+
+	public PuzzleDB(Parcel in){
           this.mId = in.readInt();
           this.mName = in.readString();
     }
@@ -43,7 +43,6 @@ public class PuzzleDB extends ObjectDB implements Parcelable{
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(mId);
 		dest.writeString(mName);
-		
 	}
 	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public PuzzleDB createFromParcel(Parcel in) {

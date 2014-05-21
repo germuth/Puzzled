@@ -1,18 +1,12 @@
 package ca.germuth.puzzled;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-import ca.germuth.puzzled.database.DatabaseSchema;
-import ca.germuth.puzzled.database.PuzzledDatabase;
-import ca.germuth.puzzled.database.DatabaseSchema.SolveTable;
-import ca.germuth.puzzled.puzzle.cube.Cube;
 import ca.germuth.puzzled.util.FontManager;
 
 public class MainMenuActivity extends PuzzledActivity implements
@@ -62,10 +56,16 @@ public class MainMenuActivity extends PuzzledActivity implements
 				.findViewById(R.id.activity_main_menu_container);
 		for (int i = 0; i < ll.getChildCount(); i++) {
 			View child = ll.getChildAt(i);
-			if (child instanceof Button) {
-				Button btn = (Button) child;
-				btn.setOnClickListener(this);
-				btn.setTypeface(agentOrange);
+			if(child instanceof LinearLayout){
+				LinearLayout l2 = (LinearLayout) child;
+				for(int j = 0; j < l2.getChildCount(); j++){
+					View child2 = l2.getChildAt(j);
+					if (child2 instanceof Button) {
+						Button btn = (Button) child2;
+						btn.setOnClickListener(this);
+						btn.setTypeface(agentOrange);
+					}
+				}
 			}
 		}
 	}

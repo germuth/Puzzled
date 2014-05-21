@@ -124,25 +124,30 @@ containing a value of this type.
     public static final class drawable {
         public static final int activity_splash_screen_background=0x7f020000;
         public static final int color_overlay=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
-        public static final int person_image=0x7f020003;
-        public static final int puzzle_3by3=0x7f020004;
-        public static final int shitty_cube_selection_screen=0x7f020005;
-        public static final int shitty_main_screen=0x7f020006;
-        public static final int swipey_tab_indicator=0x7f020007;
-        public static final int transparent_overlay=0x7f020008;
+        public static final int green_button=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
+        public static final int main_screen_2=0x7f020004;
+        public static final int person_image=0x7f020005;
+        public static final int purple_button=0x7f020006;
+        public static final int puzzle_3by3=0x7f020007;
+        public static final int red_button=0x7f020008;
+        public static final int shitty_cube_selection_screen=0x7f020009;
+        public static final int shitty_main_screen=0x7f02000a;
+        public static final int swipey_tab_indicator=0x7f02000b;
+        public static final int transparent_overlay=0x7f02000c;
+        public static final int yellow_button=0x7f02000d;
     }
     public static final class id {
         public static final int activity_game_container=0x7f04000f;
         public static final int activity_game_gl_surface_view=0x7f040014;
         public static final int activity_game_timer=0x7f040015;
-        public static final int activity_main_menu_achievement_button=0x7f040005;
+        public static final int activity_main_menu_achievement_button=0x7f040006;
         public static final int activity_main_menu_container=0x7f040001;
-        public static final int activity_main_menu_leaderboard_button=0x7f040004;
+        public static final int activity_main_menu_leaderboard_button=0x7f040005;
         public static final int activity_main_menu_play_button=0x7f040002;
-        public static final int activity_main_menu_quit_button=0x7f040007;
-        public static final int activity_main_menu_setting_button=0x7f040006;
-        public static final int activity_main_menu_statistic_button=0x7f040003;
+        public static final int activity_main_menu_quit_button=0x7f040003;
+        public static final int activity_main_menu_setting_button=0x7f040007;
+        public static final int activity_main_menu_statistic_button=0x7f040004;
         public static final int activity_puzzle_select_back_button=0x7f040009;
         public static final int activity_puzzle_select_go_button=0x7f04000b;
         public static final int activity_puzzle_select_option_button=0x7f04000a;
