@@ -107,6 +107,9 @@ public class Utils {
 //        return subclasses;
     	ArrayList<Class<?>> puzzles = new ArrayList<Class<?>>();
     	puzzles.add(Cube.class);
+    	puzzles.add(Cube.class);
+    	puzzles.add(Cube.class);
+    	puzzles.add(Cube.class);
     	//puzzles.add(Minx.class);
     	return puzzles;
     }

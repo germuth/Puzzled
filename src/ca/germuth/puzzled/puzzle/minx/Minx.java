@@ -2,13 +2,20 @@ package ca.germuth.puzzled.puzzle.minx;
 
 import java.util.ArrayList;
 
+import ca.germuth.puzzled.R;
 import ca.germuth.puzzled.openGL.shapes.Shape;
-import ca.germuth.puzzled.puzzle.ChangedTile;
 import ca.germuth.puzzled.puzzle.Puzzle;
 import ca.germuth.puzzled.puzzle.PuzzleTurn;
 import ca.germuth.puzzled.puzzle.Tile;
 
 public class Minx implements Puzzle{
+	
+//	private static final int myLayout = R.layout.puzzle_cube;
+	
+	public static int getLayout() {
+//		return myLayout;
+		return 0;
+	}
 	//TODO add megaminx layout
 	//private static final int myLayout = R.layout.puzzle_cube;
 	
@@ -33,6 +40,8 @@ public class Minx implements Puzzle{
 	private MinxFace BL;
 	private MinxFace BR;
 	private MinxFace B;
+	
+	public static final String[] constructor_param_titles = {"Size"};
 	
 	public Minx(int size){
 		this.size = size;

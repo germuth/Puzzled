@@ -30,6 +30,14 @@ import android.widget.SpinnerAdapter;
 
 public class FancyCoverFlow extends Gallery {
 
+	public interface OnSwipeListener{
+		void OnSwipe(String index);
+	}
+	
+	private OnSwipeListener onSwipeListener;
+	public void SetOnSwipeListener( OnSwipeListener l){
+		this.onSwipeListener = l;
+	}
     // =============================================================================
     // Constants
     // =============================================================================
@@ -183,6 +191,7 @@ public class FancyCoverFlow extends Gallery {
 
         super.setAdapter(adapter);
     }
+    
 
     /**
      * Returns the maximum rotation that is applied to items left and right of the center of the coverflow.
@@ -314,6 +323,21 @@ public class FancyCoverFlow extends Gallery {
         final int childHeight = item.getHeight();
         final int childCenter = item.getLeft() + childWidth / 2;
 
+        //TODO move somewhere else?
+        //you swiped to this item?
+        if( childCenter - coverFlowCenter < 50 && childCenter - coverFlowCenter > -50){
+        	if( this.onSwipeListener != null){
+        		//int resource = (Integer) this.getSelectedItem();
+        		FancyCoverFlowPuzzleAdapter a = (FancyCoverFlowPuzzleAdapter) this.getAdapter();
+        		PuzzleItem resource = (PuzzleItem) a.images.get( this.getSelectedItemPosition() );
+        		for(int i = 0; i < a.getCount(); i++){
+        			if( resource.getResource() == (Integer) this.getItemAtPosition(i)){
+        				this.onSwipeListener.OnSwipe(resource.getName());
+        				break;
+        			}
+        		}
+        	}
+        }
         // Use coverflow width when its defined as automatic.
         final int actionDistance = (this.actionDistance == ACTION_DISTANCE_AUTO) ? (int) ((coverFlowWidth + childWidth) / 2.0f) : this.actionDistance;
 

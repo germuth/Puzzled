@@ -56,6 +56,8 @@ public class Cube implements Puzzle {
 	private volatile ArrayList<Tile> changedTiles;
 	private OnPuzzleSolvedListener mOnPuzzleSolvedListener;
 
+	public static final String[] constructor_param_titles = {"Width", "Height", "Depth"};
+	
 	public Cube(int width, int height, int depth) {
 		assert (width > 1 && height > 1 && depth > 1);
 

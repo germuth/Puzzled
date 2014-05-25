@@ -2,6 +2,7 @@ package at.technikum.mti.fancycoverflow;
 
 import java.util.ArrayList;
 
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -11,12 +12,15 @@ import ca.germuth.puzzled.R;
 import ca.germuth.puzzled.puzzle.Puzzle;
 
 public class FancyCoverFlowPuzzleAdapter extends FancyCoverFlowAdapter{
-
-	public FancyCoverFlowPuzzleAdapter(PuzzleSelectActivity ac, ArrayList<Integer> images){
+	public interface OnSelectListener{
+		void OnSelect();
+	}
+	public FancyCoverFlowPuzzleAdapter(PuzzleSelectActivity ac, ArrayList<PuzzleItem> images){
 		super();
 		this.activity = ac;
 		this.images = images;
 	}
+	
 	// =============================================================================
 	// Private members
 	// =============================================================================
@@ -24,7 +28,9 @@ public class FancyCoverFlowPuzzleAdapter extends FancyCoverFlowAdapter{
 	//private int[] images = { R.drawable.puzzle_3by3, R.drawable.puzzle_3by3,
 	//		R.drawable.puzzle_3by3, R.drawable.puzzle_3by3};
 	private PuzzleSelectActivity activity;
-	private ArrayList<Integer> images;
+	protected ArrayList<PuzzleItem> images;
+	
+	private OnSelectListener onSelectListener;
 
 	// =============================================================================
 	// Supertype overrides
@@ -37,7 +43,7 @@ public class FancyCoverFlowPuzzleAdapter extends FancyCoverFlowAdapter{
 
 	@Override
 	public Integer getItem(int i) {
-		return images.get(i);
+		return images.get(i).getResource();
 	}
 
 	@Override
@@ -52,7 +58,15 @@ public class FancyCoverFlowPuzzleAdapter extends FancyCoverFlowAdapter{
 		if (reuseableView != null) {
 			imageView = (ImageView) reuseableView;
 		} else {
-			imageView = new ImageView(viewGroup.getContext());
+			imageView = new ImageView(viewGroup.getContext()){
+				@Override
+				public boolean dispatchTouchEvent(MotionEvent event) {
+					if(event.getAction() == MotionEvent.ACTION_DOWN){
+						activity.puzzleSelected( images.get(i) );
+					}
+					return super.dispatchTouchEvent(event);
+				}
+			};
 			imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 			imageView
 					.setLayoutParams(new FancyCoverFlow.LayoutParams(300, 400));
@@ -60,13 +74,13 @@ public class FancyCoverFlowPuzzleAdapter extends FancyCoverFlowAdapter{
 		}
 		//TODO i don't know
 		//imageView.setImageResource(this.getItem(i));
-		imageView.setImageResource(R.drawable.puzzle_3by3);
-		imageView.setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				activity.puzzleSelected(i);
-			}
-		});
+		imageView.setImageResource(images.get(i).getResource());
+//		imageView.setOnClickListener(new OnClickListener(){
+//			@Override
+//			public void onClick(View v) {
+//				activity.puzzleSelected(i);
+//			}
+//		});
 		return imageView;
 	}
 
