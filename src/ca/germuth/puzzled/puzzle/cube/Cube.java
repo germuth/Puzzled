@@ -213,21 +213,27 @@ public class Cube implements Puzzle {
 			for (int j = 0; j < depth; j++) {
 				// replace front with right
 				this.front.mFace[layer][j] = this.right.mFace[depth - j - 1][layer];
+				this.changedTiles.add(this.front.mFace[layer][j]);
 			}
 			for (int j = 0; j < depth; j++) {
 				// replace right with back
 				this.right.mFace[depth - j - 1][layer] = this.back.mFace[depth
 						- layer - 1][depth - j - 1];
+				this.changedTiles.add(this.right.mFace[depth - j - 1][layer]);
 			}
 			for (int j = 0; j < depth; j++) {
 				// replace back with left
 				this.back.mFace[depth - layer - 1][j] = this.left.mFace[depth
 						- j - 1][depth - layer - 1];
+				//TODO changed second here make sure it works
+				this.changedTiles.add(this.back.mFace[depth - layer - 1][j]);
 			}
 			for (int j = 0; j < depth; j++) {
 				// replace left
 				this.left.mFace[depth - j - 1][depth - layer - 1] = temp[depth
 						- j - 1];
+				this.changedTiles.add(this.left.mFace[depth - j - 1][depth - layer
+				                                 					- 1]);
 			}
 		}
 		if (width != depth) {
@@ -239,12 +245,13 @@ public class Cube implements Puzzle {
 			}
 			for (int j = 0; j < width; j++) {
 				// replace front with right
-				this.front.mFace[layer][j] = this.back.mFace[depth - layer - 1][depth
-						- j - 1];
+				this.front.mFace[layer][j] = this.back.mFace[height - layer - 1][j];
+				this.changedTiles.add(this.front.mFace[layer][j]);
 			}
 			for (int j = 0; j < width; j++) {
 				// replace back with left
-				this.back.mFace[depth - layer - 1][j] = this.front.mFace[layer][j];
+				this.back.mFace[height - layer - 1][j] = this.front.mFace[layer][j];
+				this.changedTiles.add(this.back.mFace[height - layer - 1][j]);
 			}
 
 			Tile[] tempRight = new Tile[depth];
@@ -256,23 +263,17 @@ public class Cube implements Puzzle {
 			for (int j = 0; j < depth; j++) {
 				// replace left
 				// TODO tempRight[j] or[depth - j -1]?
-				this.left.mFace[depth - j - 1][depth - layer - 1] = tempRight[j];
+				this.left.mFace[depth - j - 1][height - 1] = tempRight[j];
+				this.changedTiles.add(this.left.mFace[depth - j - 1][height - layer
+				                                 					- 1]);
 			}
 			for (int j = 0; j < depth; j++) {
 				// replace left
 				// TODO tempRight[j] or[depth - j -1]?
 				this.right.mFace[depth - j - 1][layer] = this.left.mFace[depth
-						- j - 1][depth - layer - 1];
+						- j - 1][height - 1];
+				this.changedTiles.add(this.right.mFace[depth - j - 1][layer]);
 			}
-		}
-
-		for (int j = 0; j < depth; j++) {
-			this.changedTiles.add(this.front.mFace[layer][j]);
-			this.changedTiles.add(this.right.mFace[depth - j - 1][layer]);
-			this.changedTiles.add(this.back.mFace[depth - layer - 1][depth - j
-					- 1]);
-			this.changedTiles.add(this.left.mFace[depth - j - 1][depth - layer
-					- 1]);
 		}
 	}
 
@@ -352,14 +353,7 @@ public class Cube implements Puzzle {
 	 */
 	private void rotateFace(CubeFace cf) {
 
-		// 90 degrees
-		if (cf.mFace.length == cf.mFace[0].length) {
-			rotateEvenFace(cf);
-		}// 180 degrees
-		else {
-			rotateEvenFace(cf);
-			rotateEvenFace(cf);
-		}
+		rotateEvenFace(cf);
 
 		for (int i = 0; i < cf.mFace.length; i++) {
 			for (int j = 0; j < cf.mFace[i].length; j++) {
@@ -388,11 +382,26 @@ public class Cube implements Puzzle {
 			System.arraycopy(row, 0, faceCopy[i], 0, length);
 		}
 
-		// r designates row
-		for (int r = 0; r < M; r++) {
-			// c designates column
-			for (int c = 0; c < N; c++) {
-				face[c][M - 1 - r] = faceCopy[r][c];
+		if (M == N) {
+			// r designates row
+			for (int r = 0; r < M; r++) {
+				// c designates column
+				for (int c = 0; c < N; c++) {
+					face[c][M - 1 - r] = faceCopy[r][c];
+				}
+			}
+		} else {
+			//reverse each row
+			for(int i = 0; i < M; i++){
+				for(int j = 0; j < N / 2; j++){
+					face[i][j] = faceCopy[i][N - j - 1];
+				}
+			}
+			//then each column to rotate 180 degrees
+			for(int i = 0; i < N; i++){
+				for(int j = 0; j < M / 2; j++){
+					face[j][i] = faceCopy[M - j - 1][i];
+				}
 			}
 		}
 	}
@@ -403,32 +412,44 @@ public class Cube implements Puzzle {
 		try {
 			Class<? extends Cube> c = this.getClass();
 			// Single Slice Turn
-
+			
+			float angle = -90f;
+			if(height != depth){
+				angle *= 2;
+			}
 			for (int i = 0; i <= ((width + 1) / 2) - 1; i++) {
 				// R, 2R, 3R, etc are single slice turns according to SiGN
 				PuzzleTurn R = new PuzzleTurn(this, (i + 1) + "R",
 						new Method[] { c.getMethod("RTurn", int.class,
 								int.class) }, new Object[] { new Object[] { i,
-								i } }, -90f, 'X');
+								i } }, angle, 'X');
 
 				moves.add(R);
 				PuzzleTurn L = new PuzzleTurn(this, (i + 1) + "L'",
 						new Method[] { c.getMethod("LPrimeTurn", int.class,
 								int.class) }, new Object[] { new Object[] { i,
-								i } }, -90f, 'X');
+								i } }, angle, 'X');
 				moves.add(L);
+			}
+			angle = -90f;
+			if(width != depth){
+				angle *= 2;
 			}
 			for (int i = 0; i <= ((height + 1) / 2) - 1; i++) {
 				PuzzleTurn U = new PuzzleTurn(this, (i + 1) + "U",
 						new Method[] { c.getMethod("UTurn", int.class,
 								int.class) }, new Object[] { new Object[] { i,
-								i } }, -90f, 'Y');
+								i } }, angle, 'Y');
 				moves.add(U);
 				PuzzleTurn D = new PuzzleTurn(this, (i + 1) + "D'",
 						new Method[] { c.getMethod("DPrimeTurn", int.class,
 								int.class) }, new Object[] { new Object[] { i,
-								i } }, -90f, 'Y');
+								i } }, angle, 'Y');
 				moves.add(D);
+			}
+			angle = -90f;
+			if(width != height){
+				angle *= 2;
 			}
 			for (int i = 0; i <= ((depth + 1) / 2) - 1; i++) {
 				PuzzleTurn F = new PuzzleTurn(this, (i + 1) + "F",
@@ -661,26 +682,26 @@ public class Cube implements Puzzle {
 	public ArrayList<Shape> createPuzzleModel() {
 		ArrayList<Shape> myFaces = new ArrayList<Shape>();
 
-		ArrayList<Square> topF = drawFace(top);
+		ArrayList<Square> topF = drawFace(top, depth, width, height);
 		Square.finalizeAll(topF);
 		myFaces.addAll(topF);
 
-		ArrayList<Square> frontF = drawFace(front);
+		ArrayList<Square> frontF = drawFace(front, height, width, depth);
 		Square.rotateAll(frontF, 'X', (float) Math.PI / 2);
 		Square.finalizeAll(frontF);
 		myFaces.addAll(frontF);
 
-		ArrayList<Square> backF = drawFace(back);
+		ArrayList<Square> backF = drawFace(back, height, width, depth);
 		Square.rotateAll(backF, 'X', (float) -Math.PI / 2);
 		Square.finalizeAll(backF);
 		myFaces.addAll(backF);
 
-		ArrayList<Square> leftF = drawFace(left);
+		ArrayList<Square> leftF = drawFace(left, depth, height, width);
 		Square.rotateAll(leftF, 'Z', (float) (Math.PI / 2));
 		Square.finalizeAll(leftF);
 		myFaces.addAll(leftF);
 
-		ArrayList<Square> rightF = drawFace(right);
+		ArrayList<Square> rightF = drawFace(right, depth, height, width);
 		Square.rotateAll(rightF, 'Z', (float) -(Math.PI / 2));
 		Square.finalizeAll(rightF);
 		myFaces.addAll(rightF);
@@ -689,7 +710,7 @@ public class Cube implements Puzzle {
 		// must translate directly down
 		// this might not be true somehow
 		// definetly not true somehow
-		ArrayList<Square> bottomF = drawFace(down);
+		ArrayList<Square> bottomF = drawFace(down, depth, width, height);
 		// Square.translateAll(mBottom, 'Y', -1.40);
 		Square.rotateAll(bottomF, 'X', (float) (Math.PI));
 		Square.finalizeAll(bottomF);
@@ -698,7 +719,75 @@ public class Cube implements Puzzle {
 		return myFaces;
 	}
 
-	private ArrayList<Square> drawFace(CubeFace side) {
+	private ArrayList<Square> drawFace(CubeFace side, int heightLocal, int widthLocal, int centerDistance) {
+		ArrayList<Square> face = new ArrayList<Square>();
+
+		int largestSide = (Math.max(Math.max(this.width, this.height), this.depth));
+		float faceLength = (240f / largestSide );
+		//divide by 100 since entire model is with 1 of origin
+		faceLength /= 100;
+		
+		float spaceLength = 40f / (largestSide + 1);
+		spaceLength /= 100;
+		
+		float height = 1.40f;
+		//adjust height based on smaller of width or height
+		height = 1.40f * centerDistance / largestSide;
+		
+		//actual topCorner is only 1.4 if current side we are drawing has maximum amount of pieces
+		float topCornerX = -1.40f;
+		float topCornerZ = -1.40f;
+		
+		//adjust topCorner depending on Local height and width
+		//  largest     height
+		//  1.4            x
+		topCornerX = -1.40f * widthLocal / largestSide;
+		topCornerZ = -1.40f * heightLocal / largestSide;
+				
+		topCornerX += spaceLength;
+		topCornerZ += spaceLength;
+
+		float currentTopRightX = topCornerX;
+		float currentTopRightZ = topCornerZ;
+
+		// iterate down
+		for (int i = 0; i < heightLocal; i++) {
+			// reset top right coordinates after each row
+			currentTopRightX = topCornerX;
+
+			// iterate across
+			for (int j = 0; j < widthLocal; j++) {
+
+				// make face
+				Square current = new Square(new GLVertex(currentTopRightX,
+						height, currentTopRightZ),
+						new GLVertex(currentTopRightX, height, currentTopRightZ
+								+ faceLength), new GLVertex(currentTopRightX
+								+ faceLength, height, currentTopRightZ
+								+ faceLength), new GLVertex(currentTopRightX
+								+ faceLength, height, currentTopRightZ));
+				current.setmColour(Shape.colourToGLColour(side.mFace[0][0]));
+				face.add(current);
+
+				currentTopRightX += faceLength + spaceLength;
+			}
+
+			// once we finish a row, we need to move down to next row
+			currentTopRightZ += faceLength + spaceLength;
+		}
+
+		for (int i = 0; i < side.mFace.length; i++) {
+			for (int j = 0; j < side.mFace[i].length; j++) {
+				int index = i * side.mFace[i].length + j;
+				Tile t1 = side.mFace[i][j];
+				t1.setmShape(face.get(index));
+			}
+		}
+
+		return face;
+	}
+	
+	private ArrayList<Square> drawFaceBACKUP(CubeFace side) {
 		ArrayList<Square> face = new ArrayList<Square>();
 
 		// TODO this will only work for square cubes!
@@ -749,14 +838,11 @@ public class Cube implements Puzzle {
 			currentTopRightZ += faceLength + spaceLength;
 		}
 
-		// update hashmap with tiles to shapes
 		for (int i = 0; i < side.mFace.length; i++) {
 			for (int j = 0; j < side.mFace[i].length; j++) {
 				int index = i * side.mFace[i].length + j;
-
 				Tile t1 = side.mFace[i][j];
 				t1.setmShape(face.get(index));
-
 			}
 		}
 
