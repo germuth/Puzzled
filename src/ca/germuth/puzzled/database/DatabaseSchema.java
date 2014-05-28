@@ -20,6 +20,7 @@ public class DatabaseSchema {
     	public static final String TABLE_NAME = "solve";
     	public static final String COLUMN_SOLVE_DURATION = "duration";
     	public static final String COLUMN_REPLAY = "replay";
+    	public static final String COLUMN_SCRAMBLE = "scramble";
     	public static final String COLUMN_PUZZLE = "puzzle";
     	public static final String COLUMN_SOLVE_DATE = "time";
     	//TODO make protected
@@ -28,6 +29,7 @@ public class DatabaseSchema {
     			SolveTable._ID + " integer primary key autoincrement," + 
     			COLUMN_SOLVE_DURATION + " integer," + 
     			COLUMN_REPLAY + " TEXT," + 
+    			COLUMN_SCRAMBLE + " TEXT, " +
     			COLUMN_PUZZLE + " integer," + 
     			//milliseconds since 1970 or System.currentTimeMillis()
     			//stores both date and time of finishing the solve

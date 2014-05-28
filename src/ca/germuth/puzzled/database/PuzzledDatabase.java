@@ -14,7 +14,7 @@ import ca.germuth.puzzled.puzzle.Puzzle;
 
 public class PuzzledDatabase extends SQLiteOpenHelper{
 	// If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "FeedReader.db";
 
     public PuzzledDatabase(Context context) {
@@ -55,6 +55,7 @@ public class PuzzledDatabase extends SQLiteOpenHelper{
     	//values.put(SolveTable._ID, solve.getmId());
     	values.put(SolveTable.COLUMN_PUZZLE, solve.getmPuzzle().getmId());
     	values.put(SolveTable.COLUMN_REPLAY, solve.getmReplay());
+    	values.put(SolveTable.COLUMN_SCRAMBLE, solve.getmScramble());
     	values.put(SolveTable.COLUMN_SOLVE_DATE, solve.getmDateTime());
     	values.put(SolveTable.COLUMN_SOLVE_DURATION, solve.getmDuration());
 
@@ -97,6 +98,7 @@ public class PuzzledDatabase extends SQLiteOpenHelper{
     	if( c.moveToLast() ){
     		int SolveTableID = c.getInt(c.getColumnIndex(SolveTable._ID));
     		String replay = c.getString(c.getColumnIndex(SolveTable.COLUMN_REPLAY));
+    		String scramble = c.getString(c.getColumnIndex(SolveTable.COLUMN_SCRAMBLE));
     		long dateTime = c.getLong(c.getColumnIndex(SolveTable.COLUMN_SOLVE_DATE));
     		int duration = c.getInt(c.getColumnIndex(SolveTable.COLUMN_SOLVE_DURATION));
     		int puzzleId = c.getInt(c.getColumnIndex(SolveTable.COLUMN_PUZZLE));
@@ -109,7 +111,7 @@ public class PuzzledDatabase extends SQLiteOpenHelper{
     		if( c2.moveToFirst() ){
     			PuzzleDB puz = new PuzzleDB(c2.getInt(c2.getColumnIndex(PuzzleTable._ID)),
         				c2.getString(c2.getColumnIndex(PuzzleTable.COLUMN_PUZZLE_NAME)));  
-    			SolveDB SolveTable = new SolveDB( SolveTableID, duration, replay, puz, dateTime);
+    			SolveDB SolveTable = new SolveDB( SolveTableID, duration, replay, scramble, puz, dateTime);
         		return SolveTable;
     		}else{
     			return null;
@@ -142,10 +144,11 @@ public class PuzzledDatabase extends SQLiteOpenHelper{
     		while(c.moveToNext()){
         		int SolveTableID = c.getInt(c.getColumnIndex(SolveTable._ID));
         		String replay = c.getString(c.getColumnIndex(SolveTable.COLUMN_REPLAY));
+        		String scramble = c.getString(c.getColumnIndex(SolveTable.COLUMN_SCRAMBLE));
         		long dateTime = c.getLong(c.getColumnIndex(SolveTable.COLUMN_SOLVE_DATE));
         		int duration = c.getInt(c.getColumnIndex(SolveTable.COLUMN_SOLVE_DURATION));
         		
-        		SolveDB SolveTable = new SolveDB( SolveTableID, duration, replay, puz, dateTime);
+        		SolveDB SolveTable = new SolveDB( SolveTableID, duration, replay, scramble, puz, dateTime);
         		SolveTables.add(SolveTable);
         	}
     	}

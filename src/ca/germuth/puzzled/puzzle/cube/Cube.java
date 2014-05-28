@@ -872,4 +872,139 @@ public class Cube implements Puzzle {
 	public int getWidth() {
 		return width;
 	}
+	
+//	private void OrientCube(){
+//		//move white center to the top
+//		Tile[][] white = getCenter(new Tile(255, 255, 255, 0));
+//		if(white == this.top.mFace){
+//			// none
+//		}else if( white == this.front.mFace){
+//			// x'
+//			this.xTurn();
+//		}else if( white == this.left.mFace){
+//			// yyy x
+//			this.yTurn();
+//			this.xTurn();
+//		}else if( white == this.right.mFace){
+//			//y x
+//			this.yTurn();
+//			this.xPrimeTurn();
+//		}else if( white == this.back.mFace){
+//			//one x
+//			this.xPrimeTurn();
+//		}else if( white == this.down.mFace){
+//			//two xx
+//			this.xTurn();
+//			this.xTurn();
+//		}
+//		
+//		//move green center to front
+//		Tile[][] green = getCenter(new Tile(0, 0, 255, 0));
+//		if(green == this.front.mFace){
+//			
+//		}else if( green == this.back.mFace){
+//			this.yPrimeTurn();
+//			this.yPrimeTurn();
+//		}else if( green == this.right.mFace){
+//			this.yTurn();
+//		}else if( green == this.left.mFace){
+//			this.yPrimeTurn();
+//		}
+//	}
+	
+	private ArrayList<CubeFace> getFaceList(){
+		ArrayList<CubeFace> faces = new ArrayList<CubeFace>();
+		faces.add(this.back);
+		faces.add(this.down);
+		faces.add(this.front);
+		faces.add(this.top);
+		faces.add(this.left);
+		faces.add(this.right);
+		return faces;
+	}
+	
+	private CubeFace getCenterFace(Tile t) {
+		// find white center
+		ArrayList<CubeFace> faces = getFaceList();
+
+		for (int i = 0; i < faces.size(); i++) {
+			CubeFace current = faces.get(i);
+			if (Tile.matches(current.mFace[1][1], t)) {
+				return current;
+			}
+		}
+		return null;
+	}
+	
+	private Tile[][] getCenter(Tile t) {
+		return getCenterFace(t).mFace;
+	}
+	
+	public boolean isCrossSolved(){
+		Tile[][] white = getCenter(new Tile(255, 255, 255, 0));
+		Tile[][] green = getCenter(new Tile(0  , 255,   0, 0));
+		Tile[][] blue = getCenter(new Tile(   0,   0, 255, 0));
+		Tile[][] orange = getCenter(new Tile(255, 128, 0, 0));
+		Tile[][] red = getCenter(new Tile(  255,   0,   0,  0));
+		
+		if( Tile.matches(white[1][1], white[0][1]) &&
+				Tile.matches(white[1][1], white[1][0]) &&
+				Tile.matches(white[1][1], white[2][1]) &&
+				Tile.matches(white[1][1], white[1][2]) &&
+				Tile.matches(green[1][1], green[0][1]) &&
+				Tile.matches(orange[1][1], orange[0][1]) &&
+				Tile.matches(red[1][1], red[0][1]) &&
+				Tile.matches(blue[1][1], blue[2][1])){
+			return true;
+		}
+		return false;
+	}
+	
+	public int pairsSolved(){
+		Tile[][] white = getCenter(new Tile(255, 255, 255, 0));
+		Tile[][] green = getCenter(new Tile(0  , 255,   0, 0));
+		Tile[][] blue = getCenter(new Tile(   0,   0, 255, 0));
+		Tile[][] orange = getCenter(new Tile(255, 128, 0, 0));
+		Tile[][] red = getCenter(new Tile(  255,   0,   0,  0));
+		
+		int solved = 0;
+		//FL pair
+		if( Tile.matches(white[1][1], white[2][0]) &&
+				Tile.matches(orange[1][1], orange[0][2]) &&
+				Tile.matches(orange[1][1], orange[1][2]) &&
+				Tile.matches(green[1][1], green[0][0]) &&
+				Tile.matches(green[1][1], green[1][0])){
+			solved++;
+		}
+		//FR pair
+		if( Tile.matches(white[1][1], white[2][2]) &&
+				Tile.matches(red[1][1], red[0][0]) &&
+				Tile.matches(red[1][1], red[1][0]) &&
+				Tile.matches(green[1][1], green[0][2]) &&
+				Tile.matches(green[1][1], green[1][2])){
+			solved++;
+		}
+		//BL pair
+		if( Tile.matches(white[1][1], white[0][0]) &&
+				Tile.matches(orange[1][1], orange[0][0]) &&
+				Tile.matches(orange[1][1], orange[1][0]) &&
+				Tile.matches(blue[1][1], blue[1][0]) &&
+				Tile.matches(blue[1][1], blue[2][0])){
+			solved++;
+		}
+		//BR pair
+		if( Tile.matches(white[1][1], white[0][2]) &&
+				Tile.matches(red[1][1], red[0][2]) &&
+				Tile.matches(red[1][1], red[1][2]) &&
+				Tile.matches(blue[1][1], blue[1][2]) &&
+				Tile.matches(blue[1][1], blue[2][2])){
+			solved++;
+		}
+		
+		return solved;
+	}
+	
+	public boolean isOLLSolved(){
+		return this.getCenterFace( new Tile(255, 255, 0, 0)).isSolved();
+	}
 }

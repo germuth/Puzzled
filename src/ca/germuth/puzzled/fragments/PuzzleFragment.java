@@ -93,7 +93,7 @@ public class PuzzleFragment extends SwipeyTabFragment {
 //		}
 
 		Class<?> test = SolveHistory.class;
-		new GraphStatisticsTask(this.getActivity(), test, mRoot, list, new StatisticsPanel(this.getActivity())).execute((Void[]) null);
+		new GraphStatisticsTask(this.getActivity(), mPuzzle, test, mRoot, list, new StatisticsPanel(this.getActivity())).execute((Void[]) null);
 		
 		return mRoot;
 	}

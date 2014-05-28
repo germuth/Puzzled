@@ -40,7 +40,9 @@ public class Percentile implements TextStatisticsMeasure{
 		
 		int totalSolve = Integer.parseInt( 
 				new TimesSolved().getValue(mActivity, puzz, optionalParam) );
-		
+		if(totalSolve == 0){
+			return "N/A";
+		}
 		return (int)(((double)solveNumber / (double) totalSolve ) * 100.0) + "";
 	}
 }

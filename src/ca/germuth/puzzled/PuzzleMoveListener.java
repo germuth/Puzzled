@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -16,11 +15,14 @@ public class PuzzleMoveListener implements OnClickListener{
 	private Puzzle mPuzzle;
 	private ArrayList<PuzzleTurn> mPuzzleTurns; 
 	private MyGLSurfaceView mOpenGLView;
-	
-	public PuzzleMoveListener(Puzzle p, MyGLSurfaceView view){
+	private String mReplay;
+	private GameActivity mActivity;
+	public PuzzleMoveListener(GameActivity activity, Puzzle p, MyGLSurfaceView view){
+		this.mActivity = activity;
 		this.mPuzzle = p;
 		this.mPuzzleTurns = p.getAllMoves();
 		this.mOpenGLView = view;
+		this.mReplay = "";
 	}
 
 	@Override
@@ -37,6 +39,13 @@ public class PuzzleMoveListener implements OnClickListener{
 				match = current;
 				// execute this puzzleturn on the specied puzzle
 				this.execute(current);
+				// save move and time in replay
+				int currentTime = mActivity.getCurrentTime();
+				if( !mActivity.isSolving() ){
+					currentTime *= -1;
+				}
+				this.mReplay += name + " " + currentTime + " ";
+				
 				// turn found, no need to keep searching
 				break;
 			}
@@ -44,34 +53,44 @@ public class PuzzleMoveListener implements OnClickListener{
 	}
 	
 	public void execute(PuzzleTurn current){
+
+		executePuzzleTurn( mPuzzle, current);
+		PuzzleTurn now = new PuzzleTurn(current.getmPuzzle(),
+				current.getmName(), current.getMethods(),
+				current.getmArguments(), current.getmAngle(), current.getAxis());
+		now.setmChangedTiles(mPuzzle.getChangedTiles());
+
+		mPuzzle.moveFinished();
+		// pass puzzleTurn to openGL
+		// puzzleTurn must be duplicated becuase if same button is pressed again
+		// before openGL has had its way with it, this puzzleturns changed tiles
+		// will be changed
+		mOpenGLView.addPuzzleTurn(now);
+
+	}
+	
+	public String getReplay(){
+		return mReplay.toString();
+	}
+	
+	public static void executePuzzleTurn(Puzzle puzzle, PuzzleTurn puzzleTurn) {
 		try {
-			Method[] turns = current.getMethods();
+			Method[] turns = puzzleTurn.getMethods();
 			// TODO perhaps generic way of doing this rather than if length ==
 			// 1, 2 etc
-			Object[] args = current.getmArguments();
+			Object[] args = puzzleTurn.getmArguments();
 			// execute each method with it's arguments
 			for (int j = 0; j < turns.length; j++) {
 				Method m = turns[j];
 				Object[] argsj = (Object[]) args[j];
 				if (argsj == null) {
-					m.invoke(mPuzzle, (Object[]) null);
+					m.invoke(puzzle, (Object[]) null);
 				} else if (argsj.length == 1) {
-					m.invoke(mPuzzle, argsj[0]);
+					m.invoke(puzzle, argsj[0]);
 				} else if (argsj.length == 2) {
-					m.invoke(mPuzzle, argsj[0], argsj[1]);
+					m.invoke(puzzle, argsj[0], argsj[1]);
 				}
 			}
-			
-			PuzzleTurn now = new PuzzleTurn(current.getmPuzzle(), current.getmName(), current.getMethods(),
-					current.getmArguments(), current.getmAngle(), current.getAxis());
-			now.setmChangedTiles( mPuzzle.getChangedTiles() );
-			
-			mPuzzle.moveFinished();
-			// pass puzzleTurn to openGL
-			// puzzleTurn must be duplicated becuase if same button is pressed again
-			// before openGL has had its way with it, this puzzleturns changed tiles will be changed
-			mOpenGLView.addPuzzleTurn(now);
-			
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -79,6 +98,7 @@ public class PuzzleMoveListener implements OnClickListener{
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	public ArrayList<PuzzleTurn> getmPuzzleTurns() {

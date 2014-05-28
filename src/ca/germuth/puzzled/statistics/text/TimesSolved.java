@@ -28,7 +28,7 @@ public class TimesSolved implements TextStatisticsMeasure{
 		ArrayList<SolveDB> solves = db.getAllSolves(puzz);
 		
 		if( solves.isEmpty() ){
-			return null;
+			return "0";
 		}
 		return solves.size() + "";
 	}

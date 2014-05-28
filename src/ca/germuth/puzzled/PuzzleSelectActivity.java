@@ -9,6 +9,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -85,17 +87,22 @@ public class PuzzleSelectActivity extends PuzzledActivity{
 			para_titles = (String[]) puz.getmClass().getField("constructor_param_titles").get(null);
 			
 			LinearLayout across = new LinearLayout(this);
+			across.setGravity(Gravity.CENTER);
 			across.setOrientation(LinearLayout.HORIZONTAL);
 			for(int i = 0; i < paramTypes.length; i++){
 				LinearLayout oneParam = new LinearLayout(this);
 				oneParam.setOrientation(LinearLayout.VERTICAL);
 				
 				TextView lbl = new TextView(this);
+				lbl.setGravity(Gravity.CENTER);
 				lbl.setText( para_titles[i]);
-				lbl.setTypeface(FontManager.getTypeface(this, FontManager.AGENT_ORANGE_FONT));
+				//lbl.setTypeface(FontManager.getTypeface(this, FontManager.AGENT_ORANGE_FONT));
 				
 				//TODO too new
 				NumberPicker np = new NumberPicker(this);
+				np.setScaleX(0.8f);
+				np.setScaleY(0.8f);
+				
 				np.setMaxValue(50);
 				np.setMinValue(1);
 				numberPickers.add(np);

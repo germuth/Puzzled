@@ -44,6 +44,7 @@ public class GameActivity extends PuzzledActivity {
 	private MyGLSurfaceView mGlView;
 	private Chronometer mTimer;
 	private boolean solving;
+	private String mScramble;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +52,32 @@ public class GameActivity extends PuzzledActivity {
 
 		this.setContentView(Cube.getLayout());
 
-		mPuzzle = ((PuzzledApplication)this.getApplication()).getPuzzle();
-		if( mPuzzle == null){
-			Intent myIntent = new Intent(this,
-					PuzzleSelectActivity.class);
+		mPuzzle = ((PuzzledApplication) this.getApplication()).getPuzzle();
+		if (mPuzzle == null) {
+			Intent myIntent = new Intent(this, PuzzleSelectActivity.class);
 			this.startActivity(myIntent);
 		}
-		
+
+		// grab and set up timer
+		mTimer = (Chronometer) this.findViewById(R.id.activity_game_timer);
+		mTimer.setTypeface(FontManager.getTypeface(this,
+				FontManager.AGENT_ORANGE_FONT));
+		// fires when inspection time runs out
+		mTimer.setOnChronometerFinishListener(new OnChronometerFinishListener() {
+			@Override
+			public void onChronometerFinish(Chronometer chronometer) {
+				disableButtons(false);
+				mTimer.start();
+				solving = true;
+			}
+		});
+
+		// grab openGL view
+		mGlView = (MyGLSurfaceView) this
+				.findViewById(R.id.activity_game_gl_surface_view);
+		mGlView.initializeRenderer(mPuzzle);
+		mPuzzleMoveListener = new PuzzleMoveListener(this, mPuzzle, mGlView);
+
 		// TODO recieve puzzle somehow
 		mPuzzle.setOnPuzzleSolvedListener(new OnPuzzleSolvedListener() {
 			@Override
@@ -77,7 +97,7 @@ public class GameActivity extends PuzzledActivity {
 							// dateTime){
 							Date d = new Date();
 							SolveDB ss = new SolveDB((int) mTimer
-									.getTimeElapsed(), "R F R U", db
+									.getTimeElapsed(), mPuzzleMoveListener.getReplay(), mScramble, db
 									.convert(new Cube(3, 3, 3)), d.getTime());
 							db.insertSolve(ss);
 							return null;
@@ -98,26 +118,6 @@ public class GameActivity extends PuzzledActivity {
 			}
 		});
 
-		// grab and set up timer
-		mTimer = (Chronometer) this.findViewById(R.id.activity_game_timer);
-		mTimer.setTypeface(FontManager.getTypeface(this,
-				FontManager.AGENT_ORANGE_FONT));
-		// fires when inspection time runs out
-		mTimer.setOnChronometerFinishListener(new OnChronometerFinishListener() {
-			@Override
-			public void onChronometerFinish(Chronometer chronometer) {
-				disableButtons(false);
-				mTimer.start();
-				solving = true;
-			}
-		});
-
-		// grab openGL view
-		mGlView = (MyGLSurfaceView) this
-				.findViewById(R.id.activity_game_gl_surface_view);
-		mGlView.initializeRenderer(mPuzzle);
-		mPuzzleMoveListener = new PuzzleMoveListener(this.mPuzzle, mGlView);
-
 		GameActivityLayout container = (GameActivityLayout) this
 				.findViewById(R.id.activity_game_container);
 		container.setmActivity(this);
@@ -128,6 +128,10 @@ public class GameActivity extends PuzzledActivity {
 
 		// add listener to scramble cube and start inspection time
 		addShakeListener();
+	}
+	
+	public int getCurrentTime(){
+		return (int)this.mTimer.getTimeElapsed();
 	}
 
 	private void addButtonListeners() {
@@ -157,6 +161,7 @@ public class GameActivity extends PuzzledActivity {
 	private void scramblePuzzle() {
 		new Thread(new Runnable() {
 			public void run() {
+				mScramble = "";
 				ArrayList<PuzzleTurn> turns = mPuzzleMoveListener
 						.getmPuzzleTurns();
 				Random r = new Random();
@@ -172,7 +177,10 @@ public class GameActivity extends PuzzledActivity {
 							mPuzzleMoveListener.execute(selected);
 						}
 					});
+				
+					mScramble += selected.getmName() + " ";
 					// TODO only necessary because of concurrecy bug
+					//maybe i wanna keep it because it looks better
 					try {
 						Thread.sleep(300);
 					} catch (InterruptedException e) {
@@ -276,4 +284,7 @@ public class GameActivity extends PuzzledActivity {
 		return mPuzzle;
 	}
 
+	public boolean isSolving() {
+		return solving;
+	}
 }
