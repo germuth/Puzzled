@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Scanner;
 
+import android.util.Log;
+import ca.germuth.puzzled.PuzzleMoveListener;
 import ca.germuth.puzzled.R;
 import ca.germuth.puzzled.openGL.GLVertex;
 import ca.germuth.puzzled.openGL.shapes.Shape;
@@ -41,6 +43,7 @@ import ca.germuth.puzzled.puzzle.Tile;
 public class Cube implements Puzzle {
 
 	private static final int myLayout = R.layout.puzzle_cube;
+	private static ArrayList<PuzzleTurn> myMoves;
 
 	private int width;
 	private int height;
@@ -117,7 +120,9 @@ public class Cube implements Puzzle {
 	
 	private void checkSolved(){
 		if(this.isSolved()){
-			this.mOnPuzzleSolvedListener.onPuzzleSolved();
+			if(this.mOnPuzzleSolvedListener != null){
+				this.mOnPuzzleSolvedListener.onPuzzleSolved();
+			}	
 		}
 	}
 
@@ -546,6 +551,7 @@ public class Cube implements Puzzle {
 		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
 		}
+		myMoves = moves;
 		return moves;
 	}
 
@@ -873,44 +879,68 @@ public class Cube implements Puzzle {
 		return width;
 	}
 	
-//	private void OrientCube(){
-//		//move white center to the top
-//		Tile[][] white = getCenter(new Tile(255, 255, 255, 0));
-//		if(white == this.top.mFace){
-//			// none
-//		}else if( white == this.front.mFace){
-//			// x'
-//			this.xTurn();
-//		}else if( white == this.left.mFace){
-//			// yyy x
-//			this.yTurn();
-//			this.xTurn();
-//		}else if( white == this.right.mFace){
-//			//y x
-//			this.yTurn();
-//			this.xPrimeTurn();
-//		}else if( white == this.back.mFace){
-//			//one x
-//			this.xPrimeTurn();
-//		}else if( white == this.down.mFace){
-//			//two xx
-//			this.xTurn();
-//			this.xTurn();
-//		}
-//		
-//		//move green center to front
-//		Tile[][] green = getCenter(new Tile(0, 0, 255, 0));
-//		if(green == this.front.mFace){
-//			
-//		}else if( green == this.back.mFace){
-//			this.yPrimeTurn();
-//			this.yPrimeTurn();
-//		}else if( green == this.right.mFace){
-//			this.yTurn();
-//		}else if( green == this.left.mFace){
-//			this.yPrimeTurn();
-//		}
-//	}
+	private String orientMoves;
+	
+	private void OrientCube(){
+//		Log.wtf("DEBUG", "BEFORE: " + this.top.mFace[1][1] + " " + this.front.mFace[1][1]);
+		orientMoves = "";
+		//move white center to the top
+		Tile[][] white = getCenter(new Tile(255, 255, 255, 0));
+		if(white == this.top.mFace){
+			// none
+		}else if( white == this.front.mFace){
+			// x'
+			this.xTurn();
+			orientMoves += "x' ";
+		}else if( white == this.left.mFace){
+			// yyy x
+			this.yTurn();
+			this.xTurn();
+			orientMoves += "y' x' ";
+		}else if( white == this.right.mFace){
+			//y x
+			this.yTurn();
+			this.xPrimeTurn();
+			orientMoves += "y' x";
+		}else if( white == this.back.mFace){
+			//one x
+			this.xPrimeTurn();
+			orientMoves += "x ";
+		}else if( white == this.down.mFace){
+			//two xx
+			this.xTurn();
+			this.xTurn();
+			orientMoves += "x' x' ";
+		}
+		
+		//move green center to front
+		Tile[][] green = getCenter(new Tile(0, 255, 0, 0));
+		if(green == this.front.mFace){
+			
+		}else if( green == this.back.mFace){
+			this.yPrimeTurn();
+			this.yPrimeTurn();
+			orientMoves += "y y ";
+		}else if( green == this.right.mFace){
+			this.yTurn();
+			orientMoves +="y' ";
+		}else if( green == this.left.mFace){
+			this.yPrimeTurn();
+			orientMoves +="y ";
+		}
+	}
+	
+	private void ReOrientCube(){
+		String[] moves = this.orientMoves.split(" ");
+		ArrayList<PuzzleTurn> pt = myMoves;
+		for(int i = moves.length - 1; i >= 0; i--){
+			for(int j = 0; j < pt.size(); j++){
+				if( pt.get(j).getmName().equals(moves[i].trim())){
+					PuzzleMoveListener.executePuzzleTurn(this, pt.get(j));
+				}
+			}
+		}
+	}
 	
 	private ArrayList<CubeFace> getFaceList(){
 		ArrayList<CubeFace> faces = new ArrayList<CubeFace>();
@@ -941,6 +971,8 @@ public class Cube implements Puzzle {
 	}
 	
 	public boolean isCrossSolved(){
+		OrientCube();
+		
 		Tile[][] white = getCenter(new Tile(255, 255, 255, 0));
 		Tile[][] green = getCenter(new Tile(0  , 255,   0, 0));
 		Tile[][] blue = getCenter(new Tile(   0,   0, 255, 0));
@@ -952,15 +984,19 @@ public class Cube implements Puzzle {
 				Tile.matches(white[1][1], white[2][1]) &&
 				Tile.matches(white[1][1], white[1][2]) &&
 				Tile.matches(green[1][1], green[0][1]) &&
-				Tile.matches(orange[1][1], orange[0][1]) &&
-				Tile.matches(red[1][1], red[0][1]) &&
+				Tile.matches(orange[1][1], orange[1][2]) &&
+				Tile.matches(red[1][1], red[1][0]) &&
 				Tile.matches(blue[1][1], blue[2][1])){
+			ReOrientCube();
 			return true;
 		}
+		ReOrientCube();
 		return false;
 	}
 	
 	public int pairsSolved(){
+		OrientCube(); 
+		
 		Tile[][] white = getCenter(new Tile(255, 255, 255, 0));
 		Tile[][] green = getCenter(new Tile(0  , 255,   0, 0));
 		Tile[][] blue = getCenter(new Tile(   0,   0, 255, 0));
@@ -970,36 +1006,38 @@ public class Cube implements Puzzle {
 		int solved = 0;
 		//FL pair
 		if( Tile.matches(white[1][1], white[2][0]) &&
-				Tile.matches(orange[1][1], orange[0][2]) &&
-				Tile.matches(orange[1][1], orange[1][2]) &&
+				Tile.matches(orange[1][1], orange[2][2]) &&
+				Tile.matches(orange[1][1], orange[2][1]) &&
 				Tile.matches(green[1][1], green[0][0]) &&
 				Tile.matches(green[1][1], green[1][0])){
 			solved++;
 		}
 		//FR pair
 		if( Tile.matches(white[1][1], white[2][2]) &&
-				Tile.matches(red[1][1], red[0][0]) &&
-				Tile.matches(red[1][1], red[1][0]) &&
+				Tile.matches(red[1][1], red[2][0]) &&
+				Tile.matches(red[1][1], red[2][1]) &&
 				Tile.matches(green[1][1], green[0][2]) &&
 				Tile.matches(green[1][1], green[1][2])){
 			solved++;
 		}
 		//BL pair
 		if( Tile.matches(white[1][1], white[0][0]) &&
-				Tile.matches(orange[1][1], orange[0][0]) &&
-				Tile.matches(orange[1][1], orange[1][0]) &&
+				Tile.matches(orange[1][1], orange[0][2]) &&
+				Tile.matches(orange[1][1], orange[0][1]) &&
 				Tile.matches(blue[1][1], blue[1][0]) &&
 				Tile.matches(blue[1][1], blue[2][0])){
 			solved++;
 		}
 		//BR pair
 		if( Tile.matches(white[1][1], white[0][2]) &&
-				Tile.matches(red[1][1], red[0][2]) &&
-				Tile.matches(red[1][1], red[1][2]) &&
+				Tile.matches(red[1][1], red[0][0]) &&
+				Tile.matches(red[1][1], red[0][1]) &&
 				Tile.matches(blue[1][1], blue[1][2]) &&
 				Tile.matches(blue[1][1], blue[2][2])){
 			solved++;
 		}
+		
+		ReOrientCube();
 		
 		return solved;
 	}

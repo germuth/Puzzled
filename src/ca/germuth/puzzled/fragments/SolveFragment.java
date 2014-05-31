@@ -16,6 +16,7 @@ import ca.germuth.puzzled.gui.StatisticsPanel;
 import ca.germuth.puzzled.statistics.graph.GraphStatisticsTask;
 import ca.germuth.puzzled.statistics.graph.MoveDistribution;
 import ca.germuth.puzzled.statistics.graph.TimeDistribution;
+import ca.germuth.puzzled.statistics.graph.TurnsPerSecond;
 import ca.germuth.puzzled.statistics.text.MoveCount;
 import ca.germuth.puzzled.statistics.text.Percentile;
 import ca.germuth.puzzled.statistics.text.SolveNumber;
@@ -23,6 +24,9 @@ import ca.germuth.puzzled.statistics.text.TextStatisticsTask;
 import ca.germuth.puzzled.util.Utils;
 //add guage for turns per second
 //graph for turns per second overtime
+
+//global turn per second gauge
+//ETM meaning rotations are included
 public class SolveFragment extends SwipeyTabFragment{
 	private static final String name = "SOLVE";
 	
@@ -64,8 +68,9 @@ public class SolveFragment extends SwipeyTabFragment{
 		
 		//TODO proper compatibility detection
 //		if( mSolve.getmPuzzle().getmName().contains("3") && mSolve.getmPuzzle().getmName().contains("Cube")){
-			new GraphStatisticsTask(this.getActivity(), mSolve, MoveDistribution.class, (ScrollView)root, list, new StatisticsPanel(this.getActivity())).execute((Void[]) null);
-			new GraphStatisticsTask(this.getActivity(), mSolve, TimeDistribution.class, (ScrollView)root, list, new StatisticsPanel(this.getActivity())).execute((Void[]) null);
+		new GraphStatisticsTask(this.getActivity(), mSolve, TimeDistribution.class, (ScrollView)root, list, new StatisticsPanel(this.getActivity())).execute((Void[]) null);
+		new GraphStatisticsTask(this.getActivity(), mSolve, MoveDistribution.class, (ScrollView)root, list, new StatisticsPanel(this.getActivity())).execute((Void[]) null);
+		new GraphStatisticsTask(this.getActivity(), mSolve, TurnsPerSecond.class, (ScrollView)root, list, new StatisticsPanel(this.getActivity())).execute((Void[]) null);
 //		}
 		
 		
@@ -79,6 +84,8 @@ public class SolveFragment extends SwipeyTabFragment{
 		puzName.setText( mSolve.getmPuzzle().getmName() );
 		TextView solDate = (TextView) root.findViewById(R.id.stats_solve_date);
 		solDate.setText( Utils.solveDateToString( mSolve.getmDateTime() ) );
+		TextView scramble = (TextView) root.findViewById(R.id.stats_solve_scramble);
+		scramble.setText("Scramble: " + mSolve.getmScramble());
 		
 		TextView moveCount = (TextView) root.findViewById(R.id.stats_solve_move_count);
 		TextView solveNum = (TextView) root.findViewById(R.id.stats_solve_number);

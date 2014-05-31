@@ -3,7 +3,9 @@ package ca.germuth.puzzled;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
+import android.util.Log;
 import ca.germuth.puzzled.ReplayParser.ReplayMove;
 import ca.germuth.puzzled.puzzle.Puzzle;
 import ca.germuth.puzzled.puzzle.PuzzleTurn;
@@ -47,26 +49,29 @@ public class ReplayParser implements Iterable<ReplayMove>{
 	
 	public void scramble(String scramble){
 		this.mScramble = scramble;
-		Scanner s = new Scanner(mScramble);
-		while(s.hasNext()){
-			String move = s.next();
-			
+		StringTokenizer s = new StringTokenizer(mScramble);
+		while(s.hasMoreTokens()){
+			String move = s.nextToken();
+			boolean found = false;
 			for(PuzzleTurn pt: mPuzzleMoves){
 				if(pt.getmName().equals(move)){
 					PuzzleMoveListener.executePuzzleTurn(mPuzzle, pt);
+					found = true;
 				}
 			}
+			
+			if(found == false){
+				Log.wtf("DEBUG", move + " was not found!");
+			}
 		}
-		s.close();
 	}
 	
 	private void loadReplay(){
-		Scanner s = new Scanner(mString);
-		while(s.hasNext()){
-			mMoves.add(s.next());
-			mTimes.add(s.nextInt());
+		StringTokenizer s = new StringTokenizer(mString);
+		while(s.hasMoreTokens()){
+			mMoves.add(s.nextToken());
+			mTimes.add(Integer.parseInt(s.nextToken()));
 		}
-		s.close();
 	}
 	public int getMoveCount(){
 		return mMoves.size();

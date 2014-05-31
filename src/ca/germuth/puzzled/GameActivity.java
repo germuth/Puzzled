@@ -44,6 +44,7 @@ public class GameActivity extends PuzzledActivity {
 	private MyGLSurfaceView mGlView;
 	private Chronometer mTimer;
 	private boolean solving;
+	private boolean justSolved;
 	private String mScramble;
 
 	@Override
@@ -52,6 +53,7 @@ public class GameActivity extends PuzzledActivity {
 
 		this.setContentView(Cube.getLayout());
 
+		justSolved = false;
 		mPuzzle = ((PuzzledApplication) this.getApplication()).getPuzzle();
 		if (mPuzzle == null) {
 			Intent myIntent = new Intent(this, PuzzleSelectActivity.class);
@@ -84,6 +86,7 @@ public class GameActivity extends PuzzledActivity {
 			public void onPuzzleSolved() {
 				if (solving) {
 					solving = false;
+					justSolved = true;
 					mTimer.stop();
 
 					// async task to insert solve in database
@@ -286,5 +289,13 @@ public class GameActivity extends PuzzledActivity {
 
 	public boolean isSolving() {
 		return solving;
+	}
+
+	public boolean isJustSolved() {
+		return justSolved;
+	}
+
+	public void setJustSolved(boolean justSolved) {
+		this.justSolved = justSolved;
 	}
 }

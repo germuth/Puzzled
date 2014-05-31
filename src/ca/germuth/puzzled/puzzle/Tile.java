@@ -53,9 +53,9 @@ public class Tile {
 	
 	@Override
 	public String toString() {
-		//return "Tile: " + this.red + ", " + this.green + 
-		//		", " + this.blue;
-		return mCount + "";
+		return "Tile: " + this.red + ", " + this.green + 
+				", " + this.blue;
+//		return mCount + "";
 	}
 
 	public int getRed() {

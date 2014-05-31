@@ -38,18 +38,12 @@ public class TimeDistribution implements GraphStatisticsMeasure{
 		
 		//and all its moves
 		ArrayList<PuzzleTurn> allMoves = rp.getmPuzzleMoves();
-		
-		int turn = 0;
 		//iterate through moves of the replay
 		//and test cube for completion of step at each move
 		while( iterator.hasNext() ){
-			turn++;
 			
 			ReplayMove current = iterator.next();
 			String move = current.getMove();
-			if( current.getTime() < 0){
-				continue;
-			}
 			
 			PuzzleTurn match = null;
 			//search all moves for this particular one
@@ -89,6 +83,9 @@ public class TimeDistribution implements GraphStatisticsMeasure{
 			} else{
 				if( cube.isSolved()){
 					PLLDone = current.getTime();
+					if(PLLDone < 0){
+						PLLDone *= -1;
+					}
 				}
 			}
 		}
@@ -101,9 +98,18 @@ public class TimeDistribution implements GraphStatisticsMeasure{
 		firstPairDone -= crossDone;
 		firstPairDone -= crossDone;
 		
-		return new PieGraph("Puzzle Move Distribution", "Puzzle Section", "Seconds", 
+		//times are in ms
+		//convert to sce
+		double PLL = PLLDone / 1000.00;
+		double OLL = OLLDone / 1000.00;
+		double fourth = fourthPairDone / 1000.00;
+		double third = thirdPairDone / 1000.00;
+		double second = secondPairDone / 1000.00;
+		double first = firstPairDone / 1000.00;
+		double cross = crossDone / 1000.00;
+		
+		return new PieGraph("Puzzle Time Distribution", "Puzzle Section", "Seconds", 
 				new String[]{"Cross", "First Pair", "Second Pair", "Third Pair", "Fourth Pair", "OLL", "PLL"},
-				new String[]{crossDone + "", firstPairDone + "", secondPairDone + "", thirdPairDone + "", fourthPairDone + "", OLLDone + "", PLLDone + "" });	
-//				new String[]{"6", "3", "4", "4", "5", "4", "2" });		
+				new String[]{cross+ "", first + "", second + "", third + "", fourth + "", OLL + "", PLL + "" });		
 	}
 }

@@ -40,14 +40,9 @@ public class MoveDistribution implements GraphStatisticsMeasure{
 		int turn = 0;
 		//iterate through moves of the replay
 		//and test cube for completion of step at each move
-		while( iterator.hasNext() ){
-			turn++;
-			
+		while( iterator.hasNext() ){		
 			ReplayMove current = iterator.next();
 			String move = current.getMove();
-			if( current.getTime() < 0){
-				continue;
-			}
 			
 			PuzzleTurn match = null;
 			//search all moves for this particular one
@@ -58,9 +53,18 @@ public class MoveDistribution implements GraphStatisticsMeasure{
 				}
 			}
 			
+			if( current.getTime() >= 0){
+				turn++;
+			}
+			
 			PuzzleMoveListener.executePuzzleTurn(cube, match);
 
 			if (crossDone == 0) {
+				//cube in wrong state here
+				//scrambled cube is on desk
+				//doesn't match computer cbue
+				//inpsection must have ruined cube somewher
+				//follow through
 				if (cube.isCrossSolved()) {
 					crossDone = turn;
 				}
@@ -90,6 +94,15 @@ public class MoveDistribution implements GraphStatisticsMeasure{
 				}
 			}
 		}
+		
+		PLLDone -= OLLDone;
+		OLLDone -= fourthPairDone;
+		fourthPairDone -= thirdPairDone;
+		thirdPairDone -= secondPairDone;
+		secondPairDone -= firstPairDone;
+		firstPairDone -= crossDone;
+		firstPairDone -= crossDone;
+		
 		return new PieGraph("Puzzle Move Distribution", "Puzzle Section", "Move Count", 
 				new String[]{"Cross", "First Pair", "Second Pair", "Third Pair", "Fourth Pair", "OLL", "PLL"},
 				new String[]{crossDone + "", firstPairDone + "", secondPairDone + "", thirdPairDone + "", fourthPairDone + "", OLLDone + "", PLLDone + "" });

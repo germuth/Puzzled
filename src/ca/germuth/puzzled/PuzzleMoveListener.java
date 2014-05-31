@@ -41,8 +41,12 @@ public class PuzzleMoveListener implements OnClickListener{
 				this.execute(current);
 				// save move and time in replay
 				int currentTime = mActivity.getCurrentTime();
-				if( !mActivity.isSolving() ){
-					currentTime *= -1;
+				if( !mActivity.isSolving()){
+					if( mActivity.isJustSolved()){
+						mActivity.setJustSolved(false);
+					}else{
+						currentTime *= -1;						
+					}
 				}
 				this.mReplay += name + " " + currentTime + " ";
 				

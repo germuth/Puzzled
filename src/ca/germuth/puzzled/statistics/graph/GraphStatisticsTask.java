@@ -1,7 +1,6 @@
 package ca.germuth.puzzled.statistics.graph;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -14,13 +13,10 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import ca.germuth.puzzled.database.ObjectDB;
-import ca.germuth.puzzled.database.PuzzledDatabase;
-import ca.germuth.puzzled.database.SolveDB;
 import ca.germuth.puzzled.gui.StatisticsPanel;
 import ca.germuth.puzzled.gui.graph.Graph;
 import ca.germuth.puzzled.gui.graph.LineGraph;
-import ca.germuth.puzzled.puzzle.Puzzle;
-import ca.germuth.puzzled.puzzle.cube.Cube;
+import android.os.Debug;
 
 public class GraphStatisticsTask extends AsyncTask<Void, Void, Void> {
 	private ProgressBar mPB;
@@ -57,6 +53,7 @@ public class GraphStatisticsTask extends AsyncTask<Void, Void, Void> {
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
+//			Debug.startMethodTracing();
 			GraphStatisticsMeasure gsm = (GraphStatisticsMeasure) mClass.getConstructors()[0].newInstance();
 
 			mGraph = gsm.getGraph(mActivity, mObjectDB);
@@ -74,7 +71,7 @@ public class GraphStatisticsTask extends AsyncTask<Void, Void, Void> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+//		Debug.stopMethodTracing();
 		return null;
 	}
 
