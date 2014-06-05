@@ -24,6 +24,7 @@ public interface Puzzle {
 	 */
 	abstract boolean isSolved();
 
+	abstract void checkSolved();
 	/**
 	 * Sets the current puzzle to be in the solved position
 	 */

@@ -38,6 +38,9 @@ public class MainMenuActivity extends PuzzledActivity implements
 
 				break;
 			case R.id.activity_main_menu_leaderboard_button:
+				myIntent = new Intent(MainMenuActivity.this,
+						LeaderboardActivity.class);
+				MainMenuActivity.this.startActivity(myIntent);
 				break;
 			case R.id.activity_main_menu_setting_button:
 				break;

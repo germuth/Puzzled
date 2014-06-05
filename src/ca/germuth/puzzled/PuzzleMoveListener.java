@@ -30,26 +30,26 @@ public class PuzzleMoveListener implements OnClickListener{
 		Button btn = (Button) v;
 		String name = (String) btn.getText();
 
-		PuzzleTurn match = null;
 		// search through all turns to find the matching turn
 		for (int i = 0; i < mPuzzleTurns.size(); i++) {
 			PuzzleTurn current = mPuzzleTurns.get(i);
 			if (current.getmName().equals(name)) {
 				// found the matching turn
-				match = current;
 				// execute this puzzleturn on the specied puzzle
 				this.execute(current);
 				// save move and time in replay
 				int currentTime = mActivity.getCurrentTime();
-				if( !mActivity.isSolving()){
-					if( mActivity.isJustSolved()){
-						mActivity.setJustSolved(false);
-					}else{
-						currentTime *= -1;						
-					}
+				if( mActivity.getState() == PuzzleState.Inspection){
+					this.mReplay += name + " " + -1 * currentTime + " ";
 				}
-				this.mReplay += name + " " + currentTime + " ";
 				
+				if( mActivity.getState() == PuzzleState.Solving){
+					this.mReplay += name + " " + currentTime + " ";										
+				}			
+				
+				if(!current.isRotation()){
+					this.mPuzzle.checkSolved();
+				}
 				// turn found, no need to keep searching
 				break;
 			}

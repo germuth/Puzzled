@@ -39,6 +39,8 @@
             android:name="ca.germuth.puzzled.GameActivity" />  
         <activity
             android:name="ca.germuth.puzzled.StatisticActivity" />
+        <activity
+            android:name="ca.germuth.puzzled.LeaderboardActivity" />
     </application>
 
 </manifest>

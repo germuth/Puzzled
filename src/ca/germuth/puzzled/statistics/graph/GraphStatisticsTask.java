@@ -53,7 +53,6 @@ public class GraphStatisticsTask extends AsyncTask<Void, Void, Void> {
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
-//			Debug.startMethodTracing();
 			GraphStatisticsMeasure gsm = (GraphStatisticsMeasure) mClass.getConstructors()[0].newInstance();
 
 			mGraph = gsm.getGraph(mActivity, mObjectDB);
@@ -71,7 +70,6 @@ public class GraphStatisticsTask extends AsyncTask<Void, Void, Void> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		Debug.stopMethodTracing();
 		return null;
 	}
 

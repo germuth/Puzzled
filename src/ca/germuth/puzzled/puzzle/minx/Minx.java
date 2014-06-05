@@ -100,4 +100,10 @@ public class Minx implements Puzzle{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void checkSolved() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -43,9 +43,8 @@ public class GameActivity extends PuzzledActivity {
 	private PuzzleMoveListener mPuzzleMoveListener;
 	private MyGLSurfaceView mGlView;
 	private Chronometer mTimer;
-	private boolean solving;
-	private boolean justSolved;
 	private String mScramble;
+	private PuzzleState mState;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +52,8 @@ public class GameActivity extends PuzzledActivity {
 
 		this.setContentView(Cube.getLayout());
 
-		justSolved = false;
+		mScramble = "";
+		mState = PuzzleState.Playing;
 		mPuzzle = ((PuzzledApplication) this.getApplication()).getPuzzle();
 		if (mPuzzle == null) {
 			Intent myIntent = new Intent(this, PuzzleSelectActivity.class);
@@ -68,9 +68,9 @@ public class GameActivity extends PuzzledActivity {
 		mTimer.setOnChronometerFinishListener(new OnChronometerFinishListener() {
 			@Override
 			public void onChronometerFinish(Chronometer chronometer) {
-				disableButtons(false);
+				disableButtons(false, true, true);
 				mTimer.start();
-				solving = true;
+				mState = PuzzleState.Solving;
 			}
 		});
 
@@ -80,13 +80,12 @@ public class GameActivity extends PuzzledActivity {
 		mGlView.initializeRenderer(mPuzzle);
 		mPuzzleMoveListener = new PuzzleMoveListener(this, mPuzzle, mGlView);
 
-		// TODO recieve puzzle somehow
+		// TODO receive puzzle somehow
 		mPuzzle.setOnPuzzleSolvedListener(new OnPuzzleSolvedListener() {
 			@Override
 			public void onPuzzleSolved() {
-				if (solving) {
-					solving = false;
-					justSolved = true;
+				if (mState == PuzzleState.Solving) {
+					mState = PuzzleState.Playing;
 					mTimer.stop();
 
 					// async task to insert solve in database
@@ -115,8 +114,6 @@ public class GameActivity extends PuzzledActivity {
 							GameActivity.this.finish();
 						}
 					}.execute((Void[]) null);
-					;
-
 				}
 			}
 		});
@@ -162,8 +159,10 @@ public class GameActivity extends PuzzledActivity {
 	 * TODO: Also starts the timer (maybe should be removed from this method
 	 */
 	private void scramblePuzzle() {
+		mState = PuzzleState.Scrambling;
+		
 		new Thread(new Runnable() {
-			public void run() {
+			public void run() {				
 				mScramble = "";
 				ArrayList<PuzzleTurn> turns = mPuzzleMoveListener
 						.getmPuzzleTurns();
@@ -198,6 +197,8 @@ public class GameActivity extends PuzzledActivity {
 						// inspection length is in seconds, mTimer accepts
 						// miliseconds
 						mTimer.startCountingDown(INSPECTION_LENGTH * 1000);
+						mState = PuzzleState.Inspection;
+						disableButtons(false, false, true);
 					}
 				});
 
@@ -225,13 +226,17 @@ public class GameActivity extends PuzzledActivity {
 	/**
 	 * Disables all non-rotation buttons for the inspection period
 	 */
-	private void disableButtons(boolean disable) {
+	private void disableButtons(boolean disable, boolean normalMoves, boolean rotations) {
 		ArrayList<PuzzleTurn> turns = mPuzzleMoveListener.getmPuzzleTurns();
 		// iterate through puzzleTurns
 		for (int i = 0; i < turns.size(); i++) {
 			PuzzleTurn current = turns.get(i);
 
-			if (current.isRotation()) {
+			if( !current.isRotation() && !normalMoves){
+				continue;
+			}
+			
+			if (current.isRotation() && !rotations) {
 				continue;
 			}
 
@@ -276,7 +281,7 @@ public class GameActivity extends PuzzledActivity {
 			@Override
 			public void onShake() {
 
-				disableButtons(true);
+				disableButtons(true, true, true);
 
 				scramblePuzzle();
 			}
@@ -287,15 +292,14 @@ public class GameActivity extends PuzzledActivity {
 		return mPuzzle;
 	}
 
-	public boolean isSolving() {
-		return solving;
+	public String getScramble() {
+		return mScramble;
 	}
 
-	public boolean isJustSolved() {
-		return justSolved;
+	public PuzzleState getState() {
+		return mState;
 	}
-
-	public void setJustSolved(boolean justSolved) {
-		this.justSolved = justSolved;
-	}
+	
+	
+	
 }
