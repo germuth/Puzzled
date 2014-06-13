@@ -5,11 +5,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import ca.germuth.puzzled.R;
+import ca.germuth.puzzled.leaderboard.LeaderboardRequest;
 
 
 public class LeaderboardActivity extends Activity{
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,6 +21,7 @@ public class LeaderboardActivity extends Activity{
 			public void onClick(View v) {	
 			}
 		});
-
+		
+		new LeaderboardRequest().execute((Void[])null);
 	}
 }
