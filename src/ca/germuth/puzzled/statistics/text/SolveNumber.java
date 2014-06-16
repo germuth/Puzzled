@@ -3,7 +3,6 @@ package ca.germuth.puzzled.statistics.text;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import ca.germuth.puzzled.database.PuzzleDB;
 import ca.germuth.puzzled.database.PuzzledDatabase;
 import ca.germuth.puzzled.database.SolveDB;
 

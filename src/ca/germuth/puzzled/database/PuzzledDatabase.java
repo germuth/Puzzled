@@ -86,6 +86,16 @@ public class PuzzledDatabase extends SQLiteOpenHelper{
     	}
     }
     
+    public String getPuzzleName(SolveDB sol){
+    	SQLiteDatabase db = this.getWritableDatabase();
+    	Cursor c = db.rawQuery(
+    			"SELECT * " +
+    			"FROM " + PuzzleTable.TABLE_NAME + " " +
+    			"WHERE " + PuzzleTable._ID + " = " + sol.getmPuzzle().getmId(), null);
+    	c.moveToFirst();
+    	return c.getString(c.getColumnIndex(PuzzleTable.COLUMN_PUZZLE_NAME));
+    }
+    
     public SolveDB getLastSolve(){
     	SQLiteDatabase db = this.getWritableDatabase();
     	Cursor c = db.rawQuery(
