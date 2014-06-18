@@ -2,7 +2,7 @@ package ca.germuth.puzzled.database;
 
 import android.provider.BaseColumns;
 
-public class DatabaseSchema {
+class DatabaseSchema {
 	
 	/* Inner class that defines the table contents */
 	//BaseColumn provides _id column for primary key

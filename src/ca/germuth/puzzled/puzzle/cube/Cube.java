@@ -91,6 +91,9 @@ public class Cube implements Puzzle {
 		};
 	}
 	
+	/**
+	 * this name is used for puzzle name in database
+	 */
 	@Override
 	public String getName() {
 		return this.width + "x" + this.height + "x" + this.depth + " cube";

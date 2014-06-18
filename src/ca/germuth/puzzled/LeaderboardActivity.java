@@ -16,6 +16,7 @@ import ca.germuth.puzzled.leaderboard.Solve;
 
 
 public class LeaderboardActivity extends Activity{
+	//TODO move to settings
 	public static final String USERNAME = "Germoose";
 	
 	@Override
@@ -32,11 +33,12 @@ public class LeaderboardActivity extends Activity{
 					public void run(){
 						PuzzledDatabase db = new PuzzledDatabase(LeaderboardActivity.this);
 						SolveDB solDB = db.getLastSolve();
-						Solve sol = new Solve();
-						sol.setDuration( solDB.getmDuration() );
-						sol.setUsername(USERNAME);
-						sol.setPuzzle_id(2);
-						LeaderboardRequest.submitSolve(sol, db.getPuzzleName(solDB));
+						Solve sol = new Solve(USERNAME, solDB.getmDuration(), solDB.getmDateTime(), 
+								solDB.getmScramble(), solDB.getmReplay(), solDB.getmPuzzle().getmId());
+						//need to look up the SolveDB puzzle_id and get the puzzle name
+						//puzzle names are consistent local -> remote database, but not puzzle_ids
+						String puzzleName = db.getPuzzleName(solDB);
+						LeaderboardRequest.submitSolve(sol, puzzleName);
 					}
 				}).start();
 			}
@@ -48,7 +50,7 @@ public class LeaderboardActivity extends Activity{
 			protected Void doInBackground(Void... params) {
 				PuzzledDatabase db = new PuzzledDatabase(LeaderboardActivity.this);
 				
-				solves = LeaderboardRequest.getAllSolves(2);
+				solves = LeaderboardRequest.getAllSolves(3);
 				return null;
 			}
 			
