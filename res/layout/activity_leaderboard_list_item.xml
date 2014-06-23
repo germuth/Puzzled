@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#3496bb"
+    android:padding="5dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp" >
+
+    <TextView
+        android:id="@+id/leaderboard_list_item_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="false"
+        android:layout_centerVertical="true"
+        android:text="1"
+        android:textColor="#000000"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/leaderbaord_list_item_replay_btn"
+        android:layout_width="32dip"
+        android:layout_height="32dip"
+        android:layout_alignParentRight="TRUE"
+        android:layout_centerVertical="true"
+        android:src="@android:drawable/ic_media_play" />
+
+    <TextView
+        android:id="@+id/leaderboard_list_item_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@array/androidcolors"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="14dp"
+        android:layout_toRightOf="@+id/leaderboard_list_item_number"
+        android:text="Germoose"
+        android:textColor="#000000"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/leaderboard_list_item_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/leaderboard_list_item_user"
+        android:layout_toLeftOf="@+id/leaderbaord_list_item_replay_btn"
+        android:text="00:15.63"
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/leaderboard_list_item_date_solved"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/leaderboard_list_item_user"
+        android:layout_toLeftOf="@+id/leaderbaord_list_item_replay_btn"
+        android:text="2014/06/01"
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package ca.germuth.puzzled.leaderboard;
+package ca.germuth.puzzled.leaderboard.database;
 
 import android.provider.BaseColumns;
 

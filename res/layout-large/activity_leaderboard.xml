@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:background="#FFd53e">
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/activity_leaderboard_heading"
@@ -11,7 +10,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="LEADERBOARDS"
-        android:textColor="#000000"
         android:textSize="32sp" />
 
     <LinearLayout
@@ -24,36 +22,40 @@
             android:id="@+id/activity_leaderboard_Today_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:background="#F63C56"
             android:text="Today" />
 
         <Button
             android:id="@+id/activity_leaderboard_This_Week_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:background="#F63C56"
             android:text="This Week" />
 
         <Button
             android:id="@+id/activity_leaderboard_All_Time_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_marginLeft="2dp"
             android:layout_weight="1"
-            android:background="#F63C56"
             android:text="All Time" />
-
     </LinearLayout>
 
-    <fragment
-        android:id="@+id/leaderboard_list_fragment"
-        android:name="ca.germuth.puzzled.fragments.LeaderboardListFragment"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="fill_parent" />
+    	android:layout_height="match_parent"
+    	android:orientation="horizontal" >
+
+        <fragment
+            android:id="@+id/leaderboard_list_fragment"
+            android:name="ca.germuth.puzzled.fragments.LeaderboardListFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" />
+
+        <fragment
+            android:id="@+id/leaderboard_detail_fragment"
+            android:name="ca.germuth.puzzled.fragments.SolveFragment"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+    </LinearLayout>
 
 </LinearLayout>

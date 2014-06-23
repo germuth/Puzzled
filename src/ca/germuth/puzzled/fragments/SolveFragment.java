@@ -77,6 +77,10 @@ public class SolveFragment extends SwipeyTabFragment{
 		return root;
 	}
 	
+	public void updateContent(int position){
+		
+	}
+	
 	private void setHeader(ViewGroup root){
 		TextView time = (TextView) root.findViewById(R.id.stats_solve_duration);
 		time.setText( Utils.solveDurationToString( mSolve.getmDuration() ) );
