@@ -122,23 +122,22 @@ containing a value of this type.
         public static final int activity_vertical_margin=0x7f070001;
     }
     public static final class drawable {
-        public static final int activity_splash_screen_background=0x7f020000;
-        public static final int button_replay=0x7f020001;
-        public static final int color_overlay=0x7f020002;
-        public static final int green_button=0x7f020003;
-        public static final int ic_launcher=0x7f020004;
-        public static final int main_screen_2=0x7f020005;
+        public static final int activity_main_background_orange=0x7f020000;
+        public static final int activity_splash_screen_background=0x7f020001;
+        public static final int button_replay=0x7f020002;
+        public static final int color_overlay=0x7f020003;
+        public static final int green_button=0x7f020004;
+        public static final int ic_launcher=0x7f020005;
         public static final int megaminx_puzzle=0x7f020006;
         public static final int person_image=0x7f020007;
         public static final int purple_button=0x7f020008;
         public static final int puzzle_3by3=0x7f020009;
-        public static final int red_button=0x7f02000a;
-        public static final int shitty_cube_selection_screen=0x7f02000b;
-        public static final int shitty_main_screen=0x7f02000c;
-        public static final int square1_puzzle=0x7f02000d;
-        public static final int swipey_tab_indicator=0x7f02000e;
-        public static final int transparent_overlay=0x7f02000f;
-        public static final int yellow_button=0x7f020010;
+        public static final int puzzled_icon=0x7f02000a;
+        public static final int red_button=0x7f02000b;
+        public static final int square1_puzzle=0x7f02000c;
+        public static final int swipey_tab_indicator=0x7f02000d;
+        public static final int transparent_overlay=0x7f02000e;
+        public static final int yellow_button=0x7f02000f;
     }
     public static final class id {
         public static final int activity_game_container=0x7f040018;
