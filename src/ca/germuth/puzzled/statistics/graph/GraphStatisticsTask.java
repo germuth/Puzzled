@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -14,9 +15,9 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import ca.germuth.puzzled.database.ObjectDB;
 import ca.germuth.puzzled.gui.StatisticsPanel;
+import ca.germuth.puzzled.gui.graph.GaugeGraph;
 import ca.germuth.puzzled.gui.graph.Graph;
 import ca.germuth.puzzled.gui.graph.LineGraph;
-import android.os.Debug;
 
 public class GraphStatisticsTask extends AsyncTask<Void, Void, Void> {
 	private ProgressBar mPB;

@@ -4,12 +4,13 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import ca.germuth.puzzled.database.PuzzledDatabase;
+import ca.germuth.puzzled.database.SolveDB;
 import ca.germuth.puzzled.fragments.LeaderboardListFragment;
 import ca.germuth.puzzled.leaderboard.database.LeaderboardDatabase;
 
 public class RetrieveRequest extends LeaderboardRequest {
 
-	private ArrayList<Solve> mSolves;
+	private ArrayList<SolveDB> mSolves;
 	private LeaderboardListFragment mFrag;
 	private RequestType mType;
 

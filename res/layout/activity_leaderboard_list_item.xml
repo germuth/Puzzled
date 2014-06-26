@@ -24,6 +24,7 @@
         android:layout_height="32dip"
         android:layout_alignParentRight="TRUE"
         android:layout_centerVertical="true"
+        android:focusable="false"
         android:src="@android:drawable/ic_media_play" />
 
     <TextView

@@ -10,24 +10,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import ca.germuth.puzzled.R;
+import ca.germuth.puzzled.database.SolveDB;
 import ca.germuth.puzzled.leaderboard.LeaderboardItemAdapter;
-import ca.germuth.puzzled.leaderboard.Solve;
 
 public class LeaderboardListFragment extends ListFragment{
 	private OnSolveSelectedListener mCallback;
 	private LeaderboardItemAdapter mAdapter;
-	private ArrayList<Solve> mSolves;
+	private ArrayList<SolveDB> mSolves;
 	// The container Activity must implement this interface so the frag can deliver messages
     public interface OnSolveSelectedListener {
         /** Called by HeadlinesFragment when a list item is selected */
-        public void onSolveSelected(int position);
+        public void onSolveSelected(SolveDB SolveDB);
     }
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.mSolves = new ArrayList<Solve>();
+        this.mSolves = new ArrayList<SolveDB>();
         this.mAdapter = new LeaderboardItemAdapter(this.getActivity(), mSolves);
         
         setListAdapter(this.mAdapter);
@@ -44,9 +44,9 @@ public class LeaderboardListFragment extends ListFragment{
         }
     }
     
-    public void assignSolves(ArrayList<Solve> solves){
+    public void assignSolves(ArrayList<SolveDB> SolveDBs){
     	this.mSolves.clear();
-    	this.mSolves.addAll(solves);
+    	this.mSolves.addAll(SolveDBs);
     	this.mAdapter.notifyDataSetChanged();
     }
 
@@ -60,21 +60,18 @@ public class LeaderboardListFragment extends ListFragment{
             mCallback = (OnSolveSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnSolveSelectedListener");
+                    + " must implement OnSolveDBSelectedListener");
         }
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         // Notify the parent activity of selected item
-        mCallback.onSolveSelected(position);
+        mCallback.onSolveSelected(mSolves.get(position));
         
         // Set the item as checked to be highlighted when in two-pane layout
         getListView().setItemChecked(position, true);
     }
-    
-    
-    
     
     
 	@Override

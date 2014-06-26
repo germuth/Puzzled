@@ -38,7 +38,7 @@ public class BestAverage implements TextStatisticsMeasure{
 			int avg = 0;
 			
 			for(int j = i; j < i + size; j++){
-				avg += solves.get(j).getmDuration();
+				avg += solves.get(j).getDuration();
 			}
 			avg /= size;
 			

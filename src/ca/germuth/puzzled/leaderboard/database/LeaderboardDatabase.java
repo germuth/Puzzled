@@ -10,8 +10,8 @@ import java.util.Calendar;
 
 import net.sourceforge.jtds.jdbc.Driver;
 import android.util.Log;
+import ca.germuth.puzzled.database.SolveDB;
 import ca.germuth.puzzled.leaderboard.RequestType;
-import ca.germuth.puzzled.leaderboard.Solve;
 import ca.germuth.puzzled.leaderboard.database.RemoteDatabaseSchema.PuzzleTable;
 import ca.germuth.puzzled.leaderboard.database.RemoteDatabaseSchema.SolveTable;
 
@@ -33,7 +33,7 @@ public class LeaderboardDatabase{
 		return null;
 	}
 	
-	public static void submitSolve(Solve sol, String puzName){
+	public static void submitSolve(SolveDB sol, String puzName){
 		Connection DbConn = ConnectToDatabase();
 		Boolean failure = false;
 		try {
@@ -85,8 +85,8 @@ public class LeaderboardDatabase{
 		}
 	}
 	
-	public static ArrayList<Solve> getAllSolves(int puzzle_id, RequestType type){
-		ArrayList<Solve> solves = new ArrayList<Solve>();
+	public static ArrayList<SolveDB> getAllSolves(int puzzle_id, RequestType type){
+		ArrayList<SolveDB> solves = new ArrayList<SolveDB>();
 		
 		Connection DbConn = ConnectToDatabase();
 		
@@ -119,10 +119,10 @@ public class LeaderboardDatabase{
 			ResultSet reset = stmt.executeQuery(qry);
 
 			while (reset.next()) {
-				Solve sol = new Solve();
-				sol.setSolve_id( reset.getInt( SolveTable.COLUMN_ID));
+				SolveDB sol = new SolveDB();
+				sol.setRemoteId( reset.getInt( SolveTable.COLUMN_ID));
 				sol.setDuration( reset.getInt( SolveTable.COLUMN_SOLVE_DURATION));
-				sol.setPuzzle_id( reset.getInt(SolveTable.COLUMN_PUZZLE));
+				sol.setRemotePuzzleId( reset.getInt(SolveTable.COLUMN_PUZZLE));
 				sol.setUsername( reset.getString(SolveTable.COLUMN_USER));
 				sol.setDateSolved( reset.getLong(SolveTable.COLUMN_SOLVE_DATE));
 				sol.setReplay( reset.getString(SolveTable.COLUMN_REPLAY));
@@ -136,5 +136,23 @@ public class LeaderboardDatabase{
 		}
 		
 		return solves;
+	}
+	
+	public static String getPuzzleName(int puzzle_id){
+		Connection DbConn = ConnectToDatabase();
+		Statement stmt;
+		try {
+			stmt = DbConn.createStatement();
+			ResultSet reset = stmt.executeQuery(
+					" SELECT " + PuzzleTable.COLUMN_PUZZLE_NAME +
+					" FROM "   + PuzzleTable.TABLE_NAME         +
+					" WHERE "  + PuzzleTable.COLUMN_ID          + " = " + puzzle_id);
+			
+			reset.next();
+			return reset.getString(PuzzleTable.COLUMN_PUZZLE_NAME);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "N/A";
 	}
 }

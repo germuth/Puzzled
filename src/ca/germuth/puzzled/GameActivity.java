@@ -33,7 +33,16 @@ import ca.germuth.puzzled.util.FontManager;
  * 
  * Jakob Fischer jakob@pizzadude.dk www.pizzadude.dk
  */
-
+/*
+make replays
+add message when solve deleted, and move to previous solve?
+add 3 more graphs
+make stats linkable
+actually do user panel
+change leaderboard look
+make background of play screen black
+make buttons look like buttons?
+*/		
 public class GameActivity extends PuzzledActivity {
 
 	private static final int SCRAMBLE_LENGTH = 25;

@@ -19,7 +19,7 @@ public class SolveNumber implements TextStatisticsMeasure{
 		SolveDB solve = (SolveDB) mDBObject;
 		
 		PuzzledDatabase db = new PuzzledDatabase(mActivity);
-		ArrayList<SolveDB> solves = db.getAllSolves(solve.getmPuzzle());
+		ArrayList<SolveDB> solves = db.getAllSolves(solve.getPuzzle());
 		
 		for(int i = 0; i < solves.size(); i++){
 			if( solves.get(i).equals(solve)){

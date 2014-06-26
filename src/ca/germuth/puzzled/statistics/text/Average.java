@@ -33,7 +33,7 @@ public class Average implements TextStatisticsMeasure{
 		int count = 0;
 		//iterate backwards since most recent solves are at the back
 		for(int i = solves.size() - 1; solves.size() - size <= i; i--){
-			avg += solves.get(i).getmDuration();
+			avg += solves.get(i).getDuration();
 			count++;
 		}
 		avg /= count;

@@ -29,6 +29,7 @@
                 android:id="@+id/stats_solve_replay_button"
                 android:layout_width="fill_parent"
                 android:layout_height="42dp"
+                android:background="@drawable/apptheme_btn_default_holo_light"
                 android:text="Watch Replay" />
         </LinearLayout>
 
@@ -52,6 +53,7 @@
                 android:weightSum="2" >
 
                 <TextView
+                    android:id="@+id/activity_statistics_puzzle_label"
                     style="@style/activity_statistics_textview"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
@@ -74,6 +76,7 @@
                 android:weightSum="2" >
 
                 <TextView
+                    android:id="@+id/activity_statistics_solve_number_label"
                     style="@style/activity_statistics_textview"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
@@ -118,6 +121,7 @@
                 android:weightSum="2" >
 
                 <TextView
+                    android:id="@+id/activity_statistics_percentile_label"
                     style="@style/activity_statistics_textview"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"

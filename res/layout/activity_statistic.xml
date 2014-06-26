@@ -9,10 +9,11 @@
         android:id="@+id/swipeytabs"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        swipeytabs:bottomBarColor="#CC0000"
+        swipeytabs:bottomBarColor="#FF0000"
         swipeytabs:bottomBarHeight="2dip"
         swipeytabs:tabIndicatorHeight="3dip"
-        android:background="#FFBB33"/>
+        android:background="#FFAD5F" />
+        <!--  -->android:background="#FFBB33"/> -->
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"

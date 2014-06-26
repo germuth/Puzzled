@@ -19,16 +19,16 @@ public class Percentile implements TextStatisticsMeasure{
 	@Override
 	public String getValue(Activity mActivity, Object mDBObject, int optionalParam) {
 		SolveDB solve = (SolveDB) mDBObject;
-		PuzzleDB puzz = solve.getmPuzzle();
-		int size = optionalParam;
+		PuzzleDB puzz = solve.getPuzzle();
+//		int size = optionalParam;
 		
 		PuzzledDatabase db = new PuzzledDatabase(mActivity);
-		ArrayList<SolveDB> solves = db.getAllSolves(solve.getmPuzzle());
+		ArrayList<SolveDB> solves = db.getAllSolves(solve.getPuzzle());
 		Collections.sort(solves, new Comparator<SolveDB>(){
 			@Override
 			public int compare(SolveDB lhs, SolveDB rhs) {
-				Integer left = lhs.getmDuration();
-				return left.compareTo(rhs.getmDuration());
+				Integer left = lhs.getDuration();
+				return left.compareTo(rhs.getDuration());
 			}
 		});
 		int solveNumber = -1;

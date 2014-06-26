@@ -2,7 +2,6 @@ package ca.germuth.puzzled;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Scanner;
 import java.util.StringTokenizer;
 
 import android.util.Log;

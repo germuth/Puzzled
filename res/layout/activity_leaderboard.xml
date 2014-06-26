@@ -25,8 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="#F63C56"
+            android:background="@drawable/apptheme_btn_default_holo_light"
             android:text="Today" />
 
         <Button
@@ -35,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:background="#F63C56"
+            android:background="@drawable/apptheme_btn_default_holo_light"
             android:text="This Week" />
 
         <Button
@@ -45,7 +44,7 @@
             android:layout_margin="5dp"
             android:layout_marginLeft="2dp"
             android:layout_weight="1"
-            android:background="#F63C56"
+            android:background="@drawable/apptheme_btn_default_holo_light"
             android:text="All Time" />
 
     </LinearLayout>

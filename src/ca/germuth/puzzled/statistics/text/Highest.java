@@ -28,8 +28,8 @@ public class Highest implements TextStatisticsMeasure{
 		
 		int max = Integer.MAX_VALUE;
 		for(SolveDB s : solves){
-			if( s.getmDuration() < max){
-				max = s.getmDuration();
+			if( s.getDuration() < max){
+				max = s.getDuration();
 			}
 		}
 		

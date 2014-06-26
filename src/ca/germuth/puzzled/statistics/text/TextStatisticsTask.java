@@ -38,7 +38,7 @@ public class TextStatisticsTask extends AsyncTask<Void, Void, Void>{
 			tt = (TextStatisticsMeasure) mClass.getConstructors()[0].newInstance();
 			if( tt.getType() == TextStatisticsMeasure.PUZZLE_TYPE){
 				if( mObjectDB instanceof SolveDB){
-					mResult = tt.getValue(mActivity, ((SolveDB)mObjectDB).getmPuzzle(), mOptional);
+					mResult = tt.getValue(mActivity, ((SolveDB)mObjectDB).getPuzzle(), mOptional);
 				}else{
 					mResult = tt.getValue(mActivity, mObjectDB, mOptional);
 				}

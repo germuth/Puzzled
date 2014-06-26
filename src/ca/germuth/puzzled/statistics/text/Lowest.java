@@ -28,8 +28,8 @@ public class Lowest implements TextStatisticsMeasure{
 		
 		int min = Integer.MIN_VALUE;
 		for(SolveDB s : solves){
-			if( s.getmDuration() > min){
-				min = s.getmDuration();
+			if( s.getDuration() > min){
+				min = s.getDuration();
 			}
 		}
 		

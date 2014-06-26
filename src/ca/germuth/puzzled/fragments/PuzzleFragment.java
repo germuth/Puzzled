@@ -1,10 +1,7 @@
 package ca.germuth.puzzled.fragments;
 
-import java.util.ArrayList;
-
 import net.peterkuterna.android.apps.swipeytabs.SwipeyTabFragment;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,21 +14,15 @@ import ca.germuth.puzzled.R;
 import ca.germuth.puzzled.StatisticActivity;
 import ca.germuth.puzzled.database.PuzzleDB;
 import ca.germuth.puzzled.database.PuzzledDatabase;
-import ca.germuth.puzzled.database.SolveDB;
 import ca.germuth.puzzled.gui.StatisticsPanel;
-import ca.germuth.puzzled.puzzle.Puzzle;
-import ca.germuth.puzzled.puzzle.cube.Cube;
 import ca.germuth.puzzled.statistics.graph.GraphStatisticsTask;
+import ca.germuth.puzzled.statistics.graph.Histogram;
 import ca.germuth.puzzled.statistics.graph.SolveHistory;
 import ca.germuth.puzzled.statistics.text.Average;
 import ca.germuth.puzzled.statistics.text.BestAverage;
 import ca.germuth.puzzled.statistics.text.FewestMoves;
 import ca.germuth.puzzled.statistics.text.Highest;
 import ca.germuth.puzzled.statistics.text.Lowest;
-import ca.germuth.puzzled.statistics.text.MoveCount;
-import ca.germuth.puzzled.statistics.text.Percentile;
-import ca.germuth.puzzled.statistics.text.SolveNumber;
-import ca.germuth.puzzled.statistics.text.TextStatisticsMeasure;
 import ca.germuth.puzzled.statistics.text.TextStatisticsTask;
 import ca.germuth.puzzled.statistics.text.TimesSolved;
 //add histogram
@@ -92,8 +83,8 @@ public class PuzzleFragment extends SwipeyTabFragment {
 //			new TextStatisticsTask(this.getActivity(), current, list, sPanel).execute((Void[]) null);
 //		}
 
-		Class<?> test = SolveHistory.class;
-		new GraphStatisticsTask(this.getActivity(), mPuzzle, test, mRoot, list, new StatisticsPanel(this.getActivity())).execute((Void[]) null);
+		new GraphStatisticsTask(this.getActivity(), mPuzzle, Histogram.class, mRoot, list, new StatisticsPanel(this.getActivity())).execute((Void[]) null);
+		new GraphStatisticsTask(this.getActivity(), mPuzzle, SolveHistory.class, mRoot, list, new StatisticsPanel(this.getActivity())).execute((Void[]) null);
 		
 		return mRoot;
 	}

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,14 +18,17 @@ import ca.germuth.puzzled.database.PuzzledDatabase;
 import ca.germuth.puzzled.database.SolveDB;
 import ca.germuth.puzzled.fragments.PuzzleFragment;
 import ca.germuth.puzzled.fragments.SolveFragment;
+import ca.germuth.puzzled.fragments.SolveFragment.OnResetListener;
+import ca.germuth.puzzled.fragments.SolveType;
 import ca.germuth.puzzled.fragments.UserFragment;
 import ca.germuth.puzzled.util.FontManager;
 
-public class StatisticActivity extends PuzzledFragmentActivity {
+public class StatisticActivity extends PuzzledFragmentActivity implements OnResetListener {
 
 	private SwipeyTabs mTabs;
 	private ViewPager mViewPager;
 	
+	private SolveDB mSolve;
 	private SolveFragment mSolveFragment;
 	private PuzzleFragment mPuzzleFragment;
 	private UserFragment mUserFragment;
@@ -38,10 +42,10 @@ public class StatisticActivity extends PuzzledFragmentActivity {
 
 		PuzzledDatabase db = new PuzzledDatabase(StatisticActivity.this);
 		//TODO bad
-		SolveDB theSolve = db.getLastSolve();
+		mSolve = db.getLastSolve();
 
-		mSolveFragment = SolveFragment.newInstance(theSolve);
-		mPuzzleFragment = PuzzleFragment.newInstance(theSolve.getmPuzzle());
+		mSolveFragment = SolveFragment.newInstance(mSolve, SolveType.LOCAL);
+		mPuzzleFragment = PuzzleFragment.newInstance(mSolve.getPuzzle());
 		mUserFragment = new UserFragment();
 
 		mFragments = new SwipeyTabFragment[3];
@@ -95,5 +99,11 @@ public class StatisticActivity extends PuzzledFragmentActivity {
 
 			return view;
 		}
+	}
+
+	//Listener to reset the solve fragment
+	@Override
+	public void onReset() {
+		// TODO Doesn't actually do anything... 
 	}
 }

@@ -27,12 +27,12 @@ public class TimeDistribution implements GraphStatisticsMeasure {
 		int PLLDone = 0;
 
 		SolveDB db = (SolveDB) ob;
-		ReplayParser rp = new ReplayParser(db.getmReplay());
+		ReplayParser rp = new ReplayParser(db.getReplay());
 		Iterator<ReplayMove> iterator = rp.iterator();
 
 		// get a instance of the puzzle
 		Cube cube = (Cube) rp.getmPuzzle();
-		rp.scramble(db.getmScramble());
+		rp.scramble(db.getScramble());
 
 		// and all its moves
 		ArrayList<PuzzleTurn> allMoves = rp.getmPuzzleMoves();

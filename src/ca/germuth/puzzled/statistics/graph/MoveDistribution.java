@@ -27,12 +27,12 @@ public class MoveDistribution implements GraphStatisticsMeasure {
 		int PLLDone = 0;
 
 		SolveDB db = (SolveDB) ob;
-		ReplayParser rp = new ReplayParser(db.getmReplay());
+		ReplayParser rp = new ReplayParser(db.getReplay());
 		Iterator<ReplayMove> iterator = rp.iterator();
 
 		// get a instance of the puzzle
 		Cube cube = (Cube) rp.getmPuzzle();
-		rp.scramble(db.getmScramble());
+		rp.scramble(db.getScramble());
 
 		// and all its moves
 		ArrayList<PuzzleTurn> allMoves = rp.getmPuzzleMoves();
@@ -60,11 +60,6 @@ public class MoveDistribution implements GraphStatisticsMeasure {
 			PuzzleMoveListener.executePuzzleTurn(cube, match);
 
 			if (crossDone == 0) {
-				// cube in wrong state here
-				// scrambled cube is on desk
-				// doesn't match computer cbue
-				// inpsection must have ruined cube somewher
-				// follow through
 				if (cube.isCrossSolved()) {
 					crossDone = turn;
 				}
@@ -104,7 +99,6 @@ public class MoveDistribution implements GraphStatisticsMeasure {
 		fourthPairDone -= thirdPairDone;
 		thirdPairDone -= secondPairDone;
 		secondPairDone -= firstPairDone;
-		firstPairDone -= crossDone;
 		firstPairDone -= crossDone;
 
 		return new PieGraph("Puzzle Move Distribution", "Puzzle Section",

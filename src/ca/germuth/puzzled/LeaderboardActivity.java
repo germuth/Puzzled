@@ -8,9 +8,11 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import ca.germuth.puzzled.database.SolveDB;
 import ca.germuth.puzzled.fragments.LeaderboardListFragment;
 import ca.germuth.puzzled.fragments.LeaderboardListFragment.OnSolveSelectedListener;
 import ca.germuth.puzzled.fragments.SolveFragment;
+import ca.germuth.puzzled.fragments.SolveType;
 import ca.germuth.puzzled.leaderboard.RequestType;
 import ca.germuth.puzzled.leaderboard.RetrieveRequest;
 import ca.germuth.puzzled.leaderboard.SubmitRequest;
@@ -80,7 +82,7 @@ public class LeaderboardActivity extends FragmentActivity implements OnSolveSele
 	 * This is a callback that the list fragment (Fragment A) calls when a list
 	 * item is selected
 	 */
-	public void onItemSelected(int position) {
+	public void onItemSelected(SolveDB solve) {
 		SolveFragment listFrag = (SolveFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.leaderboard_detail_fragment);
 		if (listFrag == null) {
@@ -89,18 +91,19 @@ public class LeaderboardActivity extends FragmentActivity implements OnSolveSele
 			// so start DisplayActivity (Activity B)
 			// and pass it the info about the selected item
 			Intent intent = new Intent(this, LeaderboardDetailActivity.class);
-			intent.putExtra("position", position);
+			intent.putExtra("solve", solve);
 			startActivity(intent);
 		} else {
 			// DisplayFragment (Fragment B) is in the layout (tablet layout),
 			// so tell the fragment to update
-			listFrag.updateContent(position);
+			SolveFragment frag = SolveFragment.newInstance(solve, SolveType.GLOBAL);
+			getSupportFragmentManager().beginTransaction().replace(R.id.leaderboard_detail_fragment, frag);
 		}
 	}
 
 	@Override
-	public void onSolveSelected(int position) {
-		onItemSelected(position);
+	public void onSolveSelected(SolveDB solve) {
+		onItemSelected(solve);
 	}
 
 	@Override

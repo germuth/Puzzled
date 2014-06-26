@@ -61,8 +61,8 @@ public class GaugeGraph extends Graph{
 //                + "          title: '" + mTitle + "',"
                 + "          width: 150, height: 150,"
                 + "          max: 10, min: 0,"
-                + "          redFrom: 9, redTo: 10,"
-                + "          yellowFrom: 8, yellowTo: 9,"
+                + "          redFrom: 8, redTo: 10,"
+                + "          yellowFrom: 6, yellowTo: 8,"
                 + "          majorTicks: 10, minorTicks: 5"
                 + "        };"
                 + "        var chart = new google.visualization.Gauge(document.getElementById('chart_div'));"
@@ -71,9 +71,11 @@ public class GaugeGraph extends Graph{
                 + "    </script>"
                 + "  </head>"
                 + "  <body>"
-//                + "    <div id=\"chart_div\"></div>"
-                + "    <div id=\"chart_div\" " + /*style=\"width: " + X_SIZE + "px; height: " + Y_SIZE + "px;\" */ "></div>"
-                + "       <img style=\"padding: 0; margin: 0 0 0 330px; display: block;\" src=\"truiton.png\"/>"
+//                + "    <div id=\"chart_div\"></div>"      //style=\"width: " + X_SIZE + "px; height: " + 200 + "px;
+                + "    <div id=\"chart_div\" align=\"center\"; \"></div>"
+//                + "           <img style=\" margin-left: 100px !important; \">"
+//                + "         <img style=\" display: block; margin: 0 auto;\">"
+//                + "       <img style=\"padding: 0; margin: auto; display: block;\" src=\"truiton.png\"/>"
                 + "  </body>" + "</html>";
 		return content;
 	}

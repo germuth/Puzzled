@@ -53,11 +53,11 @@ public class PuzzledDatabase extends SQLiteOpenHelper{
     	// Create a new map of values, where column names are the keys
     	ContentValues values = new ContentValues();
     	//values.put(SolveTable._ID, solve.getmId());
-    	values.put(SolveTable.COLUMN_PUZZLE, solve.getmPuzzle().getmId());
-    	values.put(SolveTable.COLUMN_REPLAY, solve.getmReplay());
-    	values.put(SolveTable.COLUMN_SCRAMBLE, solve.getmScramble());
-    	values.put(SolveTable.COLUMN_SOLVE_DATE, solve.getmDateTime());
-    	values.put(SolveTable.COLUMN_SOLVE_DURATION, solve.getmDuration());
+    	values.put(SolveTable.COLUMN_PUZZLE, solve.getPuzzle().getmId());
+    	values.put(SolveTable.COLUMN_REPLAY, solve.getReplay());
+    	values.put(SolveTable.COLUMN_SCRAMBLE, solve.getScramble());
+    	values.put(SolveTable.COLUMN_SOLVE_DATE, solve.getDateSolved());
+    	values.put(SolveTable.COLUMN_SOLVE_DURATION, solve.getDuration());
 
     	// Insert the new row, returning the primary key value of the new row
     	db.insert(SolveTable.TABLE_NAME, null, values);
@@ -66,8 +66,8 @@ public class PuzzledDatabase extends SQLiteOpenHelper{
     public void deleteSolve(SolveDB solve){
     	SQLiteDatabase db = this.getWritableDatabase();
     	
-    	if( solve.getmId() != 0){
-    		db.delete(SolveTable.TABLE_NAME, SolveTable._ID + " =?", new String[]{solve.getmId() + ""});
+    	if( solve.getLocalId() != 0){
+    		db.delete(SolveTable.TABLE_NAME, SolveTable._ID + " =?", new String[]{solve.getLocalId() + ""});
     	}else{
     		Log.wtf("DATABASE", "CANNOT delete solve without its id bro");
     	}
@@ -91,7 +91,7 @@ public class PuzzledDatabase extends SQLiteOpenHelper{
     	Cursor c = db.rawQuery(
     			"SELECT * " +
     			"FROM " + PuzzleTable.TABLE_NAME + " " +
-    			"WHERE " + PuzzleTable._ID + " = " + sol.getmPuzzle().getmId(), null);
+    			"WHERE " + PuzzleTable._ID + " = " + sol.getPuzzle().getmId(), null);
     	c.moveToFirst();
     	return c.getString(c.getColumnIndex(PuzzleTable.COLUMN_PUZZLE_NAME));
     }
@@ -121,7 +121,8 @@ public class PuzzledDatabase extends SQLiteOpenHelper{
     		if( c2.moveToFirst() ){
     			PuzzleDB puz = new PuzzleDB(c2.getInt(c2.getColumnIndex(PuzzleTable._ID)),
         				c2.getString(c2.getColumnIndex(PuzzleTable.COLUMN_PUZZLE_NAME)));  
-    			SolveDB SolveTable = new SolveDB( SolveTableID, duration, replay, scramble, puz, dateTime);
+    			SolveDB SolveTable = new SolveDB(duration, replay, scramble, puz, dateTime);
+    			SolveTable.setLocalId(SolveTableID);
         		return SolveTable;
     		}else{
     			return null;
@@ -158,7 +159,8 @@ public class PuzzledDatabase extends SQLiteOpenHelper{
         		long dateTime = c.getLong(c.getColumnIndex(SolveTable.COLUMN_SOLVE_DATE));
         		int duration = c.getInt(c.getColumnIndex(SolveTable.COLUMN_SOLVE_DURATION));
         		
-        		SolveDB SolveTable = new SolveDB( SolveTableID, duration, replay, scramble, puz, dateTime);
+        		SolveDB SolveTable = new SolveDB(duration, replay, scramble, puz, dateTime);
+        		SolveTable.setLocalId(SolveTableID);
         		SolveTables.add(SolveTable);
         	}
     	}

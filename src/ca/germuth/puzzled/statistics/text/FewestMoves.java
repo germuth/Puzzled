@@ -32,7 +32,7 @@ public class FewestMoves implements TextStatisticsMeasure{
 		MoveCount cm = new MoveCount();
 		for (SolveDB s : solves) {
 			//TODO just length of string
-			if (s.getmReplay().length() < min) {
+			if (s.getReplay().length() < min) {
 				min = Integer.parseInt( cm.getValue(mActivity, s, -1) );
 			}
 		}

@@ -3,5 +3,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:background="@drawable/activity_splash_screen_background">
+    android:background="@drawable/activity_loading_screen">
 </LinearLayout>

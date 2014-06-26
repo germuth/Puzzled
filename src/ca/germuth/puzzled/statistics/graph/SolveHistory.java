@@ -26,10 +26,10 @@ public class SolveHistory implements GraphStatisticsMeasure {
 
 		for (int i = 0; i < solves.size(); i++) {
 			SolveDB current = solves.get(i);
-			int duration = current.getmDuration();
+			int duration = current.getDuration();
 			solveDuration[i] = Utils.solveDurationToStringSeconds(duration);
 
-			long solveD = current.getmDateTime();
+			long solveD = current.getDateSolved();
 			solveDate[i] = Utils.solveDateToString(solveD);
 		}
 

@@ -16,7 +16,7 @@ public class MoveCount implements TextStatisticsMeasure{
 			int optionalParam) {
 		SolveDB solve = (SolveDB) mDBObject;
 		
-		return new ReplayParser( solve.getmReplay() ).getMoveCount() + "";
+		return new ReplayParser( solve.getReplay() ).getMoveCount() + "";
 	}
 
 }

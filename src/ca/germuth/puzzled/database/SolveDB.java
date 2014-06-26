@@ -1,94 +1,119 @@
+/**
+ * SolveDB
+ * 
+ * This class has a shared respositibilty
+ * It is the Solve Object for the local database table, but also the solve object
+ * for the remote database. 
+ */
 package ca.germuth.puzzled.database;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class SolveDB extends ObjectDB implements Parcelable{
-	
-	private int mId;
+	/**
+	 * Primary key for this solve in local database
+	 */
+	private int mLocalId;
+	/**
+	 * Primary key for this solve in remote database
+	 */
+	private int mRemoteId;
+	/**
+	 * Username of user who performed this solve
+	 * May not be used in local cases
+	 */
+	private String mUsername;
+	/**
+	 * Length of solve in milliseconds
+	 */
 	private int mDuration;
+	/**
+	 * Replay in string format
+	 */
 	private String mReplay;
+	/**
+	 * Scramble in string format
+	 */
 	private String mScramble;
+	/**
+	 * Date and time of solve in milliseconds since 1970
+	 */
+	private long mDateSolved;
+	/**
+	 * Reference to PuzzleDB object for this solve if local
+	 */
 	private PuzzleDB mPuzzle;
-	private long mDateTime;
+	/**
+	 * Primary Key in remote database for the puzzle this solve was performed on
+	 */
+	private int mRemotePuzzleId;
 	
+	//default constructor
+	public SolveDB(){
+		this.mLocalId = -1;
+		this.mDateSolved = -1;
+		this.mDuration = -1;
+		this.mPuzzle = null;
+		this.mRemoteId = -1;
+		this.mRemotePuzzleId = -1;
+		this.mReplay = null;
+		this.mScramble = null;
+		this.mUsername = null;
+	}
+	
+	/**
+	 * Constructor for local solve use
+	 * @param duration
+	 * @param replay
+	 * @param scramble
+	 * @param puz
+	 * @param dateTime
+	 */
 	public SolveDB(int duration, String replay, String scramble, PuzzleDB puz, long dateTime){
-		mDuration = duration;
-		mReplay = replay;
-		mScramble = scramble;
-		mPuzzle = puz;
-		mDateTime = dateTime;
+		this.mDuration = duration;
+		this.mReplay = replay;
+		this.mScramble = scramble;
+		this.mPuzzle = puz;
+		this.mDateSolved = dateTime;
+		
+		this.mLocalId = -1;
+		this.mRemoteId = -1;
+		this.mRemotePuzzleId = -1;
+		this.mUsername = null;
 	}
 	
-	public SolveDB(int id, int duration, String replay, String scramble, PuzzleDB puz, long dateTime){
-		mId = id;
-		mDuration = duration;
-		mReplay = replay;
-		mScramble = scramble;
-		mPuzzle = puz;
-		mDateTime = dateTime;
-	}
+	/**
+	 * Constructor for remote solve use
+	 */
+	public SolveDB(String username, int duration, long dateSolved, String scramble, String replay, int puz_id){
+		this.mUsername = username;
+		this.mDateSolved = dateSolved;
+		this.mDuration = duration;
+		this.mScramble = scramble;
+		this.mReplay = replay;
+		this.mRemotePuzzleId = puz_id;
+		
+		this.mLocalId = -1;
+		this.mPuzzle = null;
+		this.mRemoteId = -1;
 
-	public int getmId() {
-		return mId;
-	}
-
-	public void setmId(int mId) {
-		this.mId = mId;
-	}
-
-	public int getmDuration() {
-		return mDuration;
-	}
-
-	public void setmDuration(int mDuration) {
-		this.mDuration = mDuration;
-	}
-
-	public String getmReplay() {
-		return mReplay;
-	}
-
-	public void setmReplay(String mReplay) {
-		this.mReplay = mReplay;
-	}
-
-	public PuzzleDB getmPuzzle() {
-		return mPuzzle;
-	}
-
-	public void setmPuzzle(PuzzleDB mPuzzle) {
-		this.mPuzzle = mPuzzle;
-	}
-
-	public long getmDateTime() {
-		return mDateTime;
-	}
-
-	public void setmDateTime(long mDateTime) {
-		this.mDateTime = mDateTime;
 	}
 	
-	public String getmScramble() {
-		return mScramble;
-	}
-
-	public void setmScramble(String mScramble) {
-		this.mScramble = mScramble;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		return mId == ((SolveDB)o).mId;
-	}
-
+	/**
+	 * Parcelable constructor
+	 * @param in
+	 */
 	public SolveDB(Parcel in){
-		this.mId = in.readInt();
+		this.mLocalId = in.readInt();
+		this.mRemoteId = in.readInt();
+		this.mUsername = in.readString();
 		this.mDuration = in.readInt();
 		this.mReplay = in.readString();
 		this.mScramble = in.readString();
-		this.mDateTime = in.readLong();
+		this.mDateSolved = in.readLong();
 		this.mPuzzle = in.readParcelable(PuzzleDB.class.getClassLoader());
+		this.mRemotePuzzleId = in.readInt();
 	}
 
 	@Override
@@ -100,12 +125,15 @@ public class SolveDB extends ObjectDB implements Parcelable{
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		// TODO Auto-generated method stub
-		dest.writeInt(mId);
+		dest.writeInt(mLocalId);
+		dest.writeInt(mRemoteId);
+		dest.writeString(mUsername);
 		dest.writeInt(mDuration);
 		dest.writeString(mReplay);
 		dest.writeString(mScramble);
-		dest.writeLong(mDateTime);
+		dest.writeLong(mDateSolved);
 		dest.writeParcelable(this.mPuzzle, 0);
+		dest.writeInt(mRemotePuzzleId);
 	}
 	
 	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
@@ -117,5 +145,83 @@ public class SolveDB extends ObjectDB implements Parcelable{
             return new SolveDB[size];
         }
     };
-	
+
+    
+    
+	@Override
+	public boolean equals(Object o) {
+		return mLocalId == ((SolveDB)o).mLocalId;
+	}
+
+	public int getLocalId() {
+		return mLocalId;
+	}
+
+	public void setLocalId(int mLocalId) {
+		this.mLocalId = mLocalId;
+	}
+
+	public int getRemoteId() {
+		return mRemoteId;
+	}
+
+	public void setRemoteId(int mRemoteId) {
+		this.mRemoteId = mRemoteId;
+	}
+
+	public String getUsername() {
+		return mUsername;
+	}
+
+	public void setUsername(String mUsername) {
+		this.mUsername = mUsername;
+	}
+
+	public int getDuration() {
+		return mDuration;
+	}
+
+	public void setDuration(int mDuration) {
+		this.mDuration = mDuration;
+	}
+
+	public String getReplay() {
+		return mReplay;
+	}
+
+	public void setReplay(String mReplay) {
+		this.mReplay = mReplay;
+	}
+
+	public String getScramble() {
+		return mScramble;
+	}
+
+	public void setScramble(String mScramble) {
+		this.mScramble = mScramble;
+	}
+
+	public long getDateSolved() {
+		return mDateSolved;
+	}
+
+	public void setDateSolved(long mDateSolved) {
+		this.mDateSolved = mDateSolved;
+	}
+
+	public PuzzleDB getPuzzle() {
+		return mPuzzle;
+	}
+
+	public void setPuzzle(PuzzleDB mPuzzle) {
+		this.mPuzzle = mPuzzle;
+	}
+
+	public int getRemotePuzzleId() {
+		return mRemotePuzzleId;
+	}
+
+	public void setRemotePuzzleId(int mRemotePuzzleId) {
+		this.mRemotePuzzleId = mRemotePuzzleId;
+	}
 }
