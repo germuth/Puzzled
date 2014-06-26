@@ -2,7 +2,6 @@ package ca.germuth.puzzled.gui;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -13,12 +12,12 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import ca.germuth.puzzled.GameActivity;
 import ca.germuth.puzzled.openGL.MyGLSurfaceView;
-import ca.germuth.puzzled.puzzle.cube.Cube;
 import ca.germuth.puzzled.util.Utils;
 
 public class GameActivityLayout extends RelativeLayout{
 	private GameActivity mActivity;
 	private MyGLSurfaceView mGlView;
+
 	
 	private boolean touchedWithinGlView;
 	
@@ -52,9 +51,14 @@ public class GameActivityLayout extends RelativeLayout{
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
+		if(mActivity == null){
+			return true;
+		}
+		
 		int x = (int) event.getX();
 		int y = (int) event.getY();
-
+		
+		
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
 				startX = x;
@@ -97,14 +101,6 @@ public class GameActivityLayout extends RelativeLayout{
 				}
 				mActivity.changeButtonLevel(false);
 				break;
-			//if second finger is added and removed
-			case MotionEvent.ACTION_POINTER_UP:
-				Activity thisOne = (Activity) this.getContext();
-				Intent intent = thisOne.getIntent();
-				intent.putExtra("puzzle_size", ((Cube)this.mActivity.getPuzzle() ).getWidth() + 1);
-				thisOne.finish();
-				thisOne.startActivity(intent);
-				break;
 			default :
 				return false;
 		}
@@ -125,8 +121,10 @@ public class GameActivityLayout extends RelativeLayout{
 		return mActivity;
 	}
 
-	public void setmActivity(GameActivity mActivity) {
-		this.mActivity = mActivity;
+	public void setmActivity(Activity mActivity) {
+		if (mActivity instanceof GameActivity){
+			this.mActivity = (GameActivity)mActivity;			
+		}
 	}
 
 	public MyGLSurfaceView getmGlView() {

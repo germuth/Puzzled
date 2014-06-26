@@ -15,7 +15,7 @@
         android:paddingRight="1dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:background="#FFEBCD">
+        android:background="#000000">
 
         <Button style="@style/activity_game_button"
             android:background="#FFBB33" 
@@ -71,7 +71,7 @@
         android:paddingRight="1dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:background="#FFEBCD">
+        android:background="#000000">
 
         <Button style="@style/activity_game_button"
             android:background="#FF8800" 
@@ -128,7 +128,7 @@
         android:paddingRight="5dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:background="#FFEBCD">
+        android:background="#000000">
 
          <Button style="@style/activity_game_button"
             android:background="#FFBB33" 
@@ -184,7 +184,7 @@
         android:paddingRight="1dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:background="#FFEBCD">
+        android:background="#000000">
 
         <Button style="@style/activity_game_button"
             android:background="#FF8800" 

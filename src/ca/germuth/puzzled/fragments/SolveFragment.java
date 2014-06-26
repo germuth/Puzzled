@@ -108,9 +108,9 @@ public class SolveFragment extends SwipeyTabFragment{
 		
 		//TODO proper compatibility detection
 //		if( mSolve.getmPuzzle().getmName().contains("3") && mSolve.getmPuzzle().getmName().contains("Cube")){
-//		new GraphStatisticsTask(this.getActivity(), mSolve, TimeDistribution.class, (ScrollView)root, list, new StatisticsPanel(this.getActivity())).execute((Void[]) null);
-//		new GraphStatisticsTask(this.getActivity(), mSolve, MoveDistribution.class, (ScrollView)root, list, new StatisticsPanel(this.getActivity())).execute((Void[]) null);
-//		new GraphStatisticsTask(this.getActivity(), mSolve, TurnsPerSecond.class, (ScrollView)root, list, new StatisticsPanel(this.getActivity())).execute((Void[]) null);
+		new GraphStatisticsTask(this.getActivity(), mSolve, TimeDistribution.class, (ScrollView)root, list, new StatisticsPanel(this.getActivity())).execute((Void[]) null);
+		new GraphStatisticsTask(this.getActivity(), mSolve, MoveDistribution.class, (ScrollView)root, list, new StatisticsPanel(this.getActivity())).execute((Void[]) null);
+		new GraphStatisticsTask(this.getActivity(), mSolve, TurnsPerSecond.class, (ScrollView)root, list, new StatisticsPanel(this.getActivity())).execute((Void[]) null);
 //		}
 		
 		return root;
