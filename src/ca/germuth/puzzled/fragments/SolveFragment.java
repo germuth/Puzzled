@@ -2,8 +2,10 @@ package ca.germuth.puzzled.fragments;
 
 import net.peterkuterna.android.apps.swipeytabs.SwipeyTabFragment;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,13 +13,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
+import ca.germuth.puzzled.GameActivity;
+import ca.germuth.puzzled.GameActivityType;
+import ca.germuth.puzzled.PuzzledApplication;
 import ca.germuth.puzzled.R;
 import ca.germuth.puzzled.database.PuzzledDatabase;
 import ca.germuth.puzzled.database.SolveDB;
-import ca.germuth.puzzled.fragments.LeaderboardListFragment.OnSolveSelectedListener;
 import ca.germuth.puzzled.gui.StatisticsPanel;
 import ca.germuth.puzzled.leaderboard.database.LeaderboardDatabase;
+import ca.germuth.puzzled.puzzle.cube.Cube;
 import ca.germuth.puzzled.statistics.graph.GraphStatisticsTask;
 import ca.germuth.puzzled.statistics.graph.MoveDistribution;
 import ca.germuth.puzzled.statistics.graph.TimeDistribution;
@@ -103,7 +107,18 @@ public class SolveFragment extends SwipeyTabFragment{
 				mResetListener.onReset();
 			}
 		});
-		
+		Button replay = (Button)root.findViewById(R.id.stats_solve_replay_button);
+		replay.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				Intent myIntent = new Intent(getActivity(), GameActivity.class);
+            	myIntent.putExtra("activity_type", (Parcelable)GameActivityType.REPLAY);
+            	myIntent.putExtra("solve", mSolve);
+            	//TODO
+            	((PuzzledApplication)getActivity().getApplication()).setPuzzle( new Cube(3, 3, 3) );
+        		startActivity(myIntent);
+			}	
+		});
 		setHeader(root);
 		
 		//TODO proper compatibility detection

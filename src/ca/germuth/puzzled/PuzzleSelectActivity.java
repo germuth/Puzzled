@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -23,6 +24,7 @@ import ca.germuth.puzzled.puzzle.cube.Cube;
 import ca.germuth.puzzled.puzzle.minx.Minx;
 import ca.germuth.puzzled.puzzle.square1.Square1;
 import ca.germuth.puzzled.util.FontManager;
+import ca.germuth.puzzled.GameActivityType;
 /**
  * TODO: A two dimensional FancyCoverFlow would be pretty cool
  * @author Germuth
@@ -133,6 +135,7 @@ public class PuzzleSelectActivity extends PuzzledActivity{
 						e.printStackTrace();
 					}
 	            	Intent myIntent = new Intent(PuzzleSelectActivity.this, GameActivity.class);
+	            	myIntent.putExtra("activity_type", (Parcelable)GameActivityType.PLAY);
 	        		startActivity(myIntent);
 	            }
 	        })

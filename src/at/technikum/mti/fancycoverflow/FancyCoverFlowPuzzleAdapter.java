@@ -59,13 +59,29 @@ public class FancyCoverFlowPuzzleAdapter extends FancyCoverFlowAdapter{
 			imageView = (ImageView) reuseableView;
 		} else {
 			imageView = new ImageView(viewGroup.getContext()){
+				private Boolean isClick;
 				@Override
 				public boolean dispatchTouchEvent(MotionEvent event) {
-					if(event.getAction() == MotionEvent.ACTION_DOWN){
-						activity.puzzleSelected( images.get(i) );
+					switch (event.getAction()) {
+					    case MotionEvent.ACTION_DOWN:
+					        isClick = true;
+					        return true;
+					    case MotionEvent.ACTION_CANCEL:
+					    case MotionEvent.ACTION_UP:
+					        if (isClick) {
+					        	activity.puzzleSelected( images.get(i) );
+					        	return true;
+					        }
+					        break;
+					    case MotionEvent.ACTION_MOVE:
+					        isClick = false;
+					        break;
+					    default:
+					        break;
 					}
-					return super.dispatchTouchEvent(event);
+					return false;
 				}
+				
 			};
 			imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 			imageView
