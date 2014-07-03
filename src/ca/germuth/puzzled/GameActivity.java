@@ -37,7 +37,6 @@ import ca.germuth.puzzled.util.FontManager;
  * Jakob Fischer jakob@pizzadude.dk www.pizzadude.dk
  */
 /*
-make replays
 add message when solve deleted, and move to previous solve?
 add 3 more graphs
 make stats linkable
@@ -71,7 +70,7 @@ public class GameActivity extends PuzzledActivity {
 
 		mScramble = "";
 		mState = PuzzleState.Playing;
-		
+
 		//grab arguments
 		mPuzzle = ((PuzzledApplication) this.getApplication()).getPuzzle();
 		if (mPuzzle == null) {
