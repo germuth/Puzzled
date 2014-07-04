@@ -138,23 +138,6 @@ public class Minx implements Puzzle {
 		//we get outside and inside pentagon the same way
 		//then we manually grab two of these points each to create 
 		//line segments, and calculate the intersection of the line segments
-		/*
-		 * 
-		 * public static Point lineIntersect(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) {
-  double denom = (y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1);
-  if (denom == 0.0) { // Lines are parallel.
-     return null;
-  }
-  double ua = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3))/denom;
-  double ub = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3))/denom;
-    if (ua >= 0.0f && ua <= 1.0f && ub >= 0.0f && ub <= 1.0f) {
-        // Get the intersection point.
-        return new Point((int) (x1 + ua*(x2 - x1)), (int) (y1 + ua*(y2 - y1)));
-    }
-
-  return null;
-  }
-		 */
 		//this gives us the four corner bounds to every section piece
 		//might be difficult with adding small empty space between pieces
 		//because it will cause the measurements to be off slightly
@@ -164,6 +147,7 @@ public class Minx implements Puzzle {
 		final float CENTER_OUTSIDE_DISTANCE = 2.0f;
 		final float FRACTION = 0.50f;
 		final float ANGLE_BETWEEN = 1.25663706f; // = 72 degrees
+		final float SHRINK_AMOUNT = 0.1f;
 
 		ArrayList<Shape> face = new ArrayList<Shape>();
 
@@ -191,12 +175,47 @@ public class Minx implements Puzzle {
 		GLVertex ri = new GLVertex(0, CENTER_OUTSIDE_DISTANCE * FRACTION, 0);
 		ri.rotate('Z', -ANGLE_BETWEEN);
 
+		//create inner pentagon
 		Pentagon p = new Pentagon(li, bli, bri, ri, ti);
-
 		p.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
-		p.finalizeShape();
 		face.add(p);
 
+		
+		//use line intersections to get other points
+		//there are two intersection points in each line of pentagon
+		//l_t_1 l_t_2
+		//means left_top_point 1
+		//points are numbered clockwise
+		GLVertex l_t_1 = GetIntersection(l, t, bli, li);
+		GLVertex l_t_2 = GetIntersection(l, t, ri, ti);
+		
+		GLVertex t_r_1 = GetIntersection(t, r, li, ti);
+		GLVertex t_r_2 = GetIntersection(t, r, bri, ri);
+		
+		GLVertex r_br_1 = GetIntersection(r, br, ti, ri);
+		GLVertex r_br_2 = GetIntersection(r, br, bli, bri);
+		
+		GLVertex br_bl_1 = GetIntersection(br, bl, ri, bri);
+		GLVertex br_bl_2 = GetIntersection(br, bl, li, bli);
+		
+		GLVertex bl_l_1 = GetIntersection(bl, l, bri, bli);
+		GLVertex bl_l_2 = GetIntersection(bl, l, ti, li);
+		
+		//make corners
+		Square topSq = new Square(t, l_t_2, ti, t_r_1);
+		Square rSq = new Square(ri, r_br_1, r, t_r_2);
+		Square brSq = new Square(bri, br_bl_1, br, r_br_2);
+		Square blSq = new Square(bl_l_1, bl, br_bl_2, bli);
+		Square leftSq = new Square(l, bl_l_2, li, l_t_1);
+		
+		//make edges
+		Square tlE = new Square(l_t_1, li, ti, l_t_2);
+		Square trE = new Square(t_r_1, ti, ri, t_r_2);
+		Square rE = new Square(ri, bri, r_br_2, r_br_1);
+		Square bE = new Square(bli, br_bl_2, br_bl_1, bri);
+		Square lE = new Square(bl_l_2, bl_l_1, bli, li);
+		
+		/*
 		// corners of inner and outer pentagon make opposite vertices of square
 		// from these two vertices we can figure out other two vertices of
 		// square
@@ -205,27 +224,83 @@ public class Minx implements Puzzle {
 		Square blSq = calculateSquare(bl, bli);
 		Square brSq = calculateSquare(br, bri);
 		Square rSq = calculateSquare(r, ri);
-		
+		*/
 		topSq.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
-		topSq.finalizeShape();
 		leftSq.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
-		leftSq.finalizeShape();
 		blSq.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
-		blSq.finalizeShape();
 		brSq.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
-		brSq.finalizeShape();
 		rSq.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
-		rSq.finalizeShape();
 		
-		face.add(topSq);
-		face.add(leftSq);
-		face.add(blSq);
-		face.add(brSq);
-		face.add(rSq);
+//		face.add(topSq);
+//		face.add(leftSq);
+//		face.add(blSq);
+//		face.add(brSq);
+//		face.add(rSq);
+		
+		tlE.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
+		trE.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
+		bE.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
+		rE.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
+		lE.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
+		
+		face.add(tlE);
+		face.add(trE);
+		face.add(bE);
+		face.add(lE);
+		face.add(rE);
+		
+		// shrink every face
+		for (Shape curr : face) {
+//			curr.translateAway(p.getCenter(), SHRINK_AMOUNT);
+//			curr.shrink(SHRINK_AMOUNT);
+			curr.finalizeShape();
+		}
+
+		//trying to add spaces between the faces
+		//turns out to be a hard problem
+		//shrinking didn't work
+		//moving doesn't work
+		YOU AROE HERE
+		
+//		p.finalizeShape();
+//		topSq.finalizeShape();
+//		leftSq.finalizeShape();
+//		blSq.finalizeShape();
+//		brSq.finalizeShape();
+//		rSq.finalizeShape();
+//		
+//		tlE.finalizeShape();
+//		trE.finalizeShape();
+//		bE.finalizeShape();
+//		rE.finalizeShape();
+//		lE.finalizeShape();
 		
 		return face;
 	}
 	
+	public static GLVertex GetIntersection(GLVertex line1start,
+			GLVertex line1end, GLVertex line2start, GLVertex line2end) {
+		return GetIntersection(line1start.getX(), line1start.getY(),
+				line1end.getX(), line1end.getY(), line2start.getX(),
+				line2start.getY(), line2end.getX(), line2end.getY());
+	}
+
+	public static GLVertex GetIntersection(float x1, float y1, float x2, float y2,
+			float x3, float y3, float x4, float y4) {
+		float d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+		if (d == 0)
+			return null;
+
+		float xi = ((x3 - x4) * (x1 * y2 - y1 * x2) - (x1 - x2)
+				* (x3 * y4 - y3 * x4))
+				/ d;
+		float yi = ((y3 - y4) * (x1 * y2 - y1 * x2) - (y1 - y2)
+				* (x3 * y4 - y3 * x4))
+				/ d;
+
+		return new GLVertex(xi, yi, 0);
+	}
+	    
 	/**
 	 * Takes two diagonal corners of a square and calculates the other two corners.
 	 * Ensures the square is given in counter-clockwise order
