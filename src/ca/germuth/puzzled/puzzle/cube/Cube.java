@@ -679,26 +679,26 @@ public class Cube implements Puzzle {
 	public ArrayList<Shape> createPuzzleModel() {
 		ArrayList<Shape> myFaces = new ArrayList<Shape>();
 
-		ArrayList<Square> topF = drawFace(top, depth, width, height);
+		ArrayList<Shape> topF = drawFace(top, depth, width, height);
 		Square.finalizeAll(topF);
 		myFaces.addAll(topF);
 
-		ArrayList<Square> frontF = drawFace(front, height, width, depth);
+		ArrayList<Shape> frontF = drawFace(front, height, width, depth);
 		Square.rotateAll(frontF, 'X', (float) Math.PI / 2);
 		Square.finalizeAll(frontF);
 		myFaces.addAll(frontF);
 
-		ArrayList<Square> backF = drawFace(back, height, width, depth);
+		ArrayList<Shape> backF = drawFace(back, height, width, depth);
 		Square.rotateAll(backF, 'X', (float) -Math.PI / 2);
 		Square.finalizeAll(backF);
 		myFaces.addAll(backF);
 
-		ArrayList<Square> leftF = drawFace(left, depth, height, width);
+		ArrayList<Shape> leftF = drawFace(left, depth, height, width);
 		Square.rotateAll(leftF, 'Z', (float) (Math.PI / 2));
 		Square.finalizeAll(leftF);
 		myFaces.addAll(leftF);
 
-		ArrayList<Square> rightF = drawFace(right, depth, height, width);
+		ArrayList<Shape> rightF = drawFace(right, depth, height, width);
 		Square.rotateAll(rightF, 'Z', (float) -(Math.PI / 2));
 		Square.finalizeAll(rightF);
 		myFaces.addAll(rightF);
@@ -707,7 +707,7 @@ public class Cube implements Puzzle {
 		// must translate directly down
 		// this might not be true somehow
 		// definetly not true somehow
-		ArrayList<Square> bottomF = drawFace(down, depth, width, height);
+		ArrayList<Shape> bottomF = drawFace(down, depth, width, height);
 		// Square.translateAll(mBottom, 'Y', -1.40);
 		Square.rotateAll(bottomF, 'X', (float) (Math.PI));
 		Square.finalizeAll(bottomF);
@@ -716,8 +716,8 @@ public class Cube implements Puzzle {
 		return myFaces;
 	}
 
-	private ArrayList<Square> drawFace(CubeFace side, int heightLocal, int widthLocal, int centerDistance) {
-		ArrayList<Square> face = new ArrayList<Square>();
+	private ArrayList<Shape> drawFace(CubeFace side, int heightLocal, int widthLocal, int centerDistance) {
+		ArrayList<Shape> face = new ArrayList<Shape>();
 
 		int largestSide = (Math.max(Math.max(this.width, this.height), this.depth));
 		float faceLength = (240f / largestSide );

@@ -44,6 +44,9 @@ public class Minx implements Puzzle {
 
 	public Minx(int size) {
 		this.size = size;
+		this.U = new MinxFace(size, new Tile(255, 255, 255, 0));
+		this.F = new MinxFace(size, new Tile(0  , 255,   0, 0));
+		
 	}
 
 	@Override
@@ -91,10 +94,22 @@ public class Minx implements Puzzle {
 		// br.rotate('Z', 1.88495559f);
 		// GLVertex r = new GLVertex(CENTER_OUTSIDE_DISTANCE, 0, 0);
 		// GLVertex t = new GLVertex(0, CENTER_OUTSIDE_DISTANCE, 0);
+		
+		//DIHEDRAL angle of dodecahedron
+		final float ANGLE = 2.03444394f;
+		
 		ArrayList<Shape> myFaces = new ArrayList<Shape>();
-		ArrayList<Shape> top = drawFace();
+		
+		ArrayList<Shape> top = drawFace(U);
+//		Shape.translateAll(top, 'Y', 0.75f);
+		Shape.finalizeAll(top);
 
+//		ArrayList<Shape> front = drawFace(F);
+//		Shape.rotateAll(front, 'X', ANGLE);
+//		Shape.finalizeAll(front);
+		
 		myFaces.addAll(top);
+//		myFaces.addAll(front);
 
 		// ArrayList<Square> topF = drawFace(top, depth, width, height);
 		// Square.finalizeAll(topF);
@@ -133,7 +148,7 @@ public class Minx implements Puzzle {
 		return myFaces;
 	}
 
-	private ArrayList<Shape> drawFace() {
+	private ArrayList<Shape> drawFace(MinxFace minxFace) {
 		//OKAY need to do this new way
 		//we get outside and inside pentagon the same way
 		//then we manually grab two of these points each to create 
@@ -144,40 +159,42 @@ public class Minx implements Puzzle {
 		//perhaps i could make a method that moves each point 0.5 closer to the center of the piece
 		//then just call that method on everything
 		//actually that sounds great
-		final float CENTER_OUTSIDE_DISTANCE = 2.0f;
+		final float CENTER_OUTSIDE_DISTANCE = 1.5f;
 		final float FRACTION = 0.50f;
 		final float ANGLE_BETWEEN = 1.25663706f; // = 72 degrees
-		final float SHRINK_AMOUNT = 0.1f;
+		final float SHRINK_AMOUNT = 0.15f;
+		//TODO doesn't work
+		final float FACE_HEIGHT = 0.0f;
 
 		ArrayList<Shape> face = new ArrayList<Shape>();
 
 		// outer corners
-		GLVertex t = new GLVertex(0, CENTER_OUTSIDE_DISTANCE, 0);
-		GLVertex l = new GLVertex(0, CENTER_OUTSIDE_DISTANCE, 0);
+		GLVertex t = new GLVertex(0, CENTER_OUTSIDE_DISTANCE, FACE_HEIGHT);
+		GLVertex l = new GLVertex(0, CENTER_OUTSIDE_DISTANCE, FACE_HEIGHT);
 		l.rotate('Z', ANGLE_BETWEEN);
-		GLVertex bl = new GLVertex(0, CENTER_OUTSIDE_DISTANCE, 0);
+		GLVertex bl = new GLVertex(0, CENTER_OUTSIDE_DISTANCE, FACE_HEIGHT);
 		// rotate for each corner in pentagon
 		bl.rotate('Z', ANGLE_BETWEEN * 2);
-		GLVertex br = new GLVertex(0, CENTER_OUTSIDE_DISTANCE, 0);
+		GLVertex br = new GLVertex(0, CENTER_OUTSIDE_DISTANCE, FACE_HEIGHT);
 		br.rotate('Z', ANGLE_BETWEEN * 3);
-		GLVertex r = new GLVertex(0, CENTER_OUTSIDE_DISTANCE, 0);
+		GLVertex r = new GLVertex(0, CENTER_OUTSIDE_DISTANCE, FACE_HEIGHT);
 		r.rotate('Z', -ANGLE_BETWEEN);
 
 		// inner corners
-		GLVertex ti = new GLVertex(0, CENTER_OUTSIDE_DISTANCE * FRACTION, 0);
-		GLVertex li = new GLVertex(0, CENTER_OUTSIDE_DISTANCE * FRACTION, 0);
+		GLVertex ti = new GLVertex(0, CENTER_OUTSIDE_DISTANCE * FRACTION, FACE_HEIGHT);
+		GLVertex li = new GLVertex(0, CENTER_OUTSIDE_DISTANCE * FRACTION, FACE_HEIGHT);
 		li.rotate('Z', ANGLE_BETWEEN);
-		GLVertex bli = new GLVertex(0, CENTER_OUTSIDE_DISTANCE * FRACTION, 0);
+		GLVertex bli = new GLVertex(0, CENTER_OUTSIDE_DISTANCE * FRACTION, FACE_HEIGHT);
 		// rotate for each corner in pentagon
 		bli.rotate('Z', ANGLE_BETWEEN * 2);
-		GLVertex bri = new GLVertex(0, CENTER_OUTSIDE_DISTANCE * FRACTION, 0);
+		GLVertex bri = new GLVertex(0, CENTER_OUTSIDE_DISTANCE * FRACTION, FACE_HEIGHT);
 		bri.rotate('Z', ANGLE_BETWEEN * 3);
-		GLVertex ri = new GLVertex(0, CENTER_OUTSIDE_DISTANCE * FRACTION, 0);
+		GLVertex ri = new GLVertex(0, CENTER_OUTSIDE_DISTANCE * FRACTION, FACE_HEIGHT);
 		ri.rotate('Z', -ANGLE_BETWEEN);
 
 		//create inner pentagon
 		Pentagon p = new Pentagon(li, bli, bri, ri, ti);
-		p.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
+		p.setmColour(Shape.colourToGLColour(minxFace.center));
 		face.add(p);
 
 		
@@ -208,12 +225,30 @@ public class Minx implements Puzzle {
 		Square blSq = new Square(bl_l_1, bl, br_bl_2, bli);
 		Square leftSq = new Square(l, bl_l_2, li, l_t_1);
 		
+		topSq.setmColour(Shape.colourToGLColour(minxFace.corners[0].corner[0][0]));
+		leftSq.setmColour(Shape.colourToGLColour(minxFace.corners[4].corner[0][0]));
+		blSq.setmColour(Shape.colourToGLColour(minxFace.corners[3].corner[0][0]));
+		brSq.setmColour(Shape.colourToGLColour(minxFace.corners[2].corner[0][0]));
+		rSq.setmColour(Shape.colourToGLColour(minxFace.corners[1].corner[0][0]));
+//		
+		face.add(topSq);
+		face.add(leftSq);
+		face.add(blSq);
+		face.add(brSq);
+		face.add(rSq);
+		
 		//make edges
 		Square tlE = new Square(l_t_1, li, ti, l_t_2);
 		Square trE = new Square(t_r_1, ti, ri, t_r_2);
 		Square rE = new Square(ri, bri, r_br_2, r_br_1);
 		Square bE = new Square(bli, br_bl_2, br_bl_1, bri);
 		Square lE = new Square(bl_l_2, bl_l_1, bli, li);
+		
+		tlE.setmColour(Shape.colourToGLColour(minxFace.edges[0].edge[0]));
+		trE.setmColour(Shape.colourToGLColour(minxFace.edges[4].edge[0]));
+		bE.setmColour(Shape.colourToGLColour(minxFace.edges[3].edge[0]));
+		rE.setmColour(Shape.colourToGLColour(minxFace.edges[2].edge[0]));
+		lE.setmColour(Shape.colourToGLColour(minxFace.edges[1].edge[0]));
 		
 		/*
 		// corners of inner and outer pentagon make opposite vertices of square
@@ -225,11 +260,11 @@ public class Minx implements Puzzle {
 		Square brSq = calculateSquare(br, bri);
 		Square rSq = calculateSquare(r, ri);
 		*/
-		topSq.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
-		leftSq.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
-		blSq.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
-		brSq.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
-		rSq.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
+//		topSq.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
+//		leftSq.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
+//		blSq.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
+//		brSq.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
+//		rSq.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
 		
 //		face.add(topSq);
 //		face.add(leftSq);
@@ -237,30 +272,59 @@ public class Minx implements Puzzle {
 //		face.add(brSq);
 //		face.add(rSq);
 		
-		tlE.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
-		trE.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
-		bE.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
-		rE.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
-		lE.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
+		Square tlE2 = new Square(tlE);
+		Square trE2 = new Square(trE);
+		Square rE2 = new Square(rE);
+		Square bE2 = new Square(bE);
+		Square lE2 = new Square(lE);
 		
-		face.add(tlE);
-		face.add(trE);
-		face.add(bE);
-		face.add(lE);
-		face.add(rE);
+		tlE2.setmColour(Shape.colourToGLColour(minxFace.edges[0].edge[0]));
+		trE2.setmColour(Shape.colourToGLColour(minxFace.edges[4].edge[0]));
+		bE2.setmColour(Shape.colourToGLColour(minxFace.edges[3].edge[0]));
+		rE2.setmColour(Shape.colourToGLColour(minxFace.edges[2].edge[0]));
+		lE2.setmColour(Shape.colourToGLColour(minxFace.edges[1].edge[0]));
+		
+//		tlE2.shrink(SHRINK_AMOUNT);
+//		trE2.shrink(SHRINK_AMOUNT);
+//		bE2.shrink(SHRINK_AMOUNT);
+//		rE2.shrink(SHRINK_AMOUNT);
+//		lE2.shrink(SHRINK_AMOUNT);
+		
+//		face.add(tlE);
+//		face.add(trE);
+//		face.add(bE);
+//		face.add(lE);
+//		face.add(rE);
+		
+		face.add(tlE2);
+		face.add(trE2);
+		face.add(bE2);
+		face.add(rE2);
+		face.add(lE2);
 		
 		// shrink every face
 		for (Shape curr : face) {
 //			curr.translateAway(p.getCenter(), SHRINK_AMOUNT);
-//			curr.shrink(SHRINK_AMOUNT);
-			curr.finalizeShape();
+//			if( !(curr instanceof Pentagon)){
+				curr.shrink(SHRINK_AMOUNT);				
+//			}
+//			curr.finalizeShape();
 		}
 
+//		Square test = new Square(t_r_1, t_r_2, ri, ti);
+//		test.setmColour(Shape.colourToGLColour(new Tile(255, 255, 255, 0)));
+//		test.finalizeShape();
+//		face.add(test);
+//		Square test2 = new Square(test);
+//		test2.setmColour(Shape.colourToGLColour(new Tile(255, 0, 0, 0)));
+//		test2.shrink(SHRINK_AMOUNT);
+//		test2.finalizeShape();
+//		face.add(test2);
 		//trying to add spaces between the faces
 		//turns out to be a hard problem
 		//shrinking didn't work
 		//moving doesn't work
-		YOU AROE HERE
+//		YOU AROE HERE
 		
 //		p.finalizeShape();
 //		topSq.finalizeShape();

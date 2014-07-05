@@ -24,7 +24,13 @@ public class GLVertex {
 		this.y = 0; 
 		this.z = 0;
 	}
-
+ 
+	public GLVertex(GLVertex other){
+		this.x = other.x;
+		this.y = other.y;
+		this.z = other.z;
+	}
+	
 	public GLVertex(float x, float y, float z){
 		this.x = x;
 		this.y = y;

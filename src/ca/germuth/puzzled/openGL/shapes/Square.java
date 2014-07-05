@@ -33,6 +33,13 @@ public class Square extends Shape {
 		this.verticies.add(four);
 
 	}
+	
+	public Square(Square other){
+		this.verticies = new ArrayList<GLVertex>();
+		for(GLVertex curr: other.verticies){
+			this.verticies.add(new GLVertex(curr));
+		}
+	}
 
 	/**
 	 * Compile ES Shaders and add to OpenGL ES Program object and link program.

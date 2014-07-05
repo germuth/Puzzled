@@ -245,24 +245,24 @@ public abstract class Shape {
 		}
 	}
 
-	public static void translateAll(ArrayList<Square> face, char axis, double distance){
+	public static void translateAll(ArrayList<Shape> face, char axis, double distance){
 		for(int i = 0; i < face.size(); i++){
-			Square s = face.get(i);
+			Shape s = face.get(i);
 			s.translate( axis, distance );
 		}
 	}
 
 
-	public static void rotateAll(ArrayList<Square> face, char axis, float radians){
+	public static void rotateAll(ArrayList<Shape> face, char axis, float radians){
 		for(int i = 0; i < face.size(); i++){
-			Square s = face.get(i);
+			Shape s = face.get(i);
 			s.rotate(axis, radians);
 		}
 	}
 
-	public static void finalizeAll(ArrayList<Square> face){
+	public static void finalizeAll(ArrayList<Shape> face){
 		for(int i = 0; i < face.size(); i++){
-			Square s = face.get(i);
+			Shape s = face.get(i);
 			s.finalizeShape();
 		}
 	}

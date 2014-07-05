@@ -159,7 +159,8 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
 
 		//Rotate entire cube 45 degrees downwards to get better perspective
-		float angleInDegrees = 45f;
+		//float angleInDegrees = 45f;
+		float angleInDegrees = 0f;
 
 		// clear rotation matrix from whatever is was before to identity matrix
 		Matrix.setIdentityM(mRotationMatrix, 0);
