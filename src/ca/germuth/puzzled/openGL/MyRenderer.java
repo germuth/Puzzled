@@ -17,7 +17,7 @@ import ca.germuth.puzzled.puzzle.Puzzle;
 import ca.germuth.puzzled.puzzle.PuzzleTurn;
 import ca.germuth.puzzled.puzzle.Tile;
 
-/**O
+/**
  * Renderer
  * 
  * Physically uses openGL to draw colored triangles on the screen.

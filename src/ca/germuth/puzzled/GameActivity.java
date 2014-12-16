@@ -46,7 +46,6 @@ make background of play screen black
 make buttons look like buttons?
 */
 public class GameActivity extends PuzzledActivity {
-
 	private static final int SCRAMBLE_LENGTH = 25;
 	private static final int INSPECTION_LENGTH = 15;
 
@@ -58,8 +57,7 @@ public class GameActivity extends PuzzledActivity {
 	private String mScramble;
 	private PuzzleState mState;
 
-	//this activity can be used both to play the game, or to watch
-	//a replay
+	//this activity can be used both to play the game, or to watch a replay
 	private GameActivityType mActivityType;
 	
 	@Override
@@ -158,7 +156,6 @@ public class GameActivity extends PuzzledActivity {
 						
 						//scrambling done
 						//now to inspection and solve
-					
 						ReplayParser rp = new ReplayParser(mSolve.getReplay());
 						
 						//create arraylist of the puzzleturn to execute, and how long to wait inbetween moves
@@ -215,7 +212,6 @@ public class GameActivity extends PuzzledActivity {
 						});
 						
 					}catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -290,7 +286,7 @@ public class GameActivity extends PuzzledActivity {
 
 	/**
 	 * Invokes SCRAMBLE_LENGTH random non-rotation moves to the cube. Is
-	 * performed on another thread to it doesnt't freeze the gui
+	 * performed on another thread so it doesnt't freeze the gui
 	 * 
 	 * TODO: Also starts the timer (maybe should be removed from this method
 	 */
@@ -435,7 +431,4 @@ public class GameActivity extends PuzzledActivity {
 	public PuzzleState getState() {
 		return mState;
 	}
-	
-	
-	
 }
