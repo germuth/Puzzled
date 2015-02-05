@@ -40,7 +40,7 @@ public class ReplayParser implements Iterable<ReplayMove>{
 		mMoves = new ArrayList<String>();
 		mTimes = new ArrayList<Integer>();
 		
-		mPuzzle = new Cube(3, 3, 3);
+		mPuzzle = new Cube(3);
 		mPuzzleMoves = mPuzzle.getAllMoves();
 		
 		loadReplay();

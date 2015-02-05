@@ -115,7 +115,7 @@ public class SolveFragment extends SwipeyTabFragment{
             	myIntent.putExtra("activity_type", (Parcelable)GameActivityType.REPLAY);
             	myIntent.putExtra("solve", mSolve);
             	//TODO
-            	((PuzzledApplication)getActivity().getApplication()).setPuzzle( new Cube(3, 3, 3) );
+            	((PuzzledApplication)getActivity().getApplication()).setPuzzle( new Cube(3) );
         		startActivity(myIntent);
 			}	
 		});

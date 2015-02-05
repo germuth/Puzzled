@@ -1,38 +1,9 @@
 package ca.germuth.puzzled.puzzle.cube;
-
-import ca.germuth.puzzled.puzzle.PuzzleFace;
-import ca.germuth.puzzled.puzzle.Tile;
-
-
-public class CubeFace implements PuzzleFace{
-	protected Tile[][] mFace;
-	protected Tile mSolvedColour;
-
-	public CubeFace(int rows, int columns, Tile colour){
-		mFace = new Tile[rows][columns];
-		mSolvedColour = colour;
-
-		setSolved();
-	}
-
-	public boolean isSolved(){
-		for(int i = 0; i < mFace.length; i++){
-			for(int j = 0; j < mFace[i].length; j++){
-				if( ! Tile.matches(this.mFace[i][j], this.mFace[0][0] )){
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
-	public void setSolved(){
-		for(int i = 0; i < mFace.length; i++){
-			for(int j = 0; j < mFace[i].length; j++){
-				mFace[i][j] = new Tile(mSolvedColour.getRed(),
-				mSolvedColour.getGreen(), mSolvedColour.getBlue(),
-				mSolvedColour.getAlpha());
-			}
-		}
-	}
+/**
+ * CubeFace.java
+ * 
+ * @author Aaron
+ */
+public enum CubeFace {
+	UP, DOWN, LEFT, RIGHT, FRONT, BACK
 }

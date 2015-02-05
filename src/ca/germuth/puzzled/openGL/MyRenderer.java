@@ -39,7 +39,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 
 	private static final String TAG = "MyGLRenderer";
 	//TODO make configurable
-	private static final int TURN_ANIMATION_TIME = 100;
+	private static final int TURN_ANIMATION_TIME = 150;
 
 	private static final boolean spin = false;
 	private static final boolean fortyFive = true;
@@ -135,7 +135,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	    final float upX = 0.0f;
 	    final float upY = 1.0f;
 	    final float upZ = 0.0f;
-
+	    
 	    // Set the view matrix. This matrix can be said to represent the camera position.
 	    Matrix.setLookAtM(mVMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
 
@@ -159,8 +159,8 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
 
 		//Rotate entire cube 45 degrees downwards to get better perspective
-		//float angleInDegrees = 45f;
-		float angleInDegrees = 0f;
+		float angleInDegrees = 45f;
+//		float angleInDegrees = 0f;
 
 		// clear rotation matrix from whatever is was before to identity matrix
 		Matrix.setIdentityM(mRotationMatrix, 0);

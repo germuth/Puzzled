@@ -241,7 +241,7 @@ public class GameActivity extends PuzzledActivity {
 								Date d = new Date();
 								SolveDB ss = new SolveDB((int) mTimer
 										.getTimeElapsed(), mPuzzleMoveListener.getReplay(), mScramble, db
-										.convert(new Cube(3, 3, 3)), d.getTime());
+										.convert(new Cube(3)), d.getTime());
 								db.insertSolve(ss);
 								return null;
 							}
