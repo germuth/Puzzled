@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ca.germuth.puzzled.puzzle_layouts.cube.CubeLayoutButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cube_layout_button"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/leftOuterColumn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:orientation="vertical"
+        android:weightSum="13" 
+        android:paddingLeft="5dp"
+        android:paddingRight="1dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="#000000">
+
+        <Button style="@style/activity_game_button"
+            android:background="#FFBB33" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp" 
+        	android:text="U'"/>
+
+        <Button style="@style/activity_game_button" 
+            android:background="#FF4444"
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp" 
+        	android:text="L'"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#FF4444"
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp" 
+        	android:text="L"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#99CC00"
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp" 
+        	android:text="F'"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#AA66CC"
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp" 
+        	android:text="D"/>
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="0dip"
+            android:layout_weight="1" >
+        </View>
+
+        <Button style="@style/activity_game_button"
+            android:background="#33B5E5" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"
+        	android:text="y'" />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/leftInnerColumn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/leftOuterColumn"
+        android:orientation="vertical"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="#000000">
+
+        <Button style="@style/activity_game_button"
+            android:background="#FF8800" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp" 
+        	android:text="u'"/>
+
+        <Button style="@style/activity_game_button" 
+            android:background="#CC0000"
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"
+        	android:text="l'"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#CC0000"
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"
+        	android:text="l"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#669900" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"
+        	android:text="f'"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#9933CC" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"
+        	android:text="d"/>
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="0dip"
+            android:layout_weight="1" >
+        </View>
+
+        <Button style="@style/activity_game_button"
+            android:background="#0099CC" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"
+        	android:text="x"/>
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rightOuterColumn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical"
+        android:weightSum="13"
+        android:paddingLeft="1dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="#000000">
+
+         <Button style="@style/activity_game_button"
+            android:background="#FFBB33" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"
+        	android:text="U"/>
+
+        <Button style="@style/activity_game_button" 
+            android:background="#FF4444"
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"
+        	android:text="R"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#FF4444" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"
+        	android:text="R'"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#99CC00" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"
+        	android:text="F"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#AA66CC" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"
+        	android:text="D'"/>
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="0dip"
+            android:layout_weight="1" >
+        </View>
+
+        <Button style="@style/activity_game_button"
+            android:background="#33B5E5" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"
+        	android:text="y"/>
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rightInnerColumn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/rightOuterColumn"
+        android:orientation="vertical"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="#000000">
+
+        <Button style="@style/activity_game_button"
+            android:background="#FF8800" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"
+        	android:text="u"/>
+
+        <Button style="@style/activity_game_button" 
+            android:background="#CC0000"
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"
+        	android:text="r"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#CC0000"
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"
+        	android:text="r'"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#669900" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"
+        	android:text="f"/>
+
+        <Button style="@style/activity_game_button"
+            android:background="#9933CC" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"
+        	android:text="d'"/>
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="0dip"
+            android:layout_weight="1" >
+        </View>
+
+        <Button style="@style/activity_game_button"
+            android:background="#0099CC" 
+            android:layout_height="wrap_content"
+        	android:layout_width="55dp"
+        	android:text="x'"/>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_toLeftOf="@+id/rightInnerColumn"
+        android:layout_toRightOf="@+id/leftInnerColumn"
+        android:orientation="vertical"
+        android:weightSum="20">
+        
+        <ca.germuth.puzzled.openGL.MyGLSurfaceView
+            android:id="@+id/activity_game_gl_surface_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="18" />
+        
+        <ca.germuth.puzzled.util.Chronometer
+            android:id="@+id/activity_game_timer"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:background="#000000"
+            android:textSize="27dp"/>
+        
+    </LinearLayout>
+
+</ca.germuth.puzzled.puzzle_layouts.cube.CubeLayoutButton>

@@ -1,0 +1,165 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .gitattributes
+* .gitignore
+* Dev Resources\
+* Dev Resources\3by3_puzzle.png
+* Dev Resources\Minx.png
+* Dev Resources\Old\
+* Dev Resources\Old\RCSS.png
+* Dev Resources\Old\higames layout.png
+* Dev Resources\Old\tumble_cube_slow.gif
+* Dev Resources\PuzzledActivityPlan.vsdx
+* Dev Resources\PuzzledClassPlan.vsdx
+* Dev Resources\PuzzledDatabasePlan.vsdx
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials.htm
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\682094929-postmessagerelay.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\8n77RrR4jg0(1).htm
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\8n77RrR4jg0.htm
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\AndroidTutorialAndroidSdkDevelopmentProgrammingTutorial
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\VORDIF5H35GDNBBBZKYVXF
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\alfie.f51946af45e0b561c60f768335c9eb79.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\alfons_arrow.png
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\alfons_badge.png
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\all.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\android-book.png
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\android.gif
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\bootstrap.min.css
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\cb=gapi.loaded_0
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\cb=gapi.loaded_1
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\comment-reply.min.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\common.18165c72b6656b2c1289c910a843f821.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\config.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\core-rpc-shindig.random-shindig.sha1.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\count.json
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\counter.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\css
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\css(1)
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\design_21.css
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\discovery.34c07d382496e3a75148a90bf8c3ed18.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\displays.htm
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\embed.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\event(1).js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\event(2).js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\event(3).js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\event(4).js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\event(5).js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\event(6).js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\event.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\fastbutton.htm
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\flowplayer-3.2.6.min.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\flowplayer.ipad-3.2.2.min.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\ga.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\icon-search.png
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\jquery(1).js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\jquery-migrate.min.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\jquery.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\jquery.simplemodal.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\lightbox.css
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\lightbox.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\like.htm
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\lounge.ab1c5f8a17996eda70d3efb2a4e5abf8.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\lounge.load.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\noavatar92.d1dee965677e7cc8d58afe004a6d8282.png
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\ois_reset.css
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\optin.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\out
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\out(1)
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\out(2)
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\output.css
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\ping.htm
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\pinit_main.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\plusone.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\postmessageRelay.htm
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\roundtrip.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\rubikcubeanimationexample1-1024x547.png
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\rubikcubeanimationexample2.png
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\saved_resource
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\saved_resource(1)
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\saved_resource.htm
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\seg
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\shBrushJava.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\shCore.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\show_ads.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\style.css
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\styles.css
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\superfish.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\tabber.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\thumb-150x150.jpg
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\tweet_button.1397165098.htm
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\wait.gif
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\waypoints.min.js
+* Dev Resources\Rubik Cube Animation Example in Android   Android Programming Tutorials_files\widgets.js
+* Dev Resources\activity_loading_screen.png
+* Dev Resources\activity_main_background.png
+* Dev Resources\activity_main_background_orange.png
+* Dev Resources\activity_main_menu_play_icon.png
+* Dev Resources\potential_main_menu_screen.png
+* Dev Resources\puzzled_icon.png
+* Dev Resources\score_screen.png
+* Dev Resources\shitty cube selection screen.png
+* Dev Resources\shitty main screen.png
+* Dev Resources\splash_screen_Inkscape_FILE.svg
+* Dev Resources\svg-android - SVG parsing and rendering for Android - Google Project Hosting.htm
+* Dev Resources\svg-android - SVG parsing and rendering for Android - Google Project Hosting_files\
+* Dev Resources\svg-android - SVG parsing and rendering for Android - Google Project Hosting_files\cb=gapi.loaded_0
+* Dev Resources\svg-android - SVG parsing and rendering for Android - Google Project Hosting_files\core.css
+* Dev Resources\svg-android - SVG parsing and rendering for Android - Google Project Hosting_files\ga.js
+* Dev Resources\svg-android - SVG parsing and rendering for Android - Google Project Hosting_files\logo
+* Dev Resources\svg-android - SVG parsing and rendering for Android - Google Project Hosting_files\ph_core.js
+* Dev Resources\svg-android - SVG parsing and rendering for Android - Google Project Hosting_files\ph_detail.css
+* Dev Resources\svg-android - SVG parsing and rendering for Android - Google Project Hosting_files\plusone.js
+* Dev Resources\svg-android - SVG parsing and rendering for Android - Google Project Hosting_files\prettify_core_compiled.js
+* Dev Resources\svg-android - SVG parsing and rendering for Android - Google Project Hosting_files\star_off.gif
+* Dev Resources\svg-android - SVG parsing and rendering for Android - Google Project Hosting_files\ws11.png
+* Dev Resources\svg-android - SVG parsing and rendering for Android - Google Project Hosting_files\ws6.png
+* Dev Resources\svg-android - SVG parsing and rendering for Android - Google Project Hosting_files\ws9.png
+* README.md
+* ic_launcher-web.png
+* puzzled_icon-web.png
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:20.0.0
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app\src\main\AndroidManifest.xml
+* assets\ => app\src\main\assets\
+* libs\jtds-1.2.jar => app\libs\jtds-1.2.jar
+* res\ => app\src\main\res\
+* src\ => app\src\main\java\
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

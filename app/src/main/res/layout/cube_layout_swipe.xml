@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ca.germuth.puzzled.puzzle_layouts.cube.CubeLayoutSwipe xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cube_layout_swipe"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/rightInnerColumn"
+        android:layout_toRightOf="@+id/leftInnerColumn"
+        android:orientation="vertical"
+        android:weightSum="20">
+
+        <ca.germuth.puzzled.openGL.MyGLSurfaceView
+            android:id="@+id/activity_game_gl_surface_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="18" />
+
+        <ca.germuth.puzzled.util.Chronometer
+            android:id="@+id/activity_game_timer"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="#000000"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="27dp" />
+
+    </LinearLayout>
+
+</ca.germuth.puzzled.puzzle_layouts.cube.CubeLayoutSwipe>

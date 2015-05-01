@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- adding weight of 1 makes it get figured out last, so it
+    	 tries to fill window after chronometer already present -->
+    <ca.germuth.puzzled.openGL.MyGLSurfaceView
+        android:id="@+id/activity_game_gl_surface_view"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <ca.germuth.puzzled.util.Chronometer
+        android:id="@+id/activity_game_timer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#000000"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:textSize="27sp" />
+
+</LinearLayout>
