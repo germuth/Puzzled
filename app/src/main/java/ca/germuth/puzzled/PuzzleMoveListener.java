@@ -49,6 +49,7 @@ public class PuzzleMoveListener implements OnClickListener{
 				if(!current.isRotation()){
 					this.mPuzzle.checkSolved();
 				}
+
 				// turn found, no need to keep searching
 				break;
 			}

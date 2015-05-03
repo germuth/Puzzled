@@ -17,13 +17,18 @@
     <!-- //TODO used for debugging -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+
     <application
-        android:name="ca.germuth.puzzled.PuzzledApplication"
+        android:name=".PuzzledApplication"
         android:allowBackup="true"
         android:icon="@drawable/puzzled_icon"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
-        <activity android:name="SplashScreenActivity" >
+        <activity android:name=".SplashScreenActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,14 +36,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ca.germuth.puzzled.MainMenuActivity"
+            android:name=".MainMenuActivity"
             android:label="@string/app_name" />
-        <activity android:name="ca.germuth.puzzled.PuzzleSelectActivity" />
-        <activity android:name="ca.germuth.puzzled.GameActivity" />
-        <activity android:name="ca.germuth.puzzled.StatisticActivity" />
-        <activity android:name="ca.germuth.puzzled.LeaderboardActivity" />
-        <activity android:name="ca.germuth.puzzled.LeaderboardDetailActivity" />
-        <activity android:name="ca.germuth.puzzled.ReplayActivity" />
+        <activity android:name=".PuzzleSelectActivity" />
+        <activity android:name=".GameActivity" />
+        <activity android:name=".StatisticActivity" />
+        <activity android:name=".LeaderboardActivity" />
+        <activity android:name=".LeaderboardDetailActivity" />
+        <activity android:name=".ReplayActivity" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
     </application>
 
 </manifest>

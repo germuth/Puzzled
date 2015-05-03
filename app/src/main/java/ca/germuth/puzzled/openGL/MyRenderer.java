@@ -1,5 +1,11 @@
 package ca.germuth.puzzled.openGL;
 
+import android.opengl.GLES20;
+import android.opengl.GLSurfaceView;
+import android.opengl.Matrix;
+import android.os.SystemClock;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -7,11 +13,6 @@ import java.util.Queue;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import android.opengl.GLES20;
-import android.opengl.GLSurfaceView;
-import android.opengl.Matrix;
-import android.os.SystemClock;
-import android.util.Log;
 import ca.germuth.puzzled.openGL.shapes.Shape;
 import ca.germuth.puzzled.puzzle.Puzzle;
 import ca.germuth.puzzled.puzzle.PuzzleTurn;
@@ -39,7 +40,8 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 
 	private static final String TAG = "MyGLRenderer";
 	//TODO make configurable
-	private static final int TURN_ANIMATION_TIME = 150;
+	//TODO if turn time is 0 it should ignore turning logic
+	public static int TURN_ANIMATION_TIME = 150;
 
 	private static final boolean spin = false;
 	private static final boolean fortyFive = true;
@@ -191,6 +193,8 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		for(int i = 0; i < this.allFaces.size(); i++){
 			Shape curr = this.allFaces.get(i);
 			if( ! this.rotatingFaces.contains(curr) ){
+				//TODO crashes on daynas phone maybe i have to add alpha channel?
+				//http://stackoverflow.com/questions/22938673/opengl-es-2-0-illegalargumentexception
 				this.allFaces.get(i).draw(mMVPMatrix);
 			}
 		}

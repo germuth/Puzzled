@@ -1,6 +1,5 @@
 package ca.germuth.puzzled.fragments;
 
-import net.peterkuterna.android.apps.swipeytabs.SwipeyTabFragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -13,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import net.peterkuterna.android.apps.swipeytabs.SwipeyTabFragment;
+
 import ca.germuth.puzzled.GameActivity;
 import ca.germuth.puzzled.GameActivityType;
 import ca.germuth.puzzled.PuzzledApplication;
@@ -151,6 +153,7 @@ public class SolveFragment extends SwipeyTabFragment{
 
 	
 	private void setHeader(ViewGroup root){
+		//TODO if longer than one minute, it doesn't fit anymore
 		TextView time = (TextView) root.findViewById(R.id.stats_solve_duration);
 		time.setText( Utils.solveDurationToString( mSolve.getDuration() ) );
 		final TextView puzName = (TextView) root.findViewById(R.id.stats_solve_puzzle);

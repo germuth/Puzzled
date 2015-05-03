@@ -60,6 +60,7 @@ public class CubeLayoutButton extends PuzzleLayout{
 				// pressing down
 				// must determine if x and y within mGLView
 				// need to get rectangle of view
+				//TODO use MotionEvent.ACTION_OUTSIDE ?
 				Rect rectangle = new Rect();
 				mGlView.getHitRect(rectangle);
 				int[] relativeCoords = new int[2];

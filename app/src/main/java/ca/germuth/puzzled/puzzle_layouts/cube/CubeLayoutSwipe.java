@@ -3,11 +3,13 @@ package ca.germuth.puzzled.puzzle_layouts.cube;
 import android.content.Context;
 import android.graphics.Point;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 
 import ca.germuth.puzzled.PuzzleState;
+import ca.germuth.puzzled.openGL.MyRenderer;
 
 public class CubeLayoutSwipe extends PuzzleLayout{
 	private Context mContext;
@@ -41,6 +43,7 @@ public class CubeLayoutSwipe extends PuzzleLayout{
 		display.getSize(p);
 		SCREEN_WIDTH = p.x;
 		SCREEN_HEIGHT = p.y;
+		MyRenderer.TURN_ANIMATION_TIME = 50;
 	}
 
 	@Override
@@ -176,7 +179,21 @@ public class CubeLayoutSwipe extends PuzzleLayout{
 				}
 
 				if(!move.isEmpty()){
+					char apos = '\'';
+					Log.wtf("MOVE", move);
+					boolean doubleTurn = false;
+					char last = move.charAt(move.length() - 1);
+					if(last == '2') {
+						move = move.substring(0, move.length() - 1);
+						doubleTurn = true;
+					} else if(last == apos && move.charAt(move.length() - 2) == '2') {
+						move = move.substring(0, move.length() - 2) + move.substring(move.length() - 1);
+						doubleTurn = true;
+					}
 					mPuzzleMoveListener.onInput(move);
+					if(doubleTurn){
+						mPuzzleMoveListener.onInput(move);
+					}
 				}
 //				if (touchedWithinGlView) {
 //					touchedWithinGlView = false;

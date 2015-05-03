@@ -4,19 +4,135 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <!-- OpenGL View on bottom -->
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_toLeftOf="@+id/rightInnerColumn"
-        android:layout_toRightOf="@+id/leftInnerColumn"
         android:orientation="vertical"
         android:weightSum="20">
-
-        <ca.germuth.puzzled.openGL.MyGLSurfaceView
-            android:id="@+id/activity_game_gl_surface_view"
-            android:layout_width="fill_parent"
+        <!-- use a frame layout to allow layers -->
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="18" />
+            android:layout_weight="18">
+
+            <ca.germuth.puzzled.openGL.MyGLSurfaceView
+                android:id="@+id/activity_game_gl_surface_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- left most vertical line -->
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="5dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="20dp"
+                        android:background="#FF555555" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- right most vertical line -->
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"></LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="5dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_margin="20dp"
+                        android:background="#FF555555" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 3x3 grid horizontal -->
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="20dp"
+                        android:background="#FF555555" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <!-- 3x3 grid horizontal -->
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="20dp"
+                        android:background="#FF555555" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </FrameLayout>
 
         <ca.germuth.puzzled.util.Chronometer
             android:id="@+id/activity_game_timer"
@@ -29,5 +145,6 @@
             android:textSize="27dp" />
 
     </LinearLayout>
+
 
 </ca.germuth.puzzled.puzzle_layouts.cube.CubeLayoutSwipe>

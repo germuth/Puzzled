@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Puzzle Appearance" >
+
+    <CheckBoxPreference
+        android:key="sticker_border"
+        android:title="Sticker Borders"
+        android:summary="Surround each sticker with a border"
+        android:defaultValue="false" />
+
+    <CheckBoxPreference
+        android:key="double_sided"
+        android:title="Double Sided Stickers"
+        android:summary="Render both facing and not facing side of each sticker"
+        android:defaultValue="true" />
+
+    <CheckBoxPreference
+        android:key="cube_blocks"
+        android:title="Cube Blocks"
+        android:summary="Render each plastic block rather than just the colored sticker"
+        android:defaultValue="false" />
+
+    <CheckBoxPreference
+        android:key="hint_stickers"
+        android:title="Sticker Hints"
+        android:summary="Reflections of each sticker"
+        android:defaultValue="false" />
+
+        <!-- slider on margin around each sticker. 0 means the corners and edges touch eachother. gaps between each piece.-->
+        <!-- color preference background color -->
+        <!-- turn animation time -->
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Puzzle Solving">
+
+        <!-- List Preference. Input Type. Buttons, GRid, Swipe -->
+
+        <!-- Inspection Time -->
+
+        <!-- Scramble Length -->
+    </PreferenceCategory>
+
+    <!-- Inspection middle count down -->
+
+    <!-- music enabled? -->
+
+    <!-- six color preferences for 6 cube colors -->
+        <!-- go even deeper, multiple colors for each puzzle? -->
+</PreferenceScreen>
