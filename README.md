@@ -11,6 +11,9 @@ Puzzled is an android app designed for solving twisty puzzles (Rubik's cube, Squ
 It is currently in development. It has support for any NxN Rubik's cube, as well as an online leaderboard and local
 statistics. Below are some screenshots.
 
+<img src="https://cloud.githubusercontent.com/assets/3782710/11207507/790c9074-8cca-11e5-8fc1-1e7c9a5eb87d.png" width="800"/>
+<img src="https://cloud.githubusercontent.com/assets/3782710/11207505/76a3a624-8cca-11e5-8f14-7fdc5f1f7ef1.png" width="800"/>
+
 ![cubeselectscreen](https://cloud.githubusercontent.com/assets/3782710/5156397/fdd9edcc-7274-11e4-9439-fb645588e695.png)
 
 ![stat1](https://cloud.githubusercontent.com/assets/3782710/5156412/018eb6ea-7276-11e4-8427-3e8e4c12eeeb.png)
