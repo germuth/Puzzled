@@ -2,6 +2,7 @@ package at.technikum.mti.fancycoverflow;
 
 import java.util.ArrayList;
 
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -74,7 +75,8 @@ public class FancyCoverFlowPuzzleAdapter extends FancyCoverFlowAdapter{
 					        }
 					        break;
 					    case MotionEvent.ACTION_MOVE:
-					        isClick = false;
+							//this was breaking it on larger screen
+//					        isClick = false;
 					        break;
 					    default:
 					        break;
@@ -84,8 +86,12 @@ public class FancyCoverFlowPuzzleAdapter extends FancyCoverFlowAdapter{
 				
 			};
 			imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-			imageView
-					.setLayoutParams(new FancyCoverFlow.LayoutParams(300, 400));
+
+			//TODO fix for larger displays?
+//			DisplayMetrics metrics = new DisplayMetrics();
+//			this.activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+//			imageView.setLayoutParams(new FancyCoverFlow.LayoutParams(metrics.widthPixels/5, metrics.heightPixels/3));
+			imageView.setLayoutParams(new FancyCoverFlow.LayoutParams(300, 400));
 
 		}
 		//TODO i don't know

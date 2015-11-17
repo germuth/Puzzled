@@ -1,8 +1,10 @@
 package ca.germuth.puzzled;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,7 +66,10 @@ public class GameActivity extends PuzzledActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		this.setContentView(Cube.getLayout());
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+		String inputType = sp.getString("input_type", "Buttons");
+
+		this.setContentView(Cube.getLayout(inputType));
 
 		mScramble = "";
 
@@ -99,13 +104,13 @@ public class GameActivity extends PuzzledActivity {
 		mGlView.initializeRenderer(mPuzzle);
 		mPuzzleMoveListener = new PuzzleMoveListener(this, mPuzzle, mGlView);
 
+		PuzzleLayout container = null;
+		if(inputType.equals("Buttons")){
+			container = (PuzzleLayout) this.findViewById(R.id.cube_layout_button);
+		}else if(inputType.equals("Swipe")){
+			container = (PuzzleLayout) this.findViewById(R.id.cube_layout_swipe);
+		}
 
-		//CUBE LAYOUT BUTTON
-//		PuzzleLayout container = (PuzzleLayout) this
-//				.findViewById(R.id.cube_layout_button);
-		//CUBE LAYOUT SWIPE
-		PuzzleLayout container = (PuzzleLayout) this
-				.findViewById(R.id.cube_layout_swipe);
 
 		container.setActivity(this);
 		container.setGlView(mGlView);
@@ -240,9 +245,7 @@ public class GameActivity extends PuzzledActivity {
 								// int duration, String replay, PuzzleDB puz, long
 								// dateTime){
 								Date d = new Date();
-								SolveDB ss = new SolveDB((int) mTimer
-										.getTimeElapsed(), mPuzzleMoveListener.getReplay(), mScramble, db
-										.convert(new Cube(3)), d.getTime());
+								SolveDB ss = new SolveDB((int) mTimer.getTimeElapsed(), mPuzzleMoveListener.getReplay(), mScramble, db.convert(new Cube(3)), d.getTime());
 								db.insertSolve(ss);
 								return null;
 							}

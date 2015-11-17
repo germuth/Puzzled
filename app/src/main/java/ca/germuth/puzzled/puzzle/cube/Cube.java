@@ -479,8 +479,14 @@ public class Cube implements Puzzle {
 		xTurn();
 	}
 
-	public static int getLayout() {
-		return myLayout;
+	public static int getLayout(String inputType) {
+		if(inputType.equals("Buttons")) {//BUTTONS
+			return R.layout.cube_layout_button;
+		}else if(inputType.equals("Swipe")) {//SWIPE
+			return R.layout.cube_layout_swipe;
+		}else {
+			return myLayout;
+		}
 	}
 
 	@Override

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="input_types">
+        <item>Buttons</item>
+        <item>Swipe</item>
+    </string-array>
+    <string-array name="input_types_values">
+        <item>Buttons</item>
+        <item>Swipe</item>
+    </string-array>
+</resources>

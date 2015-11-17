@@ -15,5 +15,6 @@
     <string name ="activity_puzzle_select_back_button">Back</string>
     <string name ="activity_puzzle_select_option_button">Options</string>
     <string name ="activity_puzzle_select_go_button">GoGoGo!</string>
-    
+
+    <string name="title_activity_settings">Settings Activity</string>
 </resources>

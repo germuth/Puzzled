@@ -36,6 +36,13 @@
         android:title="Puzzle Solving">
 
         <!-- List Preference. Input Type. Buttons, GRid, Swipe -->
+        <ListPreference
+            android:key="input_type"
+            android:title="Input Type"
+            android:summary="Change how you turn the puzzle"
+            android:entries="@array/input_types"
+            android:entryValues="@array/input_types_values"
+            android:defaultValue="0" />
 
         <!-- Inspection Time -->
 

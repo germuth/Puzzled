@@ -1,7 +1,9 @@
 package ca.germuth.puzzled;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 
 import java.util.Iterator;
 import java.util.Random;
@@ -28,7 +30,11 @@ public class ReplayActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		this.setContentView(Cube.getLayout());
+		//TODO change to use a BLANK input type, so replays don't have buttons?
+		//or change it to use button type, and highlight the buttons as they are pressed
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+		String inputType = sp.getString("input_type", "0");
+		this.setContentView(Cube.getLayout(inputType));
 
 		mState = PuzzleState.PLAYING;
 		mPuzzle = ((PuzzledApplication) this.getApplication()).getPuzzle();

@@ -105,10 +105,11 @@ public class Square extends Shape {
 		mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
 
 		// Set color for drawing the triangle
-		float color[] = new float[3];
+		float color[] = new float[4];
 		color[0] = this.mColour.getRed();
 		color[1] = this.mColour.getGreen();
 		color[2] = this.mColour.getBlue();
+		color[3] = 1.0f;//alpha channel
 		GLES20.glUniform4fv(mColorHandle, 1, color, 0);
 		// GLES20.glUniform3fv(mColorHandle, 1, color, 0);
 
