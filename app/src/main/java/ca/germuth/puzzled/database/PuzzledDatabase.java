@@ -14,7 +14,7 @@ import ca.germuth.puzzled.puzzle.Puzzle;
 
 public class PuzzledDatabase extends SQLiteOpenHelper{
 	// If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "FeedReader.db";
 
     public PuzzledDatabase(Context context) {
@@ -58,6 +58,7 @@ public class PuzzledDatabase extends SQLiteOpenHelper{
     	values.put(SolveTable.COLUMN_SCRAMBLE, solve.getScramble());
     	values.put(SolveTable.COLUMN_SOLVE_DATE, solve.getDateSolved());
     	values.put(SolveTable.COLUMN_SOLVE_DURATION, solve.getDuration());
+		values.put(SolveTable.COLUMN_FINISHED, solve.isFinished() ? 1 : 0);
 
     	// Insert the new row, returning the primary key value of the new row
     	db.insert(SolveTable.TABLE_NAME, null, values);
@@ -77,10 +78,10 @@ public class PuzzledDatabase extends SQLiteOpenHelper{
     	SQLiteDatabase db = this.getWritableDatabase();
     	if( puz != null){
     		db.execSQL(
-    				"DELETE FROM " + 
-    				SolveTable.TABLE_NAME + 
-    				" WHERE " + SolveTable.COLUMN_PUZZLE + " = " + puz.getmId()
-    				);
+					"DELETE FROM " +
+							SolveTable.TABLE_NAME +
+							" WHERE " + SolveTable.COLUMN_PUZZLE + " = " + puz.getmId()
+			);
     	}else{
     		db.delete(SolveTable.TABLE_NAME, null, null);
     	}
@@ -95,7 +96,39 @@ public class PuzzledDatabase extends SQLiteOpenHelper{
     	c.moveToFirst();
     	return c.getString(c.getColumnIndex(PuzzleTable.COLUMN_PUZZLE_NAME));
     }
-    
+
+	public PuzzleDB getPuzzleByName(String name){
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor c = db.rawQuery(
+				" SELECT * " +
+				" FROM " + PuzzleTable.TABLE_NAME +
+				" WHERE " + PuzzleTable.COLUMN_PUZZLE_NAME + " = " + name, null );
+		if( c.moveToLast() ){
+			int id = c.getInt(c.getColumnIndex(PuzzleTable._ID));
+
+			PuzzleDB puz = new PuzzleDB(id, name);
+			return puz;
+		}
+
+		return null;
+	}
+
+	public PuzzleDB getPuzzleByID(int ID){
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor c = db.rawQuery(
+				" SELECT * " +
+						" FROM " + PuzzleTable.TABLE_NAME +
+						" WHERE " + PuzzleTable._ID + " = " + ID, null );
+		if( c.moveToLast() ){
+			String name = c.getString(c.getColumnIndex(PuzzleTable.COLUMN_PUZZLE_NAME));
+
+			PuzzleDB puz = new PuzzleDB(ID, name);
+			return puz;
+		}
+
+		return null;
+	}
+
     public SolveDB getLastSolve(){
     	SQLiteDatabase db = this.getWritableDatabase();
     	Cursor c = db.rawQuery(
@@ -112,6 +145,7 @@ public class PuzzledDatabase extends SQLiteOpenHelper{
     		long dateTime = c.getLong(c.getColumnIndex(SolveTable.COLUMN_SOLVE_DATE));
     		int duration = c.getInt(c.getColumnIndex(SolveTable.COLUMN_SOLVE_DURATION));
     		int puzzleId = c.getInt(c.getColumnIndex(SolveTable.COLUMN_PUZZLE));
+			int finished = c.getInt(c.getColumnIndex(SolveTable.COLUMN_FINISHED));
     		
     		Cursor c2 = db.rawQuery(
     				" SELECT * " +
@@ -121,7 +155,7 @@ public class PuzzledDatabase extends SQLiteOpenHelper{
     		if( c2.moveToFirst() ){
     			PuzzleDB puz = new PuzzleDB(c2.getInt(c2.getColumnIndex(PuzzleTable._ID)),
         				c2.getString(c2.getColumnIndex(PuzzleTable.COLUMN_PUZZLE_NAME)));  
-    			SolveDB SolveTable = new SolveDB(duration, replay, scramble, puz, dateTime);
+    			SolveDB SolveTable = new SolveDB(duration, replay, scramble, puz, dateTime, finished == 1 ? true : false);
     			SolveTable.setLocalId(SolveTableID);
         		return SolveTable;
     		}else{
@@ -158,8 +192,9 @@ public class PuzzledDatabase extends SQLiteOpenHelper{
         		String scramble = c.getString(c.getColumnIndex(SolveTable.COLUMN_SCRAMBLE));
         		long dateTime = c.getLong(c.getColumnIndex(SolveTable.COLUMN_SOLVE_DATE));
         		int duration = c.getInt(c.getColumnIndex(SolveTable.COLUMN_SOLVE_DURATION));
+				int finished = c.getInt(c.getColumnIndex(SolveTable.COLUMN_FINISHED));
         		
-        		SolveDB SolveTable = new SolveDB(duration, replay, scramble, puz, dateTime);
+        		SolveDB SolveTable = new SolveDB(duration, replay, scramble, puz, dateTime, finished == 1 ? true : false);
         		SolveTable.setLocalId(SolveTableID);
         		SolveTables.add(SolveTable);
         	}
@@ -167,7 +202,41 @@ public class PuzzledDatabase extends SQLiteOpenHelper{
     	
     	return SolveTables;
     }
-    
+
+	/**
+	 * Returns an unfinished solve for the given puzzle. Right now it is limited to only
+	 * save one partial solve
+	 * @return
+	 */
+	public SolveDB getUnfinishedSolve(){//PuzzleDB puzzle){
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(
+				" SELECT * " +
+						" FROM " + SolveTable.TABLE_NAME +
+//						" WHERE " + SolveTable.COLUMN_PUZZLE  + " = ?" +
+						//only want unfinished solve
+						" WHERE " + SolveTable.COLUMN_FINISHED + " = 0" +
+						//most recent solves last
+						" ORDER BY " + SolveTable.COLUMN_SOLVE_DATE + " ASC",
+
+				null);//new String[] { puzzle.getmId() + "" });
+		if( c.moveToLast() ){
+				int SolveTableID = c.getInt(c.getColumnIndex(SolveTable._ID));
+				String replay = c.getString(c.getColumnIndex(SolveTable.COLUMN_REPLAY));
+				String scramble = c.getString(c.getColumnIndex(SolveTable.COLUMN_SCRAMBLE));
+				long dateTime = c.getLong(c.getColumnIndex(SolveTable.COLUMN_SOLVE_DATE));
+				int duration = c.getInt(c.getColumnIndex(SolveTable.COLUMN_SOLVE_DURATION));
+				int finished = c.getInt(c.getColumnIndex(SolveTable.COLUMN_FINISHED));
+				int puzID = c.getInt(c.getColumnIndex(SolveTable.COLUMN_PUZZLE));
+
+				SolveDB SolveTable = new SolveDB(duration, replay, scramble, this.getPuzzleByID(puzID), dateTime,
+						finished == 1 ? true : false);
+				SolveTable.setLocalId(SolveTableID);
+				return SolveTable;
+		}
+		return null;
+	}
+
     public PuzzleDB convert(Puzzle p){
     	SQLiteDatabase db = this.getReadableDatabase();
     	

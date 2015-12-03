@@ -41,6 +41,10 @@ public class SolveDB extends ObjectDB implements Parcelable{
 	 */
 	private long mDateSolved;
 	/**
+	 * Whether the solve has been finished, or is still in progress
+	 */
+	private boolean mIsFinished;
+	/**
 	 * Reference to PuzzleDB object for this solve if local
 	 */
 	private PuzzleDB mPuzzle;
@@ -54,6 +58,7 @@ public class SolveDB extends ObjectDB implements Parcelable{
 		this.mLocalId = -1;
 		this.mDateSolved = -1;
 		this.mDuration = -1;
+		this.mIsFinished = true;
 		this.mPuzzle = null;
 		this.mRemoteId = -1;
 		this.mRemotePuzzleId = -1;
@@ -70,8 +75,9 @@ public class SolveDB extends ObjectDB implements Parcelable{
 	 * @param puz
 	 * @param dateTime
 	 */
-	public SolveDB(int duration, String replay, String scramble, PuzzleDB puz, long dateTime){
+	public SolveDB(int duration, String replay, String scramble, PuzzleDB puz, long dateTime, boolean isFinished){
 		this.mDuration = duration;
+		this.mIsFinished = isFinished;
 		this.mReplay = replay;
 		this.mScramble = scramble;
 		this.mPuzzle = puz;
@@ -86,9 +92,10 @@ public class SolveDB extends ObjectDB implements Parcelable{
 	/**
 	 * Constructor for remote solve use
 	 */
-	public SolveDB(String username, int duration, long dateSolved, String scramble, String replay, int puz_id){
+	public SolveDB(String username, int duration, long dateSolved, String scramble, String replay, boolean isFinished, int puz_id){
 		this.mUsername = username;
 		this.mDateSolved = dateSolved;
+		this.mIsFinished = isFinished;
 		this.mDuration = duration;
 		this.mScramble = scramble;
 		this.mReplay = replay;
@@ -109,6 +116,7 @@ public class SolveDB extends ObjectDB implements Parcelable{
 		this.mRemoteId = in.readInt();
 		this.mUsername = in.readString();
 		this.mDuration = in.readInt();
+		this.mIsFinished = in.readInt() == 1 ? true : false;
 		this.mReplay = in.readString();
 		this.mScramble = in.readString();
 		this.mDateSolved = in.readLong();
@@ -129,6 +137,7 @@ public class SolveDB extends ObjectDB implements Parcelable{
 		dest.writeInt(mRemoteId);
 		dest.writeString(mUsername);
 		dest.writeInt(mDuration);
+		dest.writeInt(mIsFinished ? 1 : 0);
 		dest.writeString(mReplay);
 		dest.writeString(mScramble);
 		dest.writeLong(mDateSolved);
@@ -146,8 +155,6 @@ public class SolveDB extends ObjectDB implements Parcelable{
         }
     };
 
-    
-    
 	@Override
 	public boolean equals(Object o) {
 		return mLocalId == ((SolveDB)o).mLocalId;
@@ -183,6 +190,14 @@ public class SolveDB extends ObjectDB implements Parcelable{
 
 	public void setDuration(int mDuration) {
 		this.mDuration = mDuration;
+	}
+
+	public boolean isFinished() {
+		return mIsFinished;
+	}
+
+	public void setFinished(boolean mIsFinished) {
+		this.mIsFinished = mIsFinished;
 	}
 
 	public String getReplay() {

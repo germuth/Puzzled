@@ -23,6 +23,7 @@ class DatabaseSchema {
     	public static final String COLUMN_SCRAMBLE = "scramble";
     	public static final String COLUMN_PUZZLE = "puzzle";
     	public static final String COLUMN_SOLVE_DATE = "time";
+		public static final String COLUMN_FINISHED = "finished";
     	//TODO make protected
     	public static final String SQL_CREATE_TABLE = 
     			"CREATE TABLE " + TABLE_NAME + " (" + 
@@ -37,7 +38,8 @@ class DatabaseSchema {
     			//	Date date=new Date(millis);
     			//  convert to SimpleDateFormat
     			//  bam you can prompt for day, year, month, etc
-    			COLUMN_SOLVE_DATE + " integer," + 
+    			COLUMN_SOLVE_DATE + " integer," +
+				COLUMN_FINISHED + " integer, " +
     			"FOREIGN KEY(" + COLUMN_PUZZLE + ") REFERENCES " + PuzzleTable.TABLE_NAME + "(" + PuzzleTable._ID + ") );";
     }
 

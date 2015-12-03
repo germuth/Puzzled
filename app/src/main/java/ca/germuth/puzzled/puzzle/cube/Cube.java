@@ -3,7 +3,11 @@ package ca.germuth.puzzled.puzzle.cube;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import ca.germuth.puzzled.PuzzleMoveListener;
 import ca.germuth.puzzled.R;
@@ -74,7 +78,10 @@ public class Cube implements Puzzle {
 	private Tile[][] down;
 	private Tile[][] back;
 
-	private volatile ArrayList<Tile> changedTiles;
+//	private ConcurrentLinkedQueue<Tile> changedTiles;
+//	private volatile ArrayList<Tile> changedTiles;
+	//does this need to be concurrent?
+	private HashSet<Tile> changedTiles;
 	private OnPuzzleSolvedListener mOnPuzzleSolvedListener;
 
 	public static final String[] constructor_param_titles = {"Width", "Height", "Depth"};
@@ -86,17 +93,19 @@ public class Cube implements Puzzle {
 		this.depth = size;
 		
 		this.setSolved();
+		//shouldn't need anymore because hashmap
 		// TODO slow and terrible
-		this.changedTiles = new ArrayList<Tile>() {
-			@Override
-			public boolean add(Tile object) {
-				if (this.contains(object)) {
-					return false;
-				} else {
-					return super.add(object);
-				}
-			}
-		};
+		this.changedTiles = new HashSet<Tile>();
+//		this.changedTiles = new ConcurrentLinkedQueue<Tile>() {
+//			@Override
+//			public boolean add(Tile object) {
+//				if (this.contains(object)) {
+//					return false;
+//				} else {
+//					return super.add(object);
+//				}
+//			}
+//		};
 	}
 	
 	/**
@@ -661,7 +670,7 @@ public class Cube implements Puzzle {
 	}
 
 	@Override
-	public ArrayList<Tile> getChangedTiles() {
+	public HashSet<Tile> getChangedTiles() {
 		return this.changedTiles;
 	}
 

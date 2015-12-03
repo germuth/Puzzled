@@ -70,7 +70,7 @@ public class FancyCoverFlowPuzzleAdapter extends FancyCoverFlowAdapter{
 					    case MotionEvent.ACTION_CANCEL:
 					    case MotionEvent.ACTION_UP:
 					        if (isClick) {
-					        	activity.puzzleSelected( images.get(i) );
+					        	activity.puzzleSelected(i,  images.get(i) );
 					        	return true;
 					        }
 					        break;

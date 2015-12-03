@@ -29,24 +29,38 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         <activity android:name=".SplashScreenActivity" >
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity
+            android:name=".MainMenuActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainMenuActivity"
-            android:label="@string/app_name" />
-        <activity android:name=".PuzzleSelectActivity" />
-        <activity android:name=".GameActivity" />
-        <activity android:name=".StatisticActivity" />
+        <activity android:name=".PuzzleSelectActivity"
+            android:screenOrientation="landscape"/>
+
+        <activity android:name=".GameActivity"
+            android:screenOrientation="landscape"/>
+
+        <activity android:name=".StatisticActivity"
+            android:screenOrientation="landscape"/>
         <activity android:name=".LeaderboardActivity" />
         <activity android:name=".LeaderboardDetailActivity" />
-        <activity android:name=".ReplayActivity" />
+        <activity android:name=".ReplayActivity"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" >
+            android:label="@string/title_activity_settings"
+            android:screenOrientation="landscape">
         </activity>
     </application>
 

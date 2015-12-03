@@ -2,6 +2,9 @@ package ca.germuth.puzzled.puzzle;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * PuzzleTurn
@@ -38,7 +41,8 @@ public class PuzzleTurn {
 	 * A list of the changed tiles used to animate the correct
 	 * pieces for that turn
 	 */
-	private ArrayList<Tile> mChangedTiles;
+//	private ArrayList<Tile> mChangedTiles;
+	private HashSet<Tile> mChangedTiles;
 	/**
 	 * The amount of rotation in radians that the puzzle
 	 * turn encompasses. For example, every turn on the 3x3
@@ -77,7 +81,7 @@ public class PuzzleTurn {
 		this.mName = name;
 		this.mMethods = methods;
 		this.mArguments = args;
-		this.mChangedTiles = new ArrayList<Tile>();
+		this.mChangedTiles = new HashSet<Tile>();
 		this.mAngle = rotation;
 		this.axis = axis;
 		this.isRotation = false;
@@ -99,16 +103,25 @@ public class PuzzleTurn {
 		this.mName = mName;
 	}
 
-	public ArrayList<Tile> getmChangedTiles() {
+	public HashSet<Tile> getmChangedTiles() {
 		return mChangedTiles;
 	}
 
-	public void setmChangedTiles(ArrayList<Tile> tiles) {
+	public void setmChangedTiles(HashSet<Tile> tiles) {
 		//problem is this is being executed at the same time as get
 		//this.mChangedTiles.clear();
-		for(int i = 0; i < tiles.size(); i++){
-			this.mChangedTiles.add(tiles.get(i));
-		}
+//		this.mChangedTiles.clear();
+//		Interator<Tile> i = tiles.iterator();
+//		while(i.hasNext()){
+//			this.mChangedTiles.add()
+//		}
+		this.mChangedTiles.addAll(tiles);
+//		for(Tile t: tiles.){
+//			this.mChangedTiles.add(t);
+//		}
+//		for(int i = 0; i < tiles.size(); i++){
+//			this.mChangedTiles.add(tiles.get(i));
+//		}
 	}
 
 	public Method[] getMethods() {

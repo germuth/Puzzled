@@ -1,6 +1,8 @@
 package ca.germuth.puzzled.puzzle.minx;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.concurrent.ConcurrentHashMap;
 
 import ca.germuth.puzzled.openGL.GLVertex;
 import ca.germuth.puzzled.openGL.shapes.Pentagon;
@@ -438,7 +440,7 @@ public class Minx implements Puzzle {
 	}
 
 	@Override
-	public ArrayList<Tile> getChangedTiles() {
+	public HashSet<Tile> getChangedTiles() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -36,7 +36,13 @@ public class Tile {
 		}
 		return false;
 	}
-	
+
+	@Override
+	public int hashCode() {
+//		return super.hashCode();
+		return mCount;
+	}
+
 	public Tile(int red, int green, int blue, int alpha){
 		assert(red >= 0 && red <= 255);
 		assert(green >= 0 && green <= 255);
@@ -62,33 +68,33 @@ public class Tile {
 		return red;
 	}
 
-	public void setRed(int red) {
-		this.red = red;
-	}
+//	public void setRed(int red) {
+//		this.red = red;
+//	}
 
 	public int getGreen() {
 		return green;
 	}
 
-	public void setGreen(int green) {
-		this.green = green;
-	}
+//	public void setGreen(int green) {
+//		this.green = green;
+//	}
 
 	public int getBlue() {
 		return blue;
 	}
 
-	public void setBlue(int blue) {
-		this.blue = blue;
-	}
+//	public void setBlue(int blue) {
+//		this.blue = blue;
+//	}
 
 	public int getAlpha() {
 		return alpha;
 	}
 
-	public void setAlpha(int alpha) {
-		this.alpha = alpha;
-	}
+//	public void setAlpha(int alpha) {
+//		this.alpha = alpha;
+//	}
 
 	public Shape getmShape() {
 		return mShape;

@@ -7,8 +7,11 @@ import android.os.SystemClock;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -96,12 +99,14 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	 * Each puzzle turn consits of an array of individual tiles that
 	 * need to be animated turning. 
 	 */
-	public volatile Queue<PuzzleTurn> pendingMoves;
+//	public volatile Queue<PuzzleTurn> pendingMoves;
+	public volatile ConcurrentLinkedQueue<PuzzleTurn> pendingMoves;
 	private boolean animating;
 
 	public MyRenderer(Puzzle p){
 		this.mPuzzle = p;
-		this.pendingMoves = new LinkedList<PuzzleTurn>();
+//		this.pendingMoves = new LinkedList<PuzzleTurn>();
+		this.pendingMoves = new ConcurrentLinkedQueue<PuzzleTurn>();
 		this.animating = false;
 
 		this.rotatingFaces = new ArrayList<Shape>();
@@ -176,19 +181,26 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 				this.currentAngle = 0f;
 				this.currentTurn = pendingMoves.poll();
 
-				ArrayList<Tile> changed = currentTurn.getmChangedTiles();
+				HashSet<Tile> changed = currentTurn.getmChangedTiles();
+				//okay so tile list when i add, and when i get from here are different...
+
 				//split myFaces into ones we are rotating and ones we are not
-				for(int i = 0; i < changed.size(); i++){
-					//Shape sh = mPuzzle.getShapeFor( changed.get(i) );
-					Shape sh = changed.get(i).getmShape();
+				Iterator<Tile> i = changed.iterator();
+				while(i.hasNext()){
+					Shape sh = i.next().getmShape();
 					this.rotatingFaces.add(sh);
 				}
+//				for(int i = 0; i < changed.size(); i++){
+//					//Shape sh = mPuzzle.getShapeFor( changed.get(i) );
+//					Shape sh = changed.get(i).getmShape();
+//					this.rotatingFaces.add(sh);
+//				}
 
 				this.finalTime = SystemClock.uptimeMillis() + MyRenderer.TURN_ANIMATION_TIME;
 			}
 		}
 
-		//TODO this solution is terrible and slow
+		//TODO this will slow down big cubes greatly! this solution is terrible and slow
 		//Draw all faces that aren't rotating
 		for(int i = 0; i < this.allFaces.size(); i++){
 			Shape curr = this.allFaces.get(i);

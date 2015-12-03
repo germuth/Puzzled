@@ -16,7 +16,7 @@ public class SubmitRequest extends LeaderboardRequest {
 		PuzzledDatabase db = new PuzzledDatabase(mActivity);
 		SolveDB solDB = db.getLastSolve();
 		SolveDB sol = new SolveDB(USERNAME, solDB.getDuration(),
-				solDB.getDateSolved(), solDB.getScramble(), solDB.getReplay(),
+				solDB.getDateSolved(), solDB.getScramble(), solDB.getReplay(), true,
 				solDB.getPuzzle().getmId());
 		// need to look up the SolveDB puzzle_id and get the puzzle name
 		// puzzle names are consistent local -> remote database, but not

@@ -1,6 +1,8 @@
 package ca.germuth.puzzled.puzzle;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.concurrent.ConcurrentHashMap;
 
 import ca.germuth.puzzled.openGL.shapes.Shape;
 
@@ -40,7 +42,7 @@ public interface Puzzle {
 	 * to moveFinished(); 
 	 * @return
 	 */
-	abstract ArrayList<Tile> getChangedTiles();
+	abstract HashSet<Tile> getChangedTiles();
 
 	/**
 	 * Tells the cube that the current move is finished and to clear 

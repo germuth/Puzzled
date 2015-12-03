@@ -1,5 +1,6 @@
 package ca.germuth.puzzled;
 
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -65,12 +66,12 @@ public class PuzzleMoveListener implements OnClickListener{
 	
 	public void execute(PuzzleTurn current){
 
-		executePuzzleTurn( mPuzzle, current);
+		executePuzzleTurn(mPuzzle, current);
 		PuzzleTurn now = new PuzzleTurn(current.getmPuzzle(),
 				current.getmName(), current.getMethods(),
 				current.getmArguments(), current.getmAngle(), current.getAxis());
 		now.setmChangedTiles(mPuzzle.getChangedTiles());
-
+		Log.wtf("changed tiles", now.getmChangedTiles().toString());
 		mPuzzle.moveFinished();
 		// pass puzzleTurn to openGL
 		// puzzleTurn must be duplicated becuase if same button is pressed again
@@ -82,6 +83,10 @@ public class PuzzleMoveListener implements OnClickListener{
 	
 	public String getReplay(){
 		return mReplay.toString();
+	}
+
+	public void setReplay(String unfinishedSolve){
+		mReplay = unfinishedSolve;
 	}
 	
 	public static void executePuzzleTurn(Puzzle puzzle, PuzzleTurn puzzleTurn) {

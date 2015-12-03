@@ -89,11 +89,15 @@ public class Chronometer extends TextView {
 		updateRunning();
 	}
 
-	public void startCountingUp() {
-		mBase = SystemClock.elapsedRealtime();
+	public void startCountingUp(long milliFrom) {
+		mBase = SystemClock.elapsedRealtime() - milliFrom;
 		mStarted = true;
 		mCountingDown = false;
 		updateRunning();
+	}
+
+	public void startCountingUp(){
+		startCountingUp(0);
 	}
 
 	public void stop() {

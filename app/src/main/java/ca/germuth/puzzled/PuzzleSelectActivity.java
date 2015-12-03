@@ -19,6 +19,9 @@ import at.technikum.mti.fancycoverflow.FancyCoverFlow;
 import at.technikum.mti.fancycoverflow.FancyCoverFlow.OnSwipeListener;
 import at.technikum.mti.fancycoverflow.FancyCoverFlowPuzzleAdapter;
 import at.technikum.mti.fancycoverflow.PuzzleItem;
+import ca.germuth.puzzled.database.PuzzleDB;
+import ca.germuth.puzzled.database.PuzzledDatabase;
+import ca.germuth.puzzled.database.SolveDB;
 import ca.germuth.puzzled.puzzle.Puzzle;
 import ca.germuth.puzzled.puzzle.cube.Cube;
 import ca.germuth.puzzled.puzzle.minx.Minx;
@@ -76,9 +79,15 @@ public class PuzzleSelectActivity extends PuzzledActivity{
 
 	//TODO do with listeners
 	@SuppressLint("NewApi") 
-	public void puzzleSelected(PuzzleItem puz){
+	public void puzzleSelected(int index, PuzzleItem puz){
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		
+
+		//figure out whether there is a solve to start from
+		PuzzledDatabase db = new PuzzledDatabase(this);
+//		PuzzleDB puzDB = db.getPuzzleByName(this.puzzles.get(index).getName());
+//		final SolveDB unfinished = db.getUnfinishedSolve(puzDB);
+		final SolveDB unfinished = db.getUnfinishedSolve();
+
 		ArrayList<NumberPicker> numberPickers = new ArrayList<NumberPicker>();
 		//get constructor arguments from class
 		final Constructor<?> puzConstructor = puz.getmClass().getConstructors()[0];
@@ -102,11 +111,12 @@ public class PuzzleSelectActivity extends PuzzledActivity{
 				
 				//TODO too new
 				NumberPicker np = new NumberPicker(this);
-				np.setScaleX(0.8f);
-				np.setScaleY(0.8f);
+				np.setScaleX(0.7f);
+				np.setScaleY(0.7f);
 				
 				np.setMaxValue(50);
 				np.setMinValue(1);
+				np.setValue(3);//Default
 				numberPickers.add(np);
 				
 				oneParam.addView(lbl);
@@ -115,15 +125,14 @@ public class PuzzleSelectActivity extends PuzzledActivity{
 				across.addView(oneParam);
 			}
 			final ArrayList<NumberPicker> numPickers = new ArrayList<NumberPicker>(numberPickers);
-			builder.setView(across);
-			builder.setTitle("Select Puzzle Size");
-			builder.setPositiveButton("Ready", new DialogInterface.OnClickListener() {
-	            public void onClick(DialogInterface dialog, int id) {
-	            	Object[] params = new Object[numPickers.size()];
-	            	for(int i = 0; i < numPickers.size(); i++){
-	            		params[i] = numPickers.get(i).getValue();
-	            	}
-	            	try {
+
+			DialogInterface.OnClickListener switchActivity = new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					Object[] params = new Object[numPickers.size()];
+					for(int i = 0; i < numPickers.size(); i++){
+						params[i] = numPickers.get(i).getValue();
+					}
+					try {
 						((PuzzledApplication)getApplication()).setPuzzle( (Puzzle)puzConstructor.newInstance( params ) );
 					} catch (InstantiationException e) {
 						e.printStackTrace();
@@ -134,16 +143,25 @@ public class PuzzleSelectActivity extends PuzzledActivity{
 					} catch (InvocationTargetException e) {
 						e.printStackTrace();
 					}
-	            	Intent myIntent = new Intent(PuzzleSelectActivity.this, GameActivity.class);
-	            	myIntent.putExtra("activity_type", (Parcelable)GameActivityType.PLAY);
-	        		startActivity(myIntent);
-	            }
-	        })
+					Intent myIntent = new Intent(PuzzleSelectActivity.this, GameActivity.class);
+					myIntent.putExtra("activity_type", (Parcelable)GameActivityType.PLAY);
+					myIntent.putExtra("solve", unfinished);
+					startActivity(myIntent);
+				}
+			};
+
+			builder.setView(across);
+			builder.setTitle("Select Puzzle Size");
+			builder.setPositiveButton("Ready", switchActivity)
 	        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-	            public void onClick(DialogInterface dialog, int id) {
-	                // User cancelled the dialog
-	            }
-	        });
+				public void onClick(DialogInterface dialog, int id) {
+					// User cancelled the dialog
+				}
+			});
+
+			if(unfinished != null){
+				builder.setNeutralButton("Resume Solve", switchActivity);
+			}
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {

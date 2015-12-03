@@ -202,4 +202,24 @@ public class CubeLayoutButton extends PuzzleLayout{
 			}
 		}
 	}
+
+	//temp bad method
+	public void pressButton(String text) {
+		for (int i = 0; i < this.getChildCount(); i++) {
+			View v = this.getChildAt(i);
+			if (v instanceof LinearLayout) {
+				LinearLayout l = (LinearLayout) v;
+				for (int j = 0; j < l.getChildCount(); j++) {
+					View v2 = l.getChildAt(j);
+					if (v2 instanceof Button) {
+						final Button btn = (Button) v2;
+						if(btn.getText().equals(text)){
+							btn.performClick();
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
 }
